@@ -1,0 +1,25 @@
+const converter = require('../convert.js');
+
+const ramlData = `#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  collection:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      description: Get all <<resourcePathName>>, optionally filtered
+    post:
+      description: Create a new <<resourcePathName | !singularize>>
+traits:
+  secured:
+    usage: Apply this to any method that needs to be secured
+    description: Some requests require authentication.
+    headers:
+      access_token:
+        description: Access Token
+        example: 5757gh76
+        required: true
+`;
+
+console.log(converter.convert(ramlData).toJSON());

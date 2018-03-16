@@ -1,0 +1,17 @@
+{
+  "name": "ramp2postmanConverter",
+  "version": "1.0.0",
+  "description": "Converts raml 1.0 files to postman v2",
+  "main": "convert.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Urvashi Singh",
+  "license": "ISC",
+
+  "dependencies": {
+    "postman-collection": "^3.0.7",
+    "postman_validator": ">= 0.0.4",
+    "raml-1-parser": "^1.1.40"
+  }
+}
