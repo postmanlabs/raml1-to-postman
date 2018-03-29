@@ -4,13 +4,15 @@
   "description": "Converts raml 1.0 files to postman v2",
   "main": "convert.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/mocha/bin/mocha"
   },
   "author": "Urvashi Singh",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.1.2",
     "json-schema-faker": "0.4.7",
     "lodash.indexof": "4.0.5",
+    "mocha": "^5.0.5",
     "postman-collection": "3.0.7",
     "raml-1-parser": "1.1.40"
   }
