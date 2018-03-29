@@ -8,10 +8,10 @@
   },
   "author": "Urvashi Singh",
   "license": "ISC",
-
   "dependencies": {
-    "postman-collection": "^3.0.7",
-    "postman_validator": ">= 0.0.4",
-    "raml-1-parser": "^1.1.40"
+    "json-schema-faker": "0.4.7",
+    "lodash.indexof": "4.0.5",
+    "postman-collection": "3.0.7",
+    "raml-1-parser": "1.1.40"
   }
 }
