@@ -35,10 +35,14 @@ function createTypesObject(typesArray) {
 
 var helper = {
 
-    setCollectionInfo: function(info, collection) {
+    setCollectionInfo: function(info, coll) {
+      let collection = coll;
+
       collection.name = info.title;
       collection.version = info.version;
-      collection.describe(info.documentation.concat(info.description));
+      collection.description = info.documentation.concat(info.description);
+
+      return collection;
     },
 
     convertHeader: function(header) {
@@ -73,7 +77,7 @@ var helper = {
 
       for(var code in response) {
         res.code = response[code].code;
-        res.name = response[code].name || 'Sample Response';
+        res.name = response[code].name || response[code].code;
         response[code].body && (res.body = JSON.stringify(helper.createBody(response[code].body, types, null)));
       }
 
@@ -84,9 +88,9 @@ var helper = {
         let params,
           SDKUrl = new SDK.Url(url);
 
-          for(var param in queryParameters) {
-          params = new SDK.QueryParam(param);
-          SDKUrl.addQueryParams(params);
+        for(var param in queryParameters) {
+            params = new SDK.QueryParam(param);
+            SDKUrl.addQueryParams(params);
         }
 
         url = url + '?' + SDKUrl.getQueryString();
@@ -94,9 +98,9 @@ var helper = {
         return url;
     },
 
-    addQueryStringToUrl: function(url, queryString, types) {
+    addQueryStringToUrl: function (url, queryString, types) {
 
-        if(queryString.type == 'string') {
+        if(typeof queryString === 'string') {
           url = url.concat(queryString);
         }
         else {
@@ -122,6 +126,8 @@ var helper = {
                         key: 'Content-Type',
                         value: mediaType
                       }));
+
+      return request;
     },
 
     convertMethod: function(method, url, globalParameters, types) {
@@ -130,7 +136,7 @@ var helper = {
             auth = new SDK.RequestAuth(),
             queryParameters;
 
-        globalParameters && helper.addContentTypeHeader(globalParameters.mediaType, request);
+        globalParameters && (request = helper.addContentTypeHeader(globalParameters.mediaType, request));
 
         method.queryParameters && (url = helper.addQueryParamsToUrl(url, method.queryParameters));
         method.queryString && (url = helper.addQueryStringToUrl(url, method.queryString, types));
@@ -153,14 +159,15 @@ var helper = {
     },
 
     addParametersToUrl: function(baseUrl, params) {
-      let paramString;
+      let paramString,
+          url;
 
       for(var param in params) {
         paramString = '{' + param + '}';
-        baseUrl = baseUrl.replace(paramString, ':'+ param);
+        url = baseUrl.replace(paramString, ':'+ param);
       }
 
-      return baseUrl;
+      return url;
     },
 
     convertResources: function(baseUrl, res, globalParameters) {

@@ -22,7 +22,7 @@ var converter = {
             baseUriParameters: ramlJSON.baseUriParameters
           }
 
-        helper.setCollectionInfo(info, collection);
+        collection = helper.setCollectionInfo(info, collection);
         baseUrl.key = 'baseUrl';
         baseUrl.value = helper.addParametersToUrl(ramlJSON.baseUri, ramlJSON.baseUriParameters);
         collection.variables.add(baseUrl);
