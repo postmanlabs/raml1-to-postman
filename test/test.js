@@ -1,25 +1,29 @@
-const converter = require('../convert.js');
+const converter = require('../convert.js'),
+  fs = require('fs');
 
 const ramlData = `#%RAML 1.0
-title: Example API
-version: v1
-resourceTypes:
-  collection:
-    usage: This resourceType should be used for any collection of items
-    description: The collection of <<resourcePathName>>
-    get:
-      description: Get all <<resourcePathName>>, optionally filtered
-    post:
-      description: Create a new <<resourcePathName | !singularize>>
-traits:
-  secured:
-    usage: Apply this to any method that needs to be secured
-    description: Some requests require authentication.
-    headers:
-      access_token:
-        description: Access Token
-        example: 5757gh76
-        required: true
+title: GitHub API
+version: v3
+baseUri: https://api.github.com/{version}
+/users:
+  get:
+    description: Get a list of users
+    queryParameters:
+      page:
+        description: Specify the page that you want to retrieve
+        type:        integer
+        required:    true
+        example:     1
+      per_page:
+        description: Specify the amount of items that will be retrieved per page
+        type:        integer
+        minimum:     10
+        maximum:     200
+        default:     30
+        example:     50
 `;
 
-console.log(converter.convert(ramlData).toJSON());
+fs.writeFileSync('collection-file.json', JSON.stringify(converter.convert(ramlData).toJSON(), null, 2));
+
+//console.log(JSON.stringify(converter.convert(ramlData).toJSON(), null, 2));
+console.log(converter.validate(ramlData));

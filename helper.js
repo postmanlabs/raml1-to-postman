@@ -2,11 +2,12 @@ const SDK =  require('postman-collection'),
     jsf = require('json-schema-faker');
 
 jsf.option({
-  alwaysFakeOptionals: true
+    alwaysFakeOptionals: true
 });
 
 function setSchema(body, types) {
-  let schema = '';
+  let schema = '',
+  type;
 
   body.properties && (schema = body.properties);
     if(body.type && schema === '') {
