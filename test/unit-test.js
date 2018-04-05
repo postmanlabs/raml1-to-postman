@@ -1,7 +1,6 @@
 const expect = require('chai').expect,
     converter = require('./../convert.js'),
     helper = require('./../helper.js'),
-    raml = require('raml-1-parser'),
     SDK = require('postman-collection');
 
 /* global describe, it */
@@ -35,7 +34,7 @@ describe('Validate raml', function() {
                             value: Silver`,
             valid = converter.validate(ramlString);
 
-            expect(valid).to.be.equal(true);
+        expect(valid).to.be.equal(true);
     });
 
     it('should not validate invalid raml string', function() {
@@ -67,7 +66,7 @@ describe('Validate raml', function() {
                             value: Silver`,
             valid = converter.validate(ramlString);
 
-            expect(valid).to.be.equal(false);
+        expect(valid).to.be.equal(false);
     });
 });
 
@@ -75,18 +74,18 @@ describe('helper functions' , function() {
     it('should convert raml header into postman header', function() {
         let ramlHeader =
                       { name: 'UserID',
-                        displayName: 'UserID',
-                        typePropertyKind: 'TYPE_EXPRESSION',
-                        type: [ 'string' ],
-                        example: 'SWED-123',
-                        required: true,
-                        description: 'the identifier for the user that posts a new organisation',
-                        __METADATA__: { primitiveValuesMeta: { displayName: [Object], required: [Object] } },
-                        structuredExample:
+                          displayName: 'UserID',
+                          typePropertyKind: 'TYPE_EXPRESSION',
+                          type: [ 'string' ],
+                          example: 'SWED-123',
+                          required: true,
+                          description: 'the identifier for the user that posts a new organisation',
+                          __METADATA__: { primitiveValuesMeta: { displayName: [Object], required: [Object] } },
+                          structuredExample:
                          { value: 'SWED-123',
-                           strict: true,
-                           name: null,
-                           structuredValue: 'SWED-123' }},
+                             strict: true,
+                             name: null,
+                             structuredValue: 'SWED-123' }},
             postmanHeader = helper.convertHeader(ramlHeader);
 
         expect(postmanHeader).to.be.an('object');
@@ -98,71 +97,94 @@ describe('helper functions' , function() {
     it('Should add params to url', function() {
         let baseUrl = 'www.sampleBaseUrl.com/{param}',
             params = {
-               param: {
-                  name: 'param',
-                  displayName: 'param',
-                  typePropertyKind: 'TYPE_EXPRESSION',
-                  type: [ 'string' ],
-                  required: true,
-                  __METADATA__: { calculated: true, primitiveValuesMeta: [Object] }
-               }
-             },
+                param: {
+                    name: 'param',
+                    displayName: 'param',
+                    typePropertyKind: 'TYPE_EXPRESSION',
+                    type: [ 'string' ],
+                    required: true,
+                    __METADATA__: { calculated: true, primitiveValuesMeta: [Object] }
+                }
+            },
             url = helper.addParametersToUrl(baseUrl, params);
 
-            expect(url).to.be.a('string');
-            expect(url).to.equal('www.sampleBaseUrl.com/:param');
+        expect(url).to.be.a('string');
+        expect(url).to.equal('www.sampleBaseUrl.com/:param');
 
     });
 
     it('should set info for collection', function() {
-      let info = {
-        title: 'My sample api',
-        documentation: 'This is the documentation.',
-        description: 'This is the description.',
-        version: '1.1'
-      },
-      collection = new SDK.Collection(),
-      modified_collection = helper.setCollectionInfo(info, collection);
+        let info = {
+                title: 'My sample api',
+                documentation: 'This is the documentation.',
+                description: 'This is the description.',
+                version: '1.1'
+            },
+            collection = new SDK.Collection(),
+            modified_collection = helper.setCollectionInfo(info, collection);
 
-      expect(modified_collection.name).to.equal('My sample api');
-      expect(modified_collection.version).to.equal('1.1');
-      expect(modified_collection.description).to.equal('This is the documentation.This is the description.')
+        expect(modified_collection.name).to.equal('My sample api');
+        expect(modified_collection.version).to.equal('1.1');
+        expect(modified_collection.description).to.equal('This is the documentation.This is the description.');
 
     });
 
     it('should add query parameters to url', function() {
-      let queryParams = {
+        let queryParams = {
                 page:
                  { name: 'page',
-                   displayName: 'page',
+                     displayName: 'page',
                  },
                 per_page:
                  { name: 'per_page',
-                   displayName: 'per_page',
-                   type: [ 'integer' ],
+                     displayName: 'per_page',
+                     type: [ 'integer' ],
                  }
-               },
-        url = 'www.sampleBaseUrl.com/',
-        modifiedUrl = helper.addQueryParamsToUrl(url, queryParams);
+            },
+            modifiedUrl = helper.constructQueryStringFromQueryParams(queryParams);
 
-        expect(modifiedUrl).to.equal('www.sampleBaseUrl.com/?page&per_page');
+        expect(modifiedUrl).to.equal('?page&per_page');
 
     });
 
-    it('should add query string to url', function() {
-      let url = 'www.sampleBaseUrl.com/',
-        queryString = '?page&per_page',
-        modifiedUrl = helper.addQueryStringToUrl(url, queryString, {});
+    it('should construct query string', function() {
+        let queryString = '?page&per_page',
+            modifiedQueryString = helper.constructQueryString(queryString, {});
 
-        expect(modifiedUrl).to.equal('www.sampleBaseUrl.com/?page&per_page');
+        expect(modifiedQueryString).to.equal('?page&per_page');
     });
 
-    it('should add contentType header to request', function() {
-      let mediaType = 'application/json',
-        request = new SDK.Request(),
-        modifiedRequest = helper.addContentTypeHeader(mediaType, request),
-        header = modifiedRequest.getHeaders();
+    it('should return contentType header', function() {
+        let mediaType = 'application/json',
+            header = helper.getContentTypeHeader(mediaType);
 
-        expect(header['Content-Type']).to.equal('application/json');
+        expect(header.key).to.equal('Content-Type');
+        expect(header.value).to.equal('application/json');
+    });
+
+    it('should generate postman body', function() {
+        let ramlBody = {
+                'application/json': {
+                    name: 'application/json',
+                    displayName: 'application/json',
+                    typePropertyKind: 'TYPE_EXPRESSION',
+                    type: [ 'Invoice' ],
+                    example: { amount: '1221,', vendorName: 'vendor' },
+                }
+            },
+            types = {
+                Invoice: {
+                    name: 'Invoice',
+                    displayName: 'Invoice',
+                    typePropertyKind: 'TYPE_EXPRESSION',
+                    type: [ 'object' ],
+                    properties: { amount: { type: 'number'}, vendorName: {type: 'string'} }
+                }
+            },
+            expectedBody = { amount: '1221,', vendorName: 'vendor' },
+            postmanBody = helper.convertBody(ramlBody, types);
+
+        expect(postmanBody).to.deep.equal(expectedBody);
+
     });
 });

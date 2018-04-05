@@ -6,21 +6,21 @@ var converter = {
 
     convert: function(ramlString) {
         let collection = new SDK.Collection(),
-          ramlAPI = raml.parseRAMLSync(ramlString),
-          ramlJSON = ramlAPI.toJSON(),
-          baseUrl = new SDK.Variable(),
-          info = {
-            title: ramlJSON.title || '',
-            documentation: ramlJSON.documentation || '',
-            description: ramlJSON.description || '',
-            version: ramlJSON.version || ''
-          },
-          RootParameters = {
-            mediaType: ramlJSON.mediaType,
-            types: ramlJSON.types,
-            baseUri: ramlJSON.baseUri,
-            baseUriParameters: ramlJSON.baseUriParameters
-          }
+            ramlAPI = raml.parseRAMLSync(ramlString),
+            ramlJSON = ramlAPI.toJSON(),
+            baseUrl = new SDK.Variable(),
+            info = {
+                title: ramlJSON.title || '',
+                documentation: ramlJSON.documentation || '',
+                description: ramlJSON.description || '',
+                version: ramlJSON.version || ''
+            },
+            RootParameters = {
+                mediaType: ramlJSON.mediaType,
+                types: ramlJSON.types,
+                baseUri: ramlJSON.baseUri,
+                baseUriParameters: ramlJSON.baseUriParameters
+            };
 
         collection = helper.setCollectionInfo(info, collection);
         baseUrl.key = 'baseUrl';
