@@ -1,0 +1,86 @@
+#%RAML 1.0
+title: Types raml API
+
+types:
+  User:
+    type: object
+    properties:
+      name: string
+      lastname: string
+    example:
+      name: Bob
+      lastname: Marley
+  Org:
+    type: object
+    properties:
+      name: string
+      address?: string
+      value?: string
+  Number1:
+    type: number
+    minimum: 4
+  Notebook:
+    properties:
+      manufacturer:
+        type: string
+      numberOfUSBPorts:
+        type: number
+  CreatedOn:
+    type: datetime
+    example: 2016-02-28T16:41:41.090Z
+  IsMarried:
+    type: boolean
+  Age:
+    type: integer
+    minimum: 3
+    maximum: 5
+    format: int8
+    multipleOf: 1
+    default: 5
+  Email:
+    type: string
+    minLength: 2
+    maxLength: 26
+
+/organization/{uriParam1}{uriParam2}:
+  uriParameters:
+    uriParam1:
+      type: Age
+    uriParam2:
+      type: string
+      example: example
+  post:
+    headers:
+      Header1?:
+        type: CreatedOn
+      Header2:
+        type: Email
+        default: header2Example
+      Header3:
+        type: string
+        example: header3Example
+    body:
+      application/json:
+        type: Org
+        example:
+          value:
+            name: Doe Enterprise
+            value: Silver
+  get:
+    queryParameters:
+      param1:
+        type: Age
+        example: 5
+      param2:
+        type: Email
+        example: param2Example
+    description: Returns an organization entity.
+    responses:
+      201:
+        body:
+          application/json:
+            type: Org
+            examples:
+              one:
+                name: Software Corp
+                address: 35 Central Street

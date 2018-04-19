@@ -1,13 +1,12 @@
 const expect = require('chai').expect,
-    converter = require('./../convert.js'),
-    helper = require('./../helper.js'),
+    converter = require('./../../convert.js'),
+    helper = require('./../../helper.js'),
     SDK = require('postman-collection');
 
 /* global describe, it */
 describe('Validate raml', function() {
     it('should validate valid raml string', function() {
-        let ramlString = `#%RAML 1.0
-                title: API with Examples
+        let ramlString = `#%RAML 1.0\ntitle: API with Examples
                 description: Something
                 baseUri: www.google.com/{something}
                 types:
@@ -134,16 +133,18 @@ describe('helper functions' , function() {
                 page:
                  { name: 'page',
                      displayName: 'page',
+                     example: 'hello'
                  },
                 per_page:
                  { name: 'per_page',
                      displayName: 'per_page',
                      type: [ 'integer' ],
+                     example: 10
                  }
             },
             modifiedUrl = helper.constructQueryStringFromQueryParams(queryParams);
 
-        expect(modifiedUrl).to.equal('?page&per_page');
+        expect(modifiedUrl).to.equal('?page=hello&per_page=10');
 
     });
 
@@ -160,6 +161,46 @@ describe('helper functions' , function() {
 
         expect(header.key).to.equal('Content-Type');
         expect(header.value).to.equal('application/json');
+    });
+
+    it('should disable optional headers', function() {
+      let ramlHeader = {
+              name: 'UserID',
+              displayName: 'UserID',
+              type: [ 'string' ],
+              example: 'SWED-123',
+              required: false
+            },
+          types = {},
+          postmanHeader = helper.convertHeader(ramlHeader, types);
+
+          expect(SDK.Header.isHeader(postmanHeader)).to.be.true;
+          expect(postmanHeader.disabled).to.be.true;
+      });
+
+    it('should generate postman security schemes', function() {
+      let securedBy = 'oauth_1_0',
+        securitySchemes = {
+              basic:
+               { name: 'basic',
+                 type: 'Basic Authentication',
+                 description: 'This is basic security scheme' },
+              digest:
+               { name: 'digest',
+                 type: 'Digest Authentication',
+                 description: 'This is a digest security scheme' },
+              oauth_1_0:
+                { name: 'oauth_1_0',
+                 type: 'OAuth 1.0',
+                 description: 'OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.\n',
+                 settings:
+                  { requestTokenUri: 'https://api.mysampleapi.com/1/oauth/request_token',
+                    authorizationUri: 'https://api.mysampleapi.com/1/oauth/authorize',
+                    tokenCredentialsUri: 'https://api.mysampleapi.com/1/oauth/access_token',
+                    signatures: [Object] } } },
+          postmanSecurityScheme = helper.convertSecurityScheme(securedBy, securitySchemes);
+
+          expect(postmanSecurityScheme.type).to.equal('oauth1');
     });
 
     it('should generate postman body', function() {

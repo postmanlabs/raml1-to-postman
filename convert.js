@@ -2,6 +2,21 @@ const raml = require('raml-1-parser'),
     SDK = require('postman-collection'),
     helper = require('./helper.js');
 
+function arrayToMap(array) {
+    let map = {};
+
+    for(var index in array) {
+        let mapElement = array[index],
+            element;
+
+        for(var first in mapElement) {
+            map[first] = mapElement[first];
+        }
+    }
+
+    return map;
+}
+
 var converter = {
 
     convert: function(ramlString) {
@@ -17,12 +32,17 @@ var converter = {
             },
             RootParameters = {
                 mediaType: ramlJSON.mediaType,
-                types: ramlJSON.types,
+                types: '',
                 baseUri: ramlJSON.baseUri,
-                baseUriParameters: ramlJSON.baseUriParameters
-            };
+                baseUriParameters: ramlJSON.baseUriParameters,
+                securitySchemes: '',
+                securedBy: ramlJSON.securedBy || ''
+            },
+            types;
 
         collection = helper.setCollectionInfo(info, collection);
+        ramlJSON.types && (RootParameters.types = arrayToMap(ramlJSON.types));
+        ramlJSON.securitySchemes && (RootParameters.securitySchemes = arrayToMap(ramlJSON.securitySchemes));
         baseUrl.key = 'baseUrl';
         baseUrl.value = helper.addParametersToUrl(ramlJSON.baseUri, ramlJSON.baseUriParameters);
         collection.variables.add(baseUrl);
@@ -35,7 +55,7 @@ var converter = {
     },
 
     validate: function(inputString) {
-        return inputString.startsWith('#%RAML 1.0\n');
+        return inputString.startsWith('#%RAML 1.0\ntitle:');
     }
 };
 

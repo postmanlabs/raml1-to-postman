@@ -5,47 +5,50 @@ jsf.option({
     alwaysFakeOptionals: true
 });
 
+var authTypeMap = {
+  basic: 'basic',
+  oauth_1_0: 'oauth1',
+  oauth_2_0: 'oauth2',
+  digest: 'digest'
+};
+
 //returns the schema for body with examples
 function getBodySchema(body, types) {
     let properties,
         type,
         typeProperties,
-        schema = {};
+        schema = {},
+        schemaFaker = {};
 
     if(body.example) {
       schema = body.example;
     }
+    else if(body.examples) {
+      for(var first in body.examples) {
+        schema = body.examples[first].structuredValue;
+        break;
+      }
+    }
     else {
-      properties = body.properties || {};
-
+      for(var property in body.properties) {
+        schemaFaker.properties = body.properties[property];
+        schema[property] = body.properties[property].default ||
+          body.properties[property].example ||
+          jsf(schemaFaker)[property];
+      }
       if(body.type && body.type[0] !== 'object') {
           type = body.type[0];
           typeProperties = types[type].properties;
+          for(var property in typeProperties) {
+            schemaFaker.properties = typeProperties[property];
+            schema[property] = typeProperties[property].default ||
+              typeProperties[property].example ||
+              jsf(schemaFaker)[property];
+          }
       }
-      Object.assign(properties, typeProperties);
-      schema.properties = properties;
-
-      schema = jsf(schema);
     }
 
     return schema;
-}
-
-/* creates an object for raml types to be easily accessible whenever required*/
-function createTypesObject(typesArray) {
-    let types = {};
-
-    for(var index in typesArray) {
-        let type = typesArray[index],
-            typeName;
-
-        for(var first in type) {
-            typeName = first;
-        }
-        types[typeName] = typesArray[index][typeName];
-    }
-
-    return types;
 }
 
 var helper = {
@@ -62,13 +65,18 @@ var helper = {
     },
 
 //converts raml header into postman header
-    convertHeader: function(header) {
+    convertHeader: function(header, types) {
         let converted_header = new SDK.Header();
 
         converted_header.key = header.name;
-        header.example && (converted_header.value = header.example);
+        if (header.required !== true) {
+          converted_header.disabled = true;
+        }
         header.description && (converted_header.description = header.description);
-
+        if(header.type[0] !== 'string' && header.type[0] !== 'integer' && header.type[0] !== 'boolean') {
+          converted_header.value = types[header.type[0]].default || types[header.type[0]].example;
+        }
+        converted_header.value = header.default || header.example || converted_header.value;
         return converted_header;
     },
 
@@ -94,6 +102,12 @@ var helper = {
             res.code = response[code].code;
             res.name = response[code].name || response[code].code;
             response[code].body && (res.body = JSON.stringify(helper.convertBody(response[code].body, types, null)));
+            if(response[code].headers) {
+              for(var header in response[code].headers) {
+                let returnedHeader = helper.convertHeader(response[code].headers[header], types);
+                res.headers.add(returnedHeader);
+              }
+            }
         }
 
         return res;
@@ -101,12 +115,13 @@ var helper = {
 
 //returns a url query string constructed from raml query parameters
     constructQueryStringFromQueryParams: function(queryParameters) {
-        let params,
-            SDKUrl = new SDK.Url();
+        let SDKUrl = new SDK.Url();
 
         for(var param in queryParameters) {
-            params = new SDK.QueryParam(param);
-            SDKUrl.addQueryParams(params);
+            SDKUrl.addQueryParams(new SDK.QueryParam({
+              key : param,
+              value : queryParameters[param].default || queryParameters[param].example || ''
+            }));
         }
 
         return ('?' + SDKUrl.getQueryString());
@@ -141,27 +156,35 @@ var helper = {
             });
     },
 
-//converts a raml method into postman item
-    convertMethod: function(method, url, globalParameters, types) {
-        let item = new SDK.Item(),
-            request = new SDK.Request();
+    convertSecurityScheme: function(securedBy, securitySchemes) {
+      let securityScheme = {};
 
-        globalParameters && (request.headers.add(helper.getContentTypeHeader(globalParameters.mediaType)));
+      securityScheme.type = authTypeMap[securedBy];
+
+      return securityScheme;
+    },
+
+//converts a raml method into postman item
+    convertMethod: function(method, url, globalParameters) {
+        let item = new SDK.Item(),
+            request = new SDK.Request(),
+            mediaType = globalParameters.mediaType || "application/json",
+            securedBy = method.securedBy || globalParameters.securedBy;
 
         method.queryParameters && (url = url.concat(helper.constructQueryStringFromQueryParams(method.queryParameters)));
-        method.queryString && (url = url.concat(helper.constructQueryString(method.queryString, types)));
+        method.queryString && (url = url.concat(helper.constructQueryString(method.queryString, globalParameters.types)));
 
         method.description && ( item.description = (method.description) );
         method.body && (request.body = new SDK.RequestBody({
             mode: 'raw',
-            raw: JSON.stringify(helper.convertBody(method.body, types, request))
-        }));
-        method.responses && ( item.responses.add(helper.convertResponse(method.responses, types)) );
-
+            raw: JSON.stringify(helper.convertBody(method.body, globalParameters.types, request))
+        })) && request.headers.add(helper.getContentTypeHeader(mediaType));
+        method.responses && ( item.responses.add(helper.convertResponse(method.responses, globalParameters.types)) );
+        securedBy && ( request.auth = helper.convertSecurityScheme(securedBy[0], globalParameters.securitySchemes) );
         request.url = url;
         request.method = method.method;
         for (var header in method.headers) {
-            request.headers.add(helper.convertHeader(method.headers[header]));
+            request.headers.add(helper.convertHeader(method.headers[header], globalParameters.types));
         }
         item.request = request;
 
@@ -169,13 +192,23 @@ var helper = {
     },
 
 //add parameters to url in postman specified format
-    addParametersToUrl: function(baseUrl, params) {
-        let paramString,
-            url;
+    addParametersToUrl: function(baseUrl, params, types) {
+        let paramToReplace,
+            paramToBeReplaced,
+            url = baseUrl,
+            value,
+            type;
 
         for(var param in params) {
-            paramString = '{' + param + '}';
-            url = baseUrl.replace(paramString, ':'+ param);
+          paramToReplace = param;
+          value = params[param].default || params[param].example;
+          if(params[param].type[0] !== 'string' && params[param].type[0] !== 'boolean' && params[param].type[0] !== 'integer') {
+            type = params[param].type[0];
+            value = types[type].default || types[type].example || value;
+          }
+          value && (paramToReplace = `${param}=${value}/`);
+          paramToBeReplaced = '{' + param + '}';
+          url = url.replace(paramToBeReplaced, ':'+ paramToReplace);
         }
 
         return url;
@@ -183,16 +216,19 @@ var helper = {
 
 //converts raml resources to postman folders
     convertResources: function(baseUrl, res, globalParameters) {
-        let folder = new SDK.ItemGroup(),
-            types = createTypesObject(globalParameters.types),
-            url;
+        var folder = new SDK.ItemGroup(),
+            url,
+            returnedFolder;
 
-        url = '{{' + baseUrl.key + '}}' + helper.addParametersToUrl(res.displayName, res.uriParameters);
+        url = '{{' + baseUrl.key + '}}' + helper.addParametersToUrl(res.displayName, res.uriParameters, globalParameters.types);
         res.displayName && ( folder.name = res.displayName );
         res.methods && res.methods.forEach( function (method) {
-            folder.items.add(helper.convertMethod(method, url, globalParameters, types));
+            folder.items.add(helper.convertMethod(method, url, globalParameters));
         });
-        res.resources && folder.items.add(helper.convertResources(res.resources, globalParameters));
+
+        res.resources && res.resources.forEach( function (resource) {
+            folder.items.add(helper.convertResources(baseUrl, resource, globalParameters));
+        });
 
         return folder;
     }

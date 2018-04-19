@@ -1,0 +1,141 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'lodash',
+1 verbose cli   '-g',
+1 verbose cli   '--save' ]
+2 info using npm@3.10.10
+3 info using node@v6.12.2
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readGlobalPackageData
+7 silly fetchPackageMetaData lodash
+8 silly fetchNamedPackageData lodash
+9 silly mapToRegistry name lodash
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'lodash',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   escapedName: 'lodash',
+12 silly mapToRegistry   name: 'lodash',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri https://registry.npmjs.org/lodash
+14 verbose request uri https://registry.npmjs.org/lodash
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 6:18:31 PM
+17 verbose request using bearer token for auth
+18 verbose request id 7cf83fc39f03deb1
+19 verbose etag "5acfde34-2b6d9"
+20 verbose lastModified Thu, 12 Apr 2018 22:31:16 GMT
+21 http request GET https://registry.npmjs.org/lodash
+22 http 304 https://registry.npmjs.org/lodash
+23 verbose headers { date: 'Tue, 17 Apr 2018 12:48:31 GMT',
+23 verbose headers   via: '1.1 varnish',
+23 verbose headers   'cache-control': 'max-age=300',
+23 verbose headers   etag: '"5acfde34-2b6d9"',
+23 verbose headers   age: '6418',
+23 verbose headers   connection: 'keep-alive',
+23 verbose headers   'x-served-by': 'cache-bom18226-BOM',
+23 verbose headers   'x-cache': 'HIT',
+23 verbose headers   'x-cache-hits': '192',
+23 verbose headers   'x-timer': 'S1523969311.452419,VS0,VE0',
+23 verbose headers   vary: 'Accept-Encoding, Accept' }
+24 silly get cb [ 304,
+24 silly get   { date: 'Tue, 17 Apr 2018 12:48:31 GMT',
+24 silly get     via: '1.1 varnish',
+24 silly get     'cache-control': 'max-age=300',
+24 silly get     etag: '"5acfde34-2b6d9"',
+24 silly get     age: '6418',
+24 silly get     connection: 'keep-alive',
+24 silly get     'x-served-by': 'cache-bom18226-BOM',
+24 silly get     'x-cache': 'HIT',
+24 silly get     'x-cache-hits': '192',
+24 silly get     'x-timer': 'S1523969311.452419,VS0,VE0',
+24 silly get     vary: 'Accept-Encoding, Accept' } ]
+25 verbose etag https://registry.npmjs.org/lodash from cache
+26 verbose get saving lodash to /Users/postman/.npm/registry.npmjs.org/lodash/.cache.json
+27 verbose correctMkdir /Users/postman/.npm correctMkdir not in flight; initializing
+28 silly install normalizeTree
+29 silly loadCurrentTree Finishing
+30 silly loadIdealTree Starting
+31 silly install loadIdealTree
+32 silly cloneCurrentTree Starting
+33 silly install cloneCurrentTreeToIdealTree
+34 silly cloneCurrentTree Finishing
+35 silly loadShrinkwrap Starting
+36 silly install loadShrinkwrap
+37 silly loadShrinkwrap Finishing
+38 silly loadAllDepsIntoIdealTree Starting
+39 silly install loadAllDepsIntoIdealTree
+40 silly resolveWithNewModule lodash@4.17.5 checking installable status
+41 silly cache add args [ 'lodash', null ]
+42 verbose cache add spec lodash
+43 silly cache add parsed spec Result {
+43 silly cache add   raw: 'lodash',
+43 silly cache add   scope: null,
+43 silly cache add   escapedName: 'lodash',
+43 silly cache add   name: 'lodash',
+43 silly cache add   rawSpec: '',
+43 silly cache add   spec: 'latest',
+43 silly cache add   type: 'tag' }
+44 silly addNamed lodash@latest
+45 verbose addNamed "latest" is being treated as a dist-tag for lodash
+46 info addNameTag [ 'lodash', 'latest' ]
+47 silly mapToRegistry name lodash
+48 silly mapToRegistry using default registry
+49 silly mapToRegistry registry https://registry.npmjs.org/
+50 silly mapToRegistry data Result {
+50 silly mapToRegistry   raw: 'lodash',
+50 silly mapToRegistry   scope: null,
+50 silly mapToRegistry   escapedName: 'lodash',
+50 silly mapToRegistry   name: 'lodash',
+50 silly mapToRegistry   rawSpec: '',
+50 silly mapToRegistry   spec: 'latest',
+50 silly mapToRegistry   type: 'tag' }
+51 silly mapToRegistry uri https://registry.npmjs.org/lodash
+52 verbose addNameTag registry:https://registry.npmjs.org/lodash not in flight; fetching
+53 verbose get https://registry.npmjs.org/lodash not expired, no request
+54 silly addNameTag next cb for lodash with tag latest
+55 silly addNamed lodash@4.17.5
+56 verbose addNamed "4.17.5" is a plain semver version for lodash
+57 silly cache afterAdd lodash@4.17.5
+58 verbose afterAdd /Users/postman/.npm/lodash/4.17.5/package/package.json not in flight; writing
+59 verbose correctMkdir /Users/postman/.npm correctMkdir not in flight; initializing
+60 verbose afterAdd /Users/postman/.npm/lodash/4.17.5/package/package.json written
+61 silly loadAllDepsIntoIdealTree Finishing
+62 silly loadIdealTree Finishing
+63 silly currentTree lib
+64 silly idealTree lib
+64 silly idealTree └── lodash@4.17.5
+65 silly generateActionsToTake Starting
+66 silly install generateActionsToTake
+67 warn checkPermissions Missing write access to /usr/local/lib/node_modules
+68 silly rollbackFailedOptional Starting
+69 silly rollbackFailedOptional Finishing
+70 silly runTopLevelLifecycles Finishing
+71 silly install printInstalled
+72 verbose stack Error: EACCES: permission denied, access '/usr/local/lib/node_modules'
+72 verbose stack     at Error (native)
+73 verbose cwd /Users/postman/raml2postman/test/integration
+74 error Darwin 16.7.0
+75 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "lodash" "-g" "--save"
+76 error node v6.12.2
+77 error npm  v3.10.10
+78 error path /usr/local/lib/node_modules
+79 error code EACCES
+80 error errno -13
+81 error syscall access
+82 error Error: EACCES: permission denied, access '/usr/local/lib/node_modules'
+82 error     at Error (native)
+82 error  { Error: EACCES: permission denied, access '/usr/local/lib/node_modules'
+82 error     at Error (native)
+82 error   errno: -13,
+82 error   code: 'EACCES',
+82 error   syscall: 'access',
+82 error   path: '/usr/local/lib/node_modules' }
+83 error Please try running this command again as root/Administrator.
+84 verbose exit [ -13, true ]
