@@ -33,7 +33,7 @@ describe('Validate raml', function() {
                             value: Silver`,
             valid = converter.validate(ramlString);
 
-        expect(valid).to.be.equal(true);
+        expect(valid.result).to.be.equal(true);
     });
 
     it('should not validate invalid raml string', function() {
@@ -65,7 +65,7 @@ describe('Validate raml', function() {
                             value: Silver`,
             valid = converter.validate(ramlString);
 
-        expect(valid).to.be.equal(false);
+        expect(valid.result).to.be.equal(false);
     });
 });
 
