@@ -1,6 +1,6 @@
 const expect = require('chai').expect,
-    converter = require('./../../convert.js'),
-    helper = require('./../../helper.js'),
+    converter = require('./../../lib/convert.js'),
+    helper = require('./../../lib/helper.js'),
     SDK = require('postman-collection');
 
 /* global describe, it */
@@ -69,13 +69,13 @@ describe('Validate raml', function() {
     });
 });
 
-describe('helper functions' , function() {
+describe('helper functions', function() {
     it('should convert raml header into postman header', function() {
         let ramlHeader =
                       { name: 'UserID',
                           displayName: 'UserID',
                           typePropertyKind: 'TYPE_EXPRESSION',
-                          type: [ 'string' ],
+                          type: ['string'],
                           example: 'SWED-123',
                           required: true,
                           description: 'the identifier for the user that posts a new organisation',
@@ -84,7 +84,7 @@ describe('helper functions' , function() {
                          { value: 'SWED-123',
                              strict: true,
                              name: null,
-                             structuredValue: 'SWED-123' }},
+                             structuredValue: 'SWED-123' } },
             postmanHeader = helper.convertHeader(ramlHeader);
 
         expect(postmanHeader).to.be.an('object');
@@ -100,7 +100,7 @@ describe('helper functions' , function() {
                     name: 'param',
                     displayName: 'param',
                     typePropertyKind: 'TYPE_EXPRESSION',
-                    type: [ 'string' ],
+                    type: ['string'],
                     required: true,
                     __METADATA__: { calculated: true, primitiveValuesMeta: [Object] }
                 }
@@ -138,7 +138,7 @@ describe('helper functions' , function() {
                 per_page:
                  { name: 'per_page',
                      displayName: 'per_page',
-                     type: [ 'integer' ],
+                     type: ['integer'],
                      example: 10
                  }
             },
@@ -164,43 +164,52 @@ describe('helper functions' , function() {
     });
 
     it('should disable optional headers', function() {
-      let ramlHeader = {
-              name: 'UserID',
-              displayName: 'UserID',
-              type: [ 'string' ],
-              example: 'SWED-123',
-              required: false
+        let ramlHeader = {
+                name: 'UserID',
+                displayName: 'UserID',
+                type: ['string'],
+                example: 'SWED-123',
+                required: false
             },
-          types = {},
-          postmanHeader = helper.convertHeader(ramlHeader, types);
+            types = {},
+            postmanHeader = helper.convertHeader(ramlHeader, types);
 
-          expect(SDK.Header.isHeader(postmanHeader)).to.be.true;
-          expect(postmanHeader.disabled).to.be.true;
-      });
+        expect(SDK.Header.isHeader(postmanHeader)).to.be.true;
+        expect(postmanHeader.disabled).to.be.true;
+    });
 
     it('should generate postman security schemes', function() {
-      let securedBy = 'oauth_1_0',
-        securitySchemes = {
-              basic:
-               { name: 'basic',
-                 type: 'Basic Authentication',
-                 description: 'This is basic security scheme' },
-              digest:
-               { name: 'digest',
-                 type: 'Digest Authentication',
-                 description: 'This is a digest security scheme' },
-              oauth_1_0:
-                { name: 'oauth_1_0',
-                 type: 'OAuth 1.0',
-                 description: 'OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.\n',
-                 settings:
-                  { requestTokenUri: 'https://api.mysampleapi.com/1/oauth/request_token',
-                    authorizationUri: 'https://api.mysampleapi.com/1/oauth/authorize',
-                    tokenCredentialsUri: 'https://api.mysampleapi.com/1/oauth/access_token',
-                    signatures: [Object] } } },
-          postmanSecurityScheme = helper.convertSecurityScheme(securedBy, securitySchemes);
+        let securedBy = 'oauth_1_0',
+            securitySchemes = {
+                basic:
+                 {
+                     name: 'basic',
+                     type: 'Basic Authentication',
+                     description: 'This is basic security scheme'
+                 },
+                digest:
+                 {
+                     name: 'digest',
+                     type: 'Digest Authentication',
+                     description: 'This is a digest security scheme'
+                 },
+                oauth_1_0:
+                  {
+                      name: 'oauth_1_0',
+                      type: 'OAuth 1.0',
+                      description: 'OAuth 1.0 continues to be supported for all API requests\n',
+                      settings:
+                      {
+                          requestTokenUri: 'https://api.mysampleapi.com/1/oauth/request_token',
+                          authorizationUri: 'https://api.mysampleapi.com/1/oauth/authorize',
+                          tokenCredentialsUri: 'https://api.mysampleapi.com/1/oauth/access_token',
+                          signatures: [Object]
+                      }
+                  }
+            },
+            postmanSecurityScheme = helper.convertSecurityScheme(securedBy, securitySchemes);
 
-          expect(postmanSecurityScheme.type).to.equal('oauth1');
+        expect(postmanSecurityScheme.type).to.equal('oauth1');
     });
 
     it('should generate postman body', function() {
@@ -209,8 +218,8 @@ describe('helper functions' , function() {
                     name: 'application/json',
                     displayName: 'application/json',
                     typePropertyKind: 'TYPE_EXPRESSION',
-                    type: [ 'Invoice' ],
-                    example: { amount: '1221,', vendorName: 'vendor' },
+                    type: ['Invoice'],
+                    example: { amount: '1221,', vendorName: 'vendor' }
                 }
             },
             types = {
@@ -218,8 +227,8 @@ describe('helper functions' , function() {
                     name: 'Invoice',
                     displayName: 'Invoice',
                     typePropertyKind: 'TYPE_EXPRESSION',
-                    type: [ 'object' ],
-                    properties: { amount: { type: 'number'}, vendorName: {type: 'string'} }
+                    type: ['object'],
+                    properties: { amount: { type: 'number' }, vendorName: { type: 'string' } }
                 }
             },
             expectedBody = { amount: '1221,', vendorName: 'vendor' },

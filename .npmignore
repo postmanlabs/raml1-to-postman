@@ -1,3 +1,18 @@
+### NPM Specific: Disregard recursive project files
+### ===============================================
+/.jscsrc
+/.editorconfig
+/.gitmodules
+/.jshintrc
+/.jshintignore
+/.jsbeautifyrc
+/.gitignore
+/test/
+/scripts/
+
+### Borrowed from .gitignore
+### ========================
+
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
@@ -5,6 +20,26 @@
 
 ## Directory-based project format:
 .idea/
+# if you remove the above rule, at least ignore the following:
+
+# User-specific stuff:
+# .idea/workspace.xml
+# .idea/tasks.xml
+# .idea/dictionaries
+
+# Sensitive or high-churn files:
+# .idea/dataSources.ids
+# .idea/dataSources.xml
+# .idea/sqlDataSources.xml
+# .idea/dynamic.xml
+# .idea/uiDesigner.xml
+
+# Gradle:
+# .idea/gradle.xml
+# .idea/libraries
+
+# Mongo Explorer plugin:
+# .idea/mongoSettings.xml
 
 ## File-based project format:
 *.ipr
