@@ -6,4 +6,5 @@ pipelines:
         script:
           - npm install -d --loglevel error;
           - mkdir -p .tmp;
+          - node -v
           - npm test
