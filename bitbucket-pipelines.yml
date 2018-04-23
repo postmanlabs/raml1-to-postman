@@ -2,7 +2,7 @@ pipelines:
   default:
     - step:
         name: Build and test
-        mage: node:8.9.4
+        image: node:8.9.4
         script:
           - npm install -d --loglevel error;
           - mkdir -p .tmp;
