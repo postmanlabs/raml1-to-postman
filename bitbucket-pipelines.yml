@@ -1,0 +1,10 @@
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script:
+          - npm install n -g
+          - n 6.12.2
+          - npm install
+          - npm test
