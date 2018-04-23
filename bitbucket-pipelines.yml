@@ -1,10 +1,9 @@
 pipelines:
   default:
     - step:
-        caches:
-          - node
+        name: Build and test
+        mage: node:8.9.4
         script:
-          - npm install n@6.12.2 -g
-          - n 6.12.2
-          - npm install
+          - npm install -d --loglevel error;
+          - mkdir -p .tmp;
           - npm test
