@@ -22,7 +22,7 @@ This module exposes two function `convert()` and `validate()`
 
 ### Convert
 
-Convert function sanitizes the inputs, overrides options with the default ones if not provided and return the code snippet in the desired format.
+Convert function converts the raml string into a postman collection.
 
 It requires 1 mandatory parameter:
 
@@ -47,8 +47,10 @@ collection = convert(ramlString);
 ### Validate
 
 This function is used to check whether or not this converter can be used for the given input. The input is a raml string. A valid raml string begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
-`#%RAML 1.0
-title: My API`
+```javascript
+#%RAML 1.0
+title: My API
+```
 
 The result is an object: {result: true/false, reason: 'string'}.
 
@@ -66,7 +68,7 @@ This version of converter does not handle the following:
 
 ### Resources
 
-* Raml 1.0 official documentation (https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md#oauth-10)
+* Raml 1.0 official documentation (https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md)
 
 ## Running the tests
 
