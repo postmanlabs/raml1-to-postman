@@ -3,6 +3,16 @@
   "version": "1.0.0",
   "description": "Converts raml 1.0 files to postman v2 collection",
   "main": "index.js",
+  "com_postman_plugin": {
+    "plugin_type": "importer",
+    "name": "raml 1.0 to postman",
+    "source_format": "RAML1.0",
+    "source_format_name": "RAML 1.0",
+    "sample_input": {
+      "type": "file",
+      "data": "./test/fixtures/ramlSpecBasic.raml"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git://bitbucket.org/urvashi94/raml2postman.git"
@@ -16,26 +26,26 @@
   "author": "Postman Labs <help@getpostman.com>",
   "license": "ISC",
   "dependencies": {
-    "json-schema-faker": "0.4.7",
+    "json-schema-faker": "^0.4.7",
     "postman-collection": "3.0.7",
-    "raml-1-parser": "1.1.40"
+    "raml-1-parser": "^1.1.40"
   },
   "devDependencies": {
-    "async": "2.6.0",
-    "chai": "4.1.2",
-    "colors": "1.2.1",
+    "async": "^2.6.0",
+    "chai": "^4.1.2",
+    "colors": "^1.2.1",
     "dependency-check": "3.1.0",
-    "eslint": "4.19.1",
-    "eslint-plugin-jsdoc": "3.6.3",
-    "eslint-plugin-mocha": "5.0.0",
-    "eslint-plugin-security": "1.4.0",
-    "istanbul": "0.4.5",
+    "eslint": "^4.19.1",
+    "eslint-plugin-jsdoc": "^3.6.3",
+    "eslint-plugin-mocha": "^5.0.0",
+    "eslint-plugin-security": "^1.4.0",
+    "istanbul": "^0.4.5",
     "lodash": "4.17.5",
-    "mocha": "5.0.5",
+    "mocha": "^5.0.5",
     "nsp": "2.8.1",
     "parse-gitignore": "0.4.0",
-    "pretty-ms": "3.1.0",
-    "recursive-readdir": "2.2.2",
-    "shelljs": "0.8.1"
+    "pretty-ms": "^3.1.0",
+    "recursive-readdir": "^2.2.2",
+    "shelljs": "^0.8.1"
   }
 }
