@@ -9,8 +9,8 @@
     "source_format": "RAML1.0",
     "source_format_name": "RAML 1.0",
     "sample_input": {
-      "type": "file",
-      "data": "./test/fixtures/ramlSpecBasic.raml"
+      "type": "string",
+      "data": "#%RAML 1.0\ntitle: Simple raml API\nmediaType: application/json \ndescription: This is a simple raml API. \nversion: v3 \nbaseUri: https://api.BasicRamlAPI.com/{version} \nsecuritySchemes: \n  basic: \n    type: Basic Authentication \n    description: This is basic security scheme \n  digest: \n    type: Digest Authentication \n    description: This is a digest security scheme \n  oauth_1_0: \n    description: | \n      OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred. \n    type: OAuth 1.0 \n    settings: \n      requestTokenUri: https://api.mysampleapi.com/1/oauth/request_token \n      authorizationUri: https://api.mysampleapi.com/1/oauth/authorize \n      tokenCredentialsUri: https://api.mysampleapi.com/1/oauth/access_token \n      signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ] \nsecuredBy: oauth_1_0 \n/search: \n  get: \n    responses: \n        201: \n          body: \n            application/json: \n              properties: \n                groupName: \n                  default: groupName example \n                deptCode: \n                  type: number \n                  default: 12345 \n          headers: \n            Location: \n              example: /invoices/45612 \n            Header: \n              example: Bangalore \n  post: \n    securedBy: [digest] \n    body: \n      properties: \n        firstname: string \n        lastname: string \n        age: number \n      example: \n        firstname: someName \n        lastname: someLastName \n        age: 10 \n    headers: \n      myHeader: \n        example: headerExample \n      SomeOtherHeader: \n        example: OtherExample"
     }
   },
   "repository": {
