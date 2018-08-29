@@ -27,8 +27,8 @@
   "license": "ISC",
   "dependencies": {
     "json-schema-faker": "0.4.7",
-    "postman-collection": "3.0.7",
-    "raml-1-parser": "1.1.40"
+    "postman-collection": "3.2.0",
+    "raml-1-parser": "1.1.47"
   },
   "devDependencies": {
     "async": "2.6.0",
