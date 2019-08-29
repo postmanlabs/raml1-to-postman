@@ -1,11 +1,17 @@
-# @postmanlabs/raml2postmanConverter
 
-This module is used to convert raml 1.0 to Postman Collection v2.
+![postman icon](https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/postman-logo%2Btext-320x132.png) 
+
+*Supercharge your API workflow.*  
+*Modern software is built on APIs. Postman helps you develop APIs faster.*
+
+# RAML 1.0 to Postman Collection Converter
+
+This module is used to convert raml 1.0 API schema to Postman Collection v2.
 
 ## Getting Started
  To get a copy on your local machine
 ```bash
-$ git clone git@bitbucket.org:postmanlabs/raml2postmanConverter.git
+$ git clone git@github.com:postmanlabs/raml2postman.git
 ```
 
 

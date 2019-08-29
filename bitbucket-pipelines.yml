@@ -1,9 +1,0 @@
-pipelines:
-  default:
-    - step:
-        name: Build and test
-        image: node:8.9.4
-        script:
-          - npm install -d --loglevel error;
-          - mkdir -p .tmp;
-          - npm test
