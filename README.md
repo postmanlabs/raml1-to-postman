@@ -6,12 +6,12 @@
 
 # RAML 1.0 to Postman Collection Converter
 
-This module is used to convert raml 1.0 API schema to Postman Collection v2.
+This module is used to convert RAML 1.0 API schema to Postman Collection v2.
 
 ## Getting Started
  To get a copy on your local machine
 ```bash
-$ git clone git@github.com:postmanlabs/raml2postman.git
+$ git clone git@github.com:postmanlabs/raml1-to-postman.git
 ```
 
 
@@ -28,11 +28,11 @@ This module exposes two function `convert()` and `validate()`
 
 ### Convert
 
-Convert function converts the raml string into a postman collection.
+Convert function converts the RAML string into a postman collection.
 
 It requires 1 mandatory parameter:
 
-* `ramlString` - string in a valid raml 1.0 format.
+* `ramlString` - string in a valid RAML 1.0 format.
 
 #### Example
 ```javascript
@@ -52,7 +52,7 @@ collection = convert(ramlString);
 
 ### Validate
 
-This function is used to check whether or not this converter can be used for the given input. The input is a raml string. A valid raml string begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
+This function is used to check whether or not this converter can be used for the given input. The input is a RAML string. A valid RAML string begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
 ```javascript
 #%RAML 1.0
 title: My API

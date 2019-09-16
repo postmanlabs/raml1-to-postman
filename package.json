@@ -1,7 +1,7 @@
 {
   "name": "raml1-to-postman",
   "version": "1.0.0",
-  "description": "Converts raml 1.0 files to postman v2 collection",
+  "description": "Converts RAML 1.0 files to postman v2 collection",
   "main": "index.js",
   "com_postman_plugin": {
     "plugin_type": "importer",
