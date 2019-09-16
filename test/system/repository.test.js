@@ -27,7 +27,7 @@ describe('project repository', function () {
       it('must have valid name, description and author', function () {
         expect(json.name).to.equal('raml1-to-postman');
         expect(json.description)
-          .to.equal('Converts raml 1.0 files to postman v2 collection');
+          .to.equal('Converts RAML 1.0 files to postman v2 collection');
         expect(json.author).to.equal('Postman Labs <help@getpostman.com>');
         expect(json.license).to.equal('Apache-2.0');
       });
