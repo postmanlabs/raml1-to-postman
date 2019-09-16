@@ -3,36 +3,36 @@ require('shelljs/global');
 require('colors');
 
 const async = require('async'),
-    ESLintCLIEngine = require('eslint').CLIEngine,
+  ESLintCLIEngine = require('eslint').CLIEngine,
 
-    LINT_SOURCE_DIRS = [
-        './lib/convert.js',
-        './lib/helper.js',
-        './test/**/*.js'
-    ];
+  LINT_SOURCE_DIRS = [
+    './lib/convert.js',
+    './lib/helper.js',
+    './test/**/*.js'
+  ];
 
 module.exports = function (exit) {
-    // banner line
-    console.info('\nLinting files using eslint...'.yellow.bold);
+  // banner line
+  console.info('\nLinting files using eslint...'.yellow.bold);
 
-    async.waterfall([
-        // execute the CLI engine
-        function (next) {
-            next(null, (new ESLintCLIEngine()).executeOnFiles(LINT_SOURCE_DIRS));
-        },
+  async.waterfall([
+    // execute the CLI engine
+    function (next) {
+      next(null, (new ESLintCLIEngine()).executeOnFiles(LINT_SOURCE_DIRS));
+    },
 
-        // output results
-        function (report, next) {
-            const errorReport = ESLintCLIEngine.getErrorResults(report.results);
+    // output results
+    function (report, next) {
+      const errorReport = ESLintCLIEngine.getErrorResults(report.results);
 
-            // log the result to CLI
-            console.info(ESLintCLIEngine.getFormatter()(report.results));
-            // log the success of the parser if it has no errors
-            (errorReport && !errorReport.length) && console.info('eslint ok!'.green);
-            // ensure that the exit code is non zero in case there was an error
-            next(Number(errorReport && errorReport.length) || 0);
-        }
-    ], exit);
+      // log the result to CLI
+      console.info(ESLintCLIEngine.getFormatter()(report.results));
+      // log the success of the parser if it has no errors
+      (errorReport && !errorReport.length) && console.info('eslint ok!'.green);
+      // ensure that the exit code is non zero in case there was an error
+      next(Number(errorReport && errorReport.length) || 0);
+    }
+  ], exit);
 };
 
 // ensure we run this script exports if this is a direct stdin.tty run

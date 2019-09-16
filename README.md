@@ -1,11 +1,17 @@
-# @postmanlabs/raml2postmanConverter
 
-This module is used to convert raml 1.0 to Postman Collection v2.
+![postman icon](https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/postman-logo%2Btext-320x132.png) 
+
+*Supercharge your API workflow.*  
+*Modern software is built on APIs. Postman helps you develop APIs faster.*
+
+# RAML 1.0 to Postman Collection Converter &nbsp; [![Build Status](https://travis-ci.com/postmanlabs/postman-code-generators.svg?branch=master)](https://travis-ci.com/postmanlabs/code-generators)
+
+This module is used to convert RAML 1.0 API schema to Postman Collection v2.
 
 ## Getting Started
  To get a copy on your local machine
 ```bash
-$ git clone git@bitbucket.org:postmanlabs/raml2postmanConverter.git
+$ git clone git@github.com:postmanlabs/raml1-to-postman.git
 ```
 
 
@@ -22,11 +28,11 @@ This module exposes two function `convert()` and `validate()`
 
 ### Convert
 
-Convert function converts the raml string into a postman collection.
+Convert function converts the RAML string into a postman collection.
 
 It requires 1 mandatory parameter:
 
-* `ramlString` - string in a valid raml 1.0 format.
+* `ramlString` - string in a valid RAML 1.0 format.
 
 #### Example
 ```javascript
@@ -46,7 +52,7 @@ collection = convert(ramlString);
 
 ### Validate
 
-This function is used to check whether or not this converter can be used for the given input. The input is a raml string. A valid raml string begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
+This function is used to check whether or not this converter can be used for the given input. The input is a RAML string. A valid RAML string begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
 ```javascript
 #%RAML 1.0
 title: My API
