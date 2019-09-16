@@ -4,7 +4,7 @@
 *Supercharge your API workflow.*  
 *Modern software is built on APIs. Postman helps you develop APIs faster.*
 
-# RAML 1.0 to Postman Collection Converter
+# RAML 1.0 to Postman Collection Converter &nbsp; [![Build Status](https://travis-ci.com/postmanlabs/postman-code-generators.svg?branch=master)](https://travis-ci.com/postmanlabs/code-generators)
 
 This module is used to convert RAML 1.0 API schema to Postman Collection v2.
 
