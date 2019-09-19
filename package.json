@@ -28,6 +28,7 @@
   "homepage": "https://github.com/postmanlabs/raml1-to-postman",
   "dependencies": {
     "json-schema-faker": "0.4.7",
+    "lodash": "4.17.15",
     "postman-collection": "3.5.3",
     "raml-1-parser": "1.1.47"
   },
