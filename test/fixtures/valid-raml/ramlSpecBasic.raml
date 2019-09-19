@@ -21,36 +21,37 @@ securitySchemes:
       tokenCredentialsUri: https://api.mysampleapi.com/1/oauth/access_token
       signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ]
 securedBy: oauth_1_0
-/search:
-  get:
-    responses:
-        201:
-          body:
-            application/json:
-              properties:
-                groupName:
-                  default: groupName example
-                deptCode:
-                  type: number
-                  default: 12345
-          headers:
-            Location:
-              example: /invoices/45612
-            Header:
-              example: Bangalore
-  post:
-    securedBy: [digest]
-    body:
-      properties:
-        firstname: string
-        lastname: string
-        age: number
-      example:
-        firstname: someName
-        lastname: someLastName
-        age: 10
-    headers:
-      myHeader:
-        example: headerExample
-      SomeOtherHeader:
-        example: OtherExample
+/users:
+  /search:
+    get:
+      responses:
+          201:
+            body:
+              application/json:
+                properties:
+                  groupName:
+                    default: groupName example
+                  deptCode:
+                    type: number
+                    default: 12345
+            headers:
+              Location:
+                example: /invoices/45612
+              Header:
+                example: Bangalore
+    post:
+      securedBy: [digest]
+      body:
+        properties:
+          firstname: string
+          lastname: string
+          age: number
+        example:
+          firstname: someName
+          lastname: someLastName
+          age: 10
+      headers:
+        myHeader:
+          example: headerExample
+        SomeOtherHeader:
+          example: OtherExample
