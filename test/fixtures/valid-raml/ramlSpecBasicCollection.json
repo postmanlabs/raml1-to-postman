@@ -26,7 +26,11 @@
             "url": "{{baseUrl}}/search",
             "method": "get",
             "auth": {
-              "type": "oauth1"
+              "type": "oauth1",
+              "description": {
+                "content": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.\n",
+                "type": "text/plain"
+              }
             }
           }
         },
@@ -55,7 +59,11 @@
               "raw": "{\"firstname\":\"someName\",\"lastname\":\"someLastName\",\"age\":10}"
             },
             "auth": {
-              "type": "digest"
+              "type": "digest",
+              "description": {
+                "content": "This is a digest security scheme",
+                "type": "text/plain"
+              }
             }
           }
         }
@@ -72,10 +80,10 @@
       "key": "baseUrl"
     }
   ],
-  "description": "This is a simple raml API.",
   "info": {
     "name": "Simple raml API",
     "version": "v3",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "This is a simple raml API."
   }
 }
