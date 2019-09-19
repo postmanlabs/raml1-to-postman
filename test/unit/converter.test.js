@@ -1,71 +1,35 @@
 const expect = require('chai').expect,
+  fs = require('fs'),
   converter = require('./../../lib/convert.js'),
   helper = require('./../../lib/helper.js'),
-  SDK = require('postman-collection');
+  SDK = require('postman-collection'),
+  VALID_RAML_PATH = './test/fixtures/valid-raml/validRaml.raml',
+  INVALID_NO_TITLE_PATH = './test/fixtures/invalid-raml/invalidNoTitle.raml',
+  INVALID_VERSION_PATH = './test/fixtures/invalid-raml/invalidVersion.raml';
 
 /* global describe, it */
 describe('Validate raml', function() {
   it('should validate valid raml string', function() {
-    let ramlString = `#%RAML 1.0\ntitle: API with Examples
-        description: Something
-        baseUri: www.google.com/{something}
-        types:
-          User:
-          type: object
-          properties:
-            name: string
-            lastname: string
-          example:
-            name: Bob
-        /organisation/{version}:
-          post:
-          headers:
-            UserID:
-            description: the identifier for the user that posts a new organisation
-            type: string
-            example: SWED-123 # single scalar example
-          body:
-            application/json:
-            type: Org
-            example: # single request body example
-              value: # needs to be declared since type contains 'value' property
-              name: Doe Enterprise
-              value: Silver`,
+    let ramlString = fs.readFileSync(VALID_RAML_PATH).toString(),
       valid = converter.validate(ramlString);
 
     expect(valid.result).to.be.equal(true);
   });
 
-  it('should not validate invalid raml string', function() {
-    let ramlString = `#%RAML 1.0v
-        title: API with Examples
-        description: Something
-        baseUri: www.google.com/{something}
-        types:
-          User:
-          type: object
-          properties:
-            name: string
-            lastname: string
-          example:
-            name: Bob
-        /organisation/{version}:
-          post:
-          headers:
-            UserID:
-            description: the identifier for the user that posts a new organisation
-            type: string
-            example: SWED-123 # single scalar example
-          body:
-            application/json:
-            type: Org
-            example: # single request body example
-              value: # needs to be declared since type contains 'value' property
-              name: Doe Enterprise
-              value: Silver`,
-      valid = converter.validate(ramlString);
+  describe('should not validate invalid raml string', function() {
+    it('with no title', function() {
+      let ramlString = fs.readFileSync(INVALID_NO_TITLE_PATH).toString(),
+        valid = converter.validate(ramlString);
 
-    expect(valid.result).to.be.equal(false);
+      expect(valid.result).to.be.equal(false);
+    });
+
+    it('with invalid version', function() {
+      let ramlString = fs.readFileSync(INVALID_VERSION_PATH).toString(),
+        valid = converter.validate(ramlString);
+
+      expect(valid.result).to.be.equal(false);
+    });
   });
 });
 
@@ -93,23 +57,46 @@ describe('helper functions', function() {
     expect(postmanHeader.description).to.equal('the identifier for the user that posts a new organisation');
   });
 
-  it('Should add params to url', function() {
-    let baseUrl = 'www.sampleBaseUrl.com/{param}',
-      params = {
-        param: {
-          name: 'param',
-          displayName: 'param',
-          typePropertyKind: 'TYPE_EXPRESSION',
-          type: ['string'],
-          required: true,
-          __METADATA__: { calculated: true, primitiveValuesMeta: [Object] }
-        }
-      },
-      url = helper.addParametersToUrl(baseUrl, params);
+  describe('Should add params to url', function() {
+    it('of (type: string)', function() {
+      let baseUrl = 'www.sampleBaseUrl.com/{param}',
+        params = {
+          param: {
+            name: 'param',
+            displayName: 'param',
+            typePropertyKind: 'TYPE_EXPRESSION',
+            type: ['string'],
+            example: 'domo',
+            required: true,
+            __METADATA__: { calculated: true, primitiveValuesMeta: [Object] }
+          }
+        },
+        url = helper.addParametersToUrl(baseUrl, params);
 
-    expect(url).to.be.a('string');
-    expect(url).to.equal('www.sampleBaseUrl.com/:param');
+      expect(url).to.be.a('string');
+      expect(url).to.equal('www.sampleBaseUrl.com/:param=domo/');
+    });
 
+    it('of (type: object)', function() {
+      let baseUrl = 'www.sampleBaseUrl.com/{param}',
+        params = {
+          param: {
+            name: 'param',
+            displayName: 'param',
+            typePropertyKind: 'TYPE_EXPRESSION',
+            type: ['object'],
+            required: true,
+            __METADATA__: { calculated: true, primitiveValuesMeta: [Object] }
+          }
+        },
+        types = {
+          object: {}
+        },
+        url = helper.addParametersToUrl(baseUrl, params, types);
+
+      expect(url).to.be.a('string');
+      expect(url).to.equal('www.sampleBaseUrl.com/:param');
+    });
   });
 
   it('should set info for collection', function() {
@@ -235,6 +222,5 @@ describe('helper functions', function() {
       postmanBody = helper.convertBody(ramlBody, types);
 
     expect(postmanBody).to.deep.equal(expectedBody);
-
   });
 });
