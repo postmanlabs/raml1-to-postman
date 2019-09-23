@@ -225,4 +225,42 @@ describe('helper functions', function() {
 
     expect(postmanBody).to.deep.equal(expectedBody);
   });
+
+  it('should convert baseUrl path params into postman collection variables', function() {
+    let ramlBody = {
+        version: {
+          name: 'version',
+          displayName: 'version',
+          typePropertyKind: 'TYPE_EXPRESSION',
+          type: [
+            'string'
+          ],
+          required: true,
+          enum: [
+            'v5'
+          ],
+          __METADATA__: {}
+        }
+      },
+      expectedVariables = [
+        {
+          id: 'version',
+          description: {
+            content: 'This is version of API schema.',
+            type: 'text/plain'
+          },
+          type: 'any',
+          value: 'v5'
+        },
+        {
+          id: 'baseUrl',
+          type: 'string',
+          value: 'https://amazonaws.com/{{version}}'
+        }
+      ],
+      resultVariables = helper.convertToPmCollectionVariables(ramlBody, 'baseUrl', 'https://amazonaws.com/{version}');
+
+    // Using stringify to avoid Some properties of collection sdk variable.
+    expect(JSON.stringify(resultVariables)).to.equal(JSON.stringify(expectedVariables));
+  });
 });

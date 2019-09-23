@@ -6,16 +6,37 @@
           "response": [],
           "event": [],
           "request": {
-            "url": "{{baseUrl}}/organization/:uriParam1=5/:uriParam2=example/",
+            "url": {
+              "path": [
+                "organization",
+                ":uriParam1:uriParam2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": [
+                {
+                  "key": "uriParam1",
+                  "value": "",
+                  "description": ""
+                },
+                {
+                  "key": "uriParam2",
+                  "value": "example",
+                  "description": ""
+                }
+              ]
+            },
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
               },
               {
-                "disabled": true,
                 "key": "Header1",
-                "value": "2016-02-28T16:41:41.090Z"
+                "value": "2016-02-28T16:41:41.090Z",
+                "disabled": true
               },
               {
                 "key": "Header2",
@@ -46,7 +67,37 @@
           "event": [],
           "description": "Returns an organization entity.",
           "request": {
-            "url": "{{baseUrl}}/organization/:uriParam1=5/:uriParam2=example/?param1=5&param2=param2Example",
+            "url": {
+              "path": [
+                "organization",
+                ":uriParam1:uriParam2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "param1",
+                  "value": "5"
+                },
+                {
+                  "key": "param2",
+                  "value": "param2Example"
+                }
+              ],
+              "variables": [
+                {
+                  "key": "uriParam1",
+                  "value": "",
+                  "description": ""
+                },
+                {
+                  "key": "uriParam2",
+                  "value": "",
+                  "description": ""
+                }
+              ]
+            },
             "method": "get"
           }
         }
@@ -58,8 +109,8 @@
   "event": [],
   "variable": [
     {
-      "type": "any",
-      "key": "baseUrl"
+      "type": "string",
+      "value": ""
     }
   ],
   "info": {
