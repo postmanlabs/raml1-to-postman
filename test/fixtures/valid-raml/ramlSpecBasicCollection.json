@@ -28,9 +28,9 @@
                 "url": "{{baseUrl}}/search",
                 "method": "get",
                 "auth": {
-                  "type": "oauth1",
+                  "type": "basic",
                   "description": {
-                    "content": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.\n",
+                    "content": "This is basic security scheme",
                     "type": "text/plain"
                   }
                 }
@@ -61,9 +61,9 @@
                   "raw": "{\"firstname\":\"someName\",\"lastname\":\"someLastName\",\"age\":10}"
                 },
                 "auth": {
-                  "type": "digest",
+                  "type": "basic",
                   "description": {
-                    "content": "This is a digest security scheme",
+                    "content": "This is basic security scheme",
                     "type": "text/plain"
                   }
                 }
