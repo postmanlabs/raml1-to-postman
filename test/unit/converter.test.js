@@ -57,28 +57,30 @@ describe('helper functions', function() {
     expect(postmanHeader.description).to.equal('the identifier for the user that posts a new organisation');
   });
 
-  describe('Should add params to url', function() {
+  describe('Should convert url path variables of request', function() {
     it('of (type: string)', function() {
-      let baseUrl = 'www.sampleBaseUrl.com/{param}',
+      let baseUrl = '{{baseUrl}}/hello/{param}',
         params = {
           param: {
             name: 'param',
             displayName: 'param',
             typePropertyKind: 'TYPE_EXPRESSION',
             type: ['string'],
-            example: 'domo',
+            default: 'userId',
             required: true,
             __METADATA__: { calculated: true, primitiveValuesMeta: [Object] }
           }
         },
-        url = helper.addParametersToUrl(baseUrl, params);
+        convertedUrlAndVars = helper.addParametersToUrl(baseUrl, params);
 
-      expect(url).to.be.a('string');
-      expect(url).to.equal('www.sampleBaseUrl.com/:param=domo/');
+      expect(convertedUrlAndVars.url).to.be.a('string');
+      expect(convertedUrlAndVars.url).to.equal('{{baseUrl}}/hello/:param');
+      expect(convertedUrlAndVars.variables).to.be.an('array');
+      expect(convertedUrlAndVars.variables[0].value).to.equal('userId');
     });
 
     it('of (type: object)', function() {
-      let baseUrl = 'www.sampleBaseUrl.com/{param}',
+      let baseUrl = '{{baseUrl}}/hello/{param}',
         params = {
           param: {
             name: 'param',
@@ -92,10 +94,10 @@ describe('helper functions', function() {
         types = {
           object: {}
         },
-        url = helper.addParametersToUrl(baseUrl, params, types);
+        convertedUrlAndVars = helper.addParametersToUrl(baseUrl, params, types);
 
-      expect(url).to.be.a('string');
-      expect(url).to.equal('www.sampleBaseUrl.com/:param');
+      expect(convertedUrlAndVars.url).to.be.a('string');
+      expect(convertedUrlAndVars.url).to.equal('{{baseUrl}}/hello/:param');
     });
   });
 
