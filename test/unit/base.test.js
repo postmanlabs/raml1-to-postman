@@ -120,13 +120,18 @@ describe('CONVERT FUNCTION TESTS ', function() {
       collectionJSON = conversionResult.output[0].data;
       removeId(collectionJSON);
       expect(collectionJSON).to.be.an('object');
-      expect(collectionJSON).to.deep.equal(collectionFixture);
+
+      // types used in request (url, headers and body) of first item
+      expect(collectionJSON.item[0].item[0].request).to.deep.equal(collectionFixture.item[0].item[0].request);
+
+      // types used in response body of second item
+      expect(collectionJSON.item[0].item[1].response).to.deep.equal(collectionFixture.item[0].item[1].response);
       done();
     });
   });
 
   it('The converter should convert raml spec with raml traits being used' +
-      'in different resources', function(done) {
+      'in request headers', function(done) {
     let collectionFixture = JSON.parse(fs.readFileSync(
         VALID_RAML_DIR_PATH + '/ramlSpecTraitsCollection.json'
       ).toString()),
@@ -144,7 +149,11 @@ describe('CONVERT FUNCTION TESTS ', function() {
       collectionJSON = conversionResult.output[0].data;
       removeId(collectionJSON);
       expect(collectionJSON).to.be.an('object');
-      expect(collectionJSON).to.deep.equal(collectionFixture);
+
+      // traits used in headers of a request
+      expect(collectionJSON.item[0].item[0].request.header).to.deep.equal(
+        collectionFixture.item[0].item[0].request.header
+      );
       done();
     });
   });
@@ -168,7 +177,19 @@ describe('CONVERT FUNCTION TESTS ', function() {
       collectionJSON = conversionResult.output[0].data;
       removeId(collectionJSON);
       expect(collectionJSON).to.be.an('object');
-      expect(collectionJSON).to.deep.equal(collectionFixture);
+
+      // types used in request (headers and body) of first item
+      expect(collectionJSON.item[0].item[0].request.header).to.deep.equal(
+        collectionFixture.item[0].item[0].request.header
+      );
+      expect(collectionJSON.item[0].item[0].request.body).to.deep.equal(
+        collectionFixture.item[0].item[0].request.body
+      );
+
+      // types used in response body of second item
+      expect(collectionJSON.item[0].item[1].response[0].body).to.deep.equal(
+        collectionFixture.item[0].item[1].response[0].body
+      );
       done();
     });
   });
