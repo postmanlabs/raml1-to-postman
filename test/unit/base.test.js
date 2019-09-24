@@ -77,7 +77,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     });
   });
 
-  it('The converter should convert basic raml spec to postman collection' +
+  it('The converter should convert basic raml spec to postman collection ' +
       'with proper headers, body, responses and security schemes', function(done) {
     let collectionFixture = JSON.parse(fs.readFileSync(
         VALID_RAML_DIR_PATH + '/ramlSpecBasicCollection.json'
@@ -101,7 +101,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     });
   });
 
-  it('The converter should convert raml spec with raml types being used' +
+  it('The converter should convert raml spec with raml types being used ' +
       'in headers, body, query parameters and uri parameters', function(done) {
     let collectionFixture = JSON.parse(fs.readFileSync(
         VALID_RAML_DIR_PATH + '/ramlSpecTypesCollection.json'
@@ -130,7 +130,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     });
   });
 
-  it('The converter should convert raml spec with raml traits being used' +
+  it('The converter should convert raml spec with raml traits being used ' +
       'in request headers', function(done) {
     let collectionFixture = JSON.parse(fs.readFileSync(
         VALID_RAML_DIR_PATH + '/ramlSpecTraitsCollection.json'
@@ -158,7 +158,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     });
   });
 
-  it('The converter should convert raml spec with examples being used' +
+  it('The converter should convert raml spec with examples being used ' +
       'in different resources', function(done) {
     let collectionFixture = JSON.parse(fs.readFileSync(
         VALID_RAML_DIR_PATH + '/ramlSpecExamplesCollection.json'
@@ -190,6 +190,30 @@ describe('CONVERT FUNCTION TESTS ', function() {
       expect(collectionJSON.item[0].item[1].response[0].body).to.deep.equal(
         collectionFixture.item[0].item[1].response[0].body
       );
+      done();
+    });
+  });
+
+  it('The converter should convert raml spec to postman collection ' +
+      'with proper naming and description of request and folders', function(done) {
+    let collectionFixture = JSON.parse(fs.readFileSync(
+        VALID_RAML_DIR_PATH + '/ramlSpecNameAndDescCollection.json'
+      ).toString()),
+      collectionJSON;
+
+    Converter.convert({
+      type: 'file',
+      data: VALID_RAML_DIR_PATH + '/ramlSpecNameAndDesc.raml'
+    }, null, (err, conversionResult) => {
+      expect(err).to.be.null;
+      expect(conversionResult.result).to.equal(true);
+      expect(conversionResult.output.length).to.equal(1);
+      expect(conversionResult.output[0].type).to.equal('collection');
+
+      collectionJSON = conversionResult.output[0].data;
+      removeId(collectionJSON);
+      expect(collectionJSON).to.be.an('object');
+      expect(collectionJSON).to.deep.equal(collectionFixture);
       done();
     });
   });
