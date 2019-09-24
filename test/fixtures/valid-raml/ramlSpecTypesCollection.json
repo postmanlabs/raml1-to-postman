@@ -5,6 +5,7 @@
         {
           "response": [],
           "event": [],
+          "name": "/organization/:uriParam1:uriParam2",
           "request": {
             "url": {
               "path": [
@@ -47,7 +48,7 @@
                 "value": "header3Example"
               }
             ],
-            "method": "post",
+            "method": "POST",
             "body": {
               "mode": "raw",
               "raw": "{\"name\":\"Doe Enterprise\",\"value\":\"Silver\"}"
@@ -65,7 +66,7 @@
             }
           ],
           "event": [],
-          "description": "Returns an organization entity.",
+          "name": "/organization/:uriParam1:uriParam2",
           "request": {
             "url": {
               "path": [
@@ -93,12 +94,13 @@
                 },
                 {
                   "key": "uriParam2",
-                  "value": "",
+                  "value": "example",
                   "description": ""
                 }
               ]
             },
-            "method": "get"
+            "method": "GET",
+            "description": "Returns an organization entity."
           }
         }
       ],
@@ -117,6 +119,6 @@
     "name": "Types raml API",
     "version": "",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": ""
+    "description": "# Description\n\n\n\n# Documentation\n\n"
   }
 }
