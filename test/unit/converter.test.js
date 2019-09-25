@@ -104,7 +104,6 @@ describe('helper functions', function() {
   it('should set info for collection', function() {
     let info = {
         title: 'My sample api',
-        documentation: 'This is the documentation.',
         description: 'This is the description.',
         version: '1.1'
       },
@@ -113,8 +112,19 @@ describe('helper functions', function() {
 
     expect(modified_collection.name).to.equal('My sample api');
     expect(modified_collection.version).to.equal('1.1');
-    expect(modified_collection.description).to.equal('This is the documentation.This is the description.');
+    expect(modified_collection.description).to.equal('This is the description.');
+  });
 
+  it('should convert RAML documentation to postman description', function() {
+    let documentation = [{
+        title: 'Home',
+        content: 'This does support **Markdown**'
+      }],
+      description = 'This is the description.',
+      convertedDescription = helper.convertDescription(description, documentation);
+
+    expect(convertedDescription).to.equal('# Description\n\nThis is the description.\n\n' +
+      '# Documentation\n\n## Home\n\nThis does support **Markdown**\n\n');
   });
 
   it('should add query parameters to url', function() {
