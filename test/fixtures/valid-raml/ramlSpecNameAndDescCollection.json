@@ -1,0 +1,76 @@
+{
+  "item": [
+    {
+      "item": [
+        {
+          "response": [],
+          "event": [],
+          "name": "/users",
+          "request": {
+            "url": {
+              "path": [
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": []
+            },
+            "method": "GET",
+            "description": "Description of /users GET req"
+          }
+        }
+      ],
+      "event": [],
+      "name": "Folder named /users"
+    },
+    {
+      "item": [
+        {
+          "response": [],
+          "event": [],
+          "name": "GET req of /admins",
+          "request": {
+            "url": {
+              "path": [
+                "users",
+                "teams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": []
+            },
+            "method": "GET"
+          }
+        }
+      ],
+      "event": [],
+      "name": "/teams",
+      "description": "Description of Folder named /teams"
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "This is version of API schema.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v5"
+    },
+    {
+      "type": "string",
+      "value": "https://name.me/{{version}}"
+    }
+  ],
+  "info": {
+    "name": "The Naming And Description One",
+    "version": "v5",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": ""
+  }
+}

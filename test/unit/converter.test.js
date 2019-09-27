@@ -57,28 +57,30 @@ describe('helper functions', function() {
     expect(postmanHeader.description).to.equal('the identifier for the user that posts a new organisation');
   });
 
-  describe('Should add params to url', function() {
+  describe('Should convert url path variables of request', function() {
     it('of (type: string)', function() {
-      let baseUrl = 'www.sampleBaseUrl.com/{param}',
+      let baseUrl = '{{baseUrl}}/hello/{param}',
         params = {
           param: {
             name: 'param',
             displayName: 'param',
             typePropertyKind: 'TYPE_EXPRESSION',
             type: ['string'],
-            example: 'domo',
+            default: 'userId',
             required: true,
             __METADATA__: { calculated: true, primitiveValuesMeta: [Object] }
           }
         },
-        url = helper.addParametersToUrl(baseUrl, params);
+        convertedUrlAndVars = helper.addParametersToUrl(baseUrl, params);
 
-      expect(url).to.be.a('string');
-      expect(url).to.equal('www.sampleBaseUrl.com/:param=domo/');
+      expect(convertedUrlAndVars.url).to.be.a('string');
+      expect(convertedUrlAndVars.url).to.equal('{{baseUrl}}/hello/:param');
+      expect(convertedUrlAndVars.variables).to.be.an('array');
+      expect(convertedUrlAndVars.variables[0].value).to.equal('userId');
     });
 
     it('of (type: object)', function() {
-      let baseUrl = 'www.sampleBaseUrl.com/{param}',
+      let baseUrl = '{{baseUrl}}/hello/{param}',
         params = {
           param: {
             name: 'param',
@@ -92,17 +94,16 @@ describe('helper functions', function() {
         types = {
           object: {}
         },
-        url = helper.addParametersToUrl(baseUrl, params, types);
+        convertedUrlAndVars = helper.addParametersToUrl(baseUrl, params, types);
 
-      expect(url).to.be.a('string');
-      expect(url).to.equal('www.sampleBaseUrl.com/:param');
+      expect(convertedUrlAndVars.url).to.be.a('string');
+      expect(convertedUrlAndVars.url).to.equal('{{baseUrl}}/hello/:param');
     });
   });
 
   it('should set info for collection', function() {
     let info = {
         title: 'My sample api',
-        documentation: 'This is the documentation.',
         description: 'This is the description.',
         version: '1.1'
       },
@@ -111,8 +112,19 @@ describe('helper functions', function() {
 
     expect(modified_collection.name).to.equal('My sample api');
     expect(modified_collection.version).to.equal('1.1');
-    expect(modified_collection.description).to.equal('This is the documentation.This is the description.');
+    expect(modified_collection.description).to.equal('This is the description.');
+  });
 
+  it('should convert RAML documentation to postman description', function() {
+    let documentation = [{
+        title: 'Home',
+        content: 'This does support **Markdown**'
+      }],
+      description = 'This is the description.',
+      convertedDescription = helper.convertDescription(description, documentation);
+
+    expect(convertedDescription).to.equal('# Description\n\nThis is the description.\n\n' +
+      '# Documentation\n\n## Home\n\nThis does support **Markdown**\n\n');
   });
 
   it('should add query parameters to url', function() {
@@ -222,5 +234,43 @@ describe('helper functions', function() {
       postmanBody = helper.convertBody(ramlBody, types);
 
     expect(postmanBody).to.deep.equal(expectedBody);
+  });
+
+  it('should convert baseUrl path params into postman collection variables', function() {
+    let ramlBody = {
+        version: {
+          name: 'version',
+          displayName: 'version',
+          typePropertyKind: 'TYPE_EXPRESSION',
+          type: [
+            'string'
+          ],
+          required: true,
+          enum: [
+            'v5'
+          ],
+          __METADATA__: {}
+        }
+      },
+      expectedVariables = [
+        {
+          id: 'version',
+          description: {
+            content: 'This is version of API schema.',
+            type: 'text/plain'
+          },
+          type: 'any',
+          value: 'v5'
+        },
+        {
+          id: 'baseUrl',
+          type: 'string',
+          value: 'https://amazonaws.com/{{version}}'
+        }
+      ],
+      resultVariables = helper.convertToPmCollectionVariables(ramlBody, 'baseUrl', 'https://amazonaws.com/{version}');
+
+    // Using stringify to avoid Some properties of collection sdk variable.
+    expect(JSON.stringify(resultVariables)).to.equal(JSON.stringify(expectedVariables));
   });
 });

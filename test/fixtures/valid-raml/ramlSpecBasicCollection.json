@@ -24,9 +24,20 @@
                 }
               ],
               "event": [],
+              "name": "/users/search",
               "request": {
-                "url": "{{baseUrl}}/search",
-                "method": "get",
+                "url": {
+                  "path": [
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variables": []
+                },
+                "method": "GET",
                 "auth": {
                   "type": "basic",
                   "description": {
@@ -39,8 +50,19 @@
             {
               "response": [],
               "event": [],
+              "name": "/users/search",
               "request": {
-                "url": "{{baseUrl}}/search",
+                "url": {
+                  "path": [
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variables": []
+                },
                 "header": [
                   {
                     "key": "Content-Type",
@@ -55,7 +77,7 @@
                     "value": "OtherExample"
                   }
                 ],
-                "method": "post",
+                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\"firstname\":\"someName\",\"lastname\":\"someLastName\",\"age\":10}"
@@ -81,9 +103,16 @@
   "event": [],
   "variable": [
     {
+      "description": {
+        "content": "This is version of API schema.",
+        "type": "text/plain"
+      },
       "type": "any",
-      "value": "https://api.BasicRamlAPI.com/:version",
-      "key": "baseUrl"
+      "value": "v3"
+    },
+    {
+      "type": "string",
+      "value": "https://api.BasicRamlAPI.com/{{version}}"
     }
   ],
   "info": {
