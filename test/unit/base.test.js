@@ -122,10 +122,14 @@ describe('CONVERT FUNCTION TESTS ', function() {
       expect(collectionJSON).to.be.an('object');
 
       // types used in request (url, headers and body) of first item
-      expect(collectionJSON.item[0].item[0].request).to.deep.equal(collectionFixture.item[0].item[0].request);
+      expect(collectionJSON.item[0].item[0].item[0].request).to.deep.equal(
+        collectionFixture.item[0].item[0].item[0].request
+      );
 
       // types used in response body of second item
-      expect(collectionJSON.item[0].item[1].response).to.deep.equal(collectionFixture.item[0].item[1].response);
+      expect(collectionJSON.item[0].item[0].item[1].response).to.deep.equal(
+        collectionFixture.item[0].item[0].item[1].response
+      );
       done();
     });
   });
@@ -151,8 +155,8 @@ describe('CONVERT FUNCTION TESTS ', function() {
       expect(collectionJSON).to.be.an('object');
 
       // traits used in headers of a request
-      expect(collectionJSON.item[0].item[0].request.header).to.deep.equal(
-        collectionFixture.item[0].item[0].request.header
+      expect(collectionJSON.item[0].request.header).to.deep.equal(
+        collectionFixture.item[0].request.header
       );
       done();
     });

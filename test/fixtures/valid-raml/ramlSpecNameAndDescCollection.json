@@ -1,6 +1,11 @@
 {
   "item": [
     {
+      "name": "Folder named /users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
           "response": [],
@@ -22,10 +27,14 @@
           }
         }
       ],
-      "event": [],
-      "name": "Folder named /users"
+      "event": []
     },
     {
+      "name": "teams",
+      "description": {
+        "content": "Description of Folder named /teams",
+        "type": "text/plain"
+      },
       "item": [
         {
           "response": [],
@@ -34,7 +43,6 @@
           "request": {
             "url": {
               "path": [
-                "users",
                 "teams"
               ],
               "host": [
@@ -47,9 +55,7 @@
           }
         }
       ],
-      "event": [],
-      "name": "/teams",
-      "description": "Description of Folder named /teams"
+      "event": []
     }
   ],
   "event": [],

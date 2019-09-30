@@ -1,111 +1,125 @@
 {
   "item": [
     {
+      "name": "organization",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
-          "response": [],
-          "event": [],
-          "name": "/organization/:uriParam1:uriParam2",
-          "request": {
-            "url": {
-              "path": [
-                "organization",
-                ":uriParam1:uriParam2"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variables": [
-                {
-                  "key": "uriParam1",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "key": "uriParam2",
-                  "value": "example",
-                  "description": ""
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Header1",
-                "value": "2016-02-28T16:41:41.090Z",
-                "disabled": true
-              },
-              {
-                "key": "Header2",
-                "value": "header2Example"
-              },
-              {
-                "key": "Header3",
-                "value": "header3Example"
-              }
-            ],
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\"name\":\"Doe Enterprise\",\"value\":\"Silver\"}"
-            }
-          }
-        },
-        {
-          "response": [
+          "name": "{uriParam1}{uriParam2}",
+          "description": {
+            "content": "",
+            "type": "text/plain"
+          },
+          "item": [
             {
-              "header": [],
-              "cookie": [],
-              "code": "201",
-              "name": "201",
-              "body": "{\"name\":\"Software Corp\",\"address\":\"35 Central Street\"}"
+              "response": [],
+              "event": [],
+              "name": "/organization/:uriParam1:uriParam2",
+              "request": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":uriParam1:uriParam2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variables": [
+                    {
+                      "key": "uriParam1",
+                      "value": "",
+                      "description": ""
+                    },
+                    {
+                      "key": "uriParam2",
+                      "value": "example",
+                      "description": ""
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Header1",
+                    "value": "2016-02-28T16:41:41.090Z",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Header2",
+                    "value": "header2Example"
+                  },
+                  {
+                    "key": "Header3",
+                    "value": "header3Example"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\":\"Doe Enterprise\",\"value\":\"Silver\"}"
+                }
+              }
+            },
+            {
+              "response": [
+                {
+                  "header": [],
+                  "cookie": [],
+                  "code": "201",
+                  "name": "201",
+                  "body": "{\"name\":\"Software Corp\",\"address\":\"35 Central Street\"}"
+                }
+              ],
+              "event": [],
+              "name": "/organization/:uriParam1:uriParam2",
+              "request": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":uriParam1:uriParam2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "param1",
+                      "value": "5"
+                    },
+                    {
+                      "key": "param2",
+                      "value": "param2Example"
+                    }
+                  ],
+                  "variables": [
+                    {
+                      "key": "uriParam1",
+                      "value": "",
+                      "description": ""
+                    },
+                    {
+                      "key": "uriParam2",
+                      "value": "example",
+                      "description": ""
+                    }
+                  ]
+                },
+                "method": "GET",
+                "description": "Returns an organization entity."
+              }
             }
           ],
-          "event": [],
-          "name": "/organization/:uriParam1:uriParam2",
-          "request": {
-            "url": {
-              "path": [
-                "organization",
-                ":uriParam1:uriParam2"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "key": "param1",
-                  "value": "5"
-                },
-                {
-                  "key": "param2",
-                  "value": "param2Example"
-                }
-              ],
-              "variables": [
-                {
-                  "key": "uriParam1",
-                  "value": "",
-                  "description": ""
-                },
-                {
-                  "key": "uriParam2",
-                  "value": "example",
-                  "description": ""
-                }
-              ]
-            },
-            "method": "GET",
-            "description": "Returns an organization entity."
-          }
+          "event": []
         }
       ],
-      "event": [],
-      "name": "/organization/{uriParam1}{uriParam2}"
+      "event": []
     }
   ],
   "event": [],
@@ -119,6 +133,6 @@
     "name": "Types raml API",
     "version": "",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "# Description\n\n\n\n# Documentation\n\n"
+    "description": ""
   }
 }
