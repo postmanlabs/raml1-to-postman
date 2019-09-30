@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: Animals and Birds
+mediaType: application/json
+description: Will check for folder structure (Made from trie)
+version: v3
+baseUri: https://animal.birds.tech/{version}
+/:
+  get:
+    displayName: GET Request at root 
+/animal/dog:
+  post:
+    displayName: Display name for POST /animal/dog
+/animal/cat:
+  put:
+    displayName: Display name for PUT /animal/dog
+/mammal:
+  /dog:
+    /bulldog:
+      description: Folder will be made as this resource has description. With name mammal/dog/bulldog as no displayName is defined.
+      get:
+        displayName: Display name for GET mammal/dog/bulldog
+        description: This is bulldog
+/birds:
+  displayName: This is Birds.
+  /parrot:
+    description: Will not be collapsed with /birds as there is description present.
+    get:
+      displayName: JUST DO IT.

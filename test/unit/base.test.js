@@ -221,6 +221,30 @@ describe('CONVERT FUNCTION TESTS ', function() {
       done();
     });
   });
+
+  it('The converter should convert raml spec to postman collection ' +
+      'with proper folder structure', function(done) {
+    let collectionFixture = JSON.parse(fs.readFileSync(
+        VALID_RAML_DIR_PATH + '/ramlSpecFolderStructureCollection.json'
+      ).toString()),
+      collectionJSON;
+
+    Converter.convert({
+      type: 'file',
+      data: VALID_RAML_DIR_PATH + '/ramlSpecFolderStructure.raml'
+    }, null, (err, conversionResult) => {
+      expect(err).to.be.null;
+      expect(conversionResult.result).to.equal(true);
+      expect(conversionResult.output.length).to.equal(1);
+      expect(conversionResult.output[0].type).to.equal('collection');
+
+      collectionJSON = conversionResult.output[0].data;
+      removeId(collectionJSON);
+      expect(collectionJSON).to.be.an('object');
+      expect(collectionJSON).to.deep.equal(collectionFixture);
+      done();
+    });
+  });
 });
 
 /* Plugin Interface Tests */
