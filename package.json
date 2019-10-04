@@ -27,7 +27,6 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/postmanlabs/raml1-to-postman",
   "dependencies": {
-    "json-schema-faker": "0.4.7",
     "lodash": "4.17.15",
     "postman-collection": "3.5.3",
     "raml-1-parser": "1.1.47"
@@ -36,7 +35,6 @@
     "async": "2.6.0",
     "chai": "4.1.2",
     "colors": "1.2.1",
-    "dependency-check": "3.1.0",
     "eslint": "4.19.1",
     "eslint-plugin-jsdoc": "3.6.3",
     "eslint-plugin-mocha": "5.0.0",
