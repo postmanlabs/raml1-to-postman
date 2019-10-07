@@ -1,12 +1,27 @@
 {
   "item": [
     {
+      "name": "organization",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
           "response": [],
           "event": [],
+          "name": "/organization",
           "request": {
-            "url": "{{baseUrl}}/organization",
+            "url": {
+              "path": [
+                "organization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": []
+            },
             "header": [
               {
                 "key": "Content-Type",
@@ -18,7 +33,7 @@
                 "description": "the identifier for the user who posts a new organization"
               }
             ],
-            "method": "post",
+            "method": "POST",
             "body": {
               "mode": "raw",
               "raw": "{\"name\":\"Doe Enterprise\",\"value\":\"Silver\"}"
@@ -36,22 +51,31 @@
             }
           ],
           "event": [],
-          "description": "Returns an organization entity.",
+          "name": "/organization",
           "request": {
-            "url": "{{baseUrl}}/organization",
-            "method": "get"
+            "url": {
+              "path": [
+                "organization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": []
+            },
+            "method": "GET",
+            "description": "Returns an organization entity."
           }
         }
       ],
-      "event": [],
-      "name": "/organization"
+      "event": []
     }
   ],
   "event": [],
   "variable": [
     {
-      "type": "any",
-      "key": "baseUrl"
+      "type": "string",
+      "value": ""
     }
   ],
   "info": {
