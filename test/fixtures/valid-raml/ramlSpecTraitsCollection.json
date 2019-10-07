@@ -18,7 +18,10 @@
         "header": [
           {
             "key": "X-Dept",
-            "value": "",
+            "value": [
+              "<string>",
+              "<string>"
+            ],
             "description": "A department code to be charged.\nMultiple of such headers are allowed.\n"
           },
           {
