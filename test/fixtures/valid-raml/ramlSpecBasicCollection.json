@@ -1,103 +1,101 @@
 {
   "item": [
     {
+      "name": "users/search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
-          "item": [
+          "response": [
             {
-              "response": [
+              "header": [
                 {
-                  "header": [
-                    {
-                      "key": "Location",
-                      "value": "/invoices/45612"
-                    },
-                    {
-                      "key": "Header",
-                      "value": "Bangalore"
-                    }
-                  ],
-                  "cookie": [],
-                  "code": "201",
-                  "name": "201",
-                  "body": "{\n  \"groupName\": \"groupName example\",\n  \"deptCode\": 12345\n}"
+                  "key": "Location",
+                  "value": "/invoices/45612"
+                },
+                {
+                  "key": "Header",
+                  "value": "Bangalore"
                 }
               ],
-              "event": [],
-              "name": "/users/search",
-              "request": {
-                "url": {
-                  "path": [
-                    "users",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variables": []
-                },
-                "method": "GET",
-                "auth": {
-                  "type": "basic",
-                  "description": {
-                    "content": "This is basic security scheme",
-                    "type": "text/plain"
-                  }
-                }
-              }
-            },
-            {
-              "response": [],
-              "event": [],
-              "name": "/users/search",
-              "request": {
-                "url": {
-                  "path": [
-                    "users",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variables": []
-                },
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "myHeader",
-                    "value": "headerExample"
-                  },
-                  {
-                    "key": "SomeOtherHeader",
-                    "value": "OtherExample"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"firstname\": \"someName\",\n  \"lastname\": \"someLastName\",\n  \"age\": 10\n}"
-                },
-                "auth": {
-                  "type": "basic",
-                  "description": {
-                    "content": "This is basic security scheme",
-                    "type": "text/plain"
-                  }
-                }
-              }
+              "cookie": [],
+              "code": "201",
+              "name": "201",
+              "body": "{\n  \"groupName\": \"groupName example\",\n  \"deptCode\": 12345\n}"
             }
           ],
           "event": [],
-          "name": "/search"
+          "name": "/users/search",
+          "request": {
+            "url": {
+              "path": [
+                "users",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": []
+            },
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "description": {
+                "content": "This is basic security scheme",
+                "type": "text/plain"
+              }
+            }
+          }
+        },
+        {
+          "response": [],
+          "event": [],
+          "name": "/users/search",
+          "request": {
+            "url": {
+              "path": [
+                "users",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "myHeader",
+                "value": "headerExample"
+              },
+              {
+                "key": "SomeOtherHeader",
+                "value": "OtherExample"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"someName\",\n  \"lastname\": \"someLastName\",\n  \"age\": 10\n}"
+            },
+            "auth": {
+              "type": "basic",
+              "description": {
+                "content": "This is basic security scheme",
+                "type": "text/plain"
+              }
+            }
+          }
         }
       ],
-      "event": [],
-      "name": "/users"
+      "event": []
     }
   ],
   "event": [],

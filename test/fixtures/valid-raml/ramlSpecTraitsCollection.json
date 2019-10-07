@@ -1,37 +1,42 @@
 {
   "item": [
     {
-      "item": [
-        {
-          "response": [],
-          "event": [],
-          "description": "The HTTP interaction will look like\n\nGET /users HTTP/1.1\nX-Dept: 18-FINANCE\nX-Dept: 200-MISC\nX-Tracker: gfr456d03ygh38s2\n",
-          "request": {
-            "url": "{{baseUrl}}/users",
-            "header": [
-              {
-                "key": "X-Dept",
-                "value": "",
-                "description": "A department code to be charged.\nMultiple of such headers are allowed.\n"
-              },
-              {
-                "key": "X-Tracker",
-                "value": "gfr456d03ygh38s2"
-              }
-            ],
-            "method": "get"
-          }
-        }
-      ],
+      "response": [],
       "event": [],
-      "name": "/users"
+      "name": "/users",
+      "request": {
+        "url": {
+          "path": [
+            "users"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variables": []
+        },
+        "header": [
+          {
+            "key": "X-Dept",
+            "value": "",
+            "description": "A department code to be charged.\nMultiple of such headers are allowed.\n"
+          },
+          {
+            "key": "X-Tracker",
+            "value": "abcdefghijklmnop",
+            "description": "A code to track API calls end to end"
+          }
+        ],
+        "method": "GET",
+        "description": "The HTTP interaction will look like\n\nGET /users HTTP/1.1\nX-Dept: 18-FINANCE\nX-Dept: 200-MISC\nX-Tracker: gfr456d03ygh38s2\n"
+      }
     }
   ],
   "event": [],
   "variable": [
     {
-      "type": "any",
-      "key": "baseUrl"
+      "type": "string",
+      "value": ""
     }
   ],
   "info": {

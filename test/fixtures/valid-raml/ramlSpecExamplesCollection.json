@@ -1,6 +1,11 @@
 {
   "item": [
     {
+      "name": "organization",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
           "response": [],
@@ -63,8 +68,7 @@
           }
         }
       ],
-      "event": [],
-      "name": "/organization"
+      "event": []
     }
   ],
   "event": [],
