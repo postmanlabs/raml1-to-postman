@@ -36,7 +36,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\"name\":\"Doe Enterprise\",\"value\":\"Silver\"}"
+              "raw": "{\n  \"name\": \"Doe Enterprise\",\n  \"value\": \"Silver\"\n}"
             }
           }
         },
@@ -47,7 +47,7 @@
               "cookie": [],
               "code": "201",
               "name": "201",
-              "body": "{\"name\":\"Acme\"}"
+              "body": "{\n  \"name\": \"Acme\"\n}"
             }
           ],
           "event": [],
