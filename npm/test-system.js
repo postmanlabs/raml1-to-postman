@@ -26,15 +26,6 @@ module.exports = function (exit) {
   async.series([
 
     /**
-     * Enforces sanity checks on installed packages via dependency-check.
-     */
-    function (next) {
-      console.log(('checking package dependencies...\n').yellow);
-
-      exec('dependency-check ./package.json --extra --no-dev --missing', next);
-    },
-
-    /**
      * Runs system tests on SPEC_SOURCE_DIR using Mocha.
      *
      */

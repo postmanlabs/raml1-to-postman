@@ -49,7 +49,7 @@ describe('helper functions', function() {
                strict: true,
                name: null,
                structuredValue: 'SWED-123' } },
-      postmanHeader = helper.convertHeader(ramlHeader);
+      postmanHeader = helper.convertHeader(ramlHeader, {});
 
     expect(postmanHeader).to.be.an('object');
     expect(postmanHeader.key).to.equal('UserID');
@@ -272,5 +272,40 @@ describe('helper functions', function() {
 
     // Using stringify to avoid Some properties of collection sdk variable.
     expect(JSON.stringify(resultVariables)).to.equal(JSON.stringify(expectedVariables));
+  });
+
+  it('should convert body with circular types', function(done) {
+    let ramlTypes = {
+        'a': {
+          'name': 'a',
+          'type': ['array'],
+          'items': 'b'
+        },
+        'b': {
+          'name': 'b',
+          'type': ['object'],
+          'properties': {
+            'c': {
+              'name': 'c',
+              'type': ['a'],
+              'required': true
+            }
+          }
+        }
+      },
+      ramlBody = {
+        'application/json': {
+          'name': 'application/json',
+          'type': [
+            'a'
+          ]
+        }
+      },
+      postmanBody = helper.convertBody(ramlBody, ramlTypes),
+      tooManyLevelsString = postmanBody[0].c[0].c[0].c[0].c[0].c.value;
+
+    expect(postmanBody).to.not.equal(null);
+    expect(tooManyLevelsString).to.equal('<Error: Too many levels of nesting to fake this schema>');
+    done();
   });
 });
