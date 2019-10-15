@@ -148,10 +148,36 @@ describe('helper functions', function() {
   });
 
   it('should construct query string', function() {
-    let queryString = '?page&per_page',
-      modifiedQueryString = helper.constructQueryString(queryString, {});
+    let queryString = {
+        'name': 'queryString',
+        'type': [
+          'madeuptype'
+        ]
+      },
+      types = {
+        'madeuptype': {
+          'type': [
+            'object'
+          ],
+          'properties': {
+            'page': {
+              'name': 'page',
+              'type': [
+                'integer'
+              ]
+            },
+            'per_page': {
+              'name': 'per_page',
+              'type': [
+                'integer'
+              ]
+            }
+          }
+        }
+      },
+      modifiedQueryString = helper.constructQueryString(queryString, types);
 
-    expect(modifiedQueryString).to.equal('?page&per_page');
+    expect(modifiedQueryString).to.equal('?page=<integer>&per_page=<integer>');
   });
 
   it('should return contentType header', function() {
