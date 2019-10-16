@@ -33,7 +33,6 @@
           "request": {
             "url": {
               "path": [
-                "",
                 "animal",
                 "dog"
               ],
@@ -59,9 +58,6 @@
           "request": {
             "url": {
               "path": [
-                "",
-                "animal",
-                "dog",
                 "animal",
                 "cat"
               ],
@@ -91,11 +87,6 @@
                   "request": {
                     "url": {
                       "path": [
-                        "",
-                        "animal",
-                        "dog",
-                        "animal",
-                        "cat",
                         "mammal",
                         "dog",
                         "bulldog"
@@ -134,14 +125,6 @@
               "request": {
                 "url": {
                   "path": [
-                    "",
-                    "animal",
-                    "dog",
-                    "animal",
-                    "cat",
-                    "mammal",
-                    "dog",
-                    "bulldog",
                     "birds",
                     "parrot"
                   ],
