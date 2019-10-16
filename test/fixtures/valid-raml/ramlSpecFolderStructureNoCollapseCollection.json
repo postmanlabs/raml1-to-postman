@@ -1,0 +1,188 @@
+{
+  "item": [
+    {
+      "item": [
+        {
+          "response": [],
+          "event": [],
+          "name": "GET Request at root",
+          "request": {
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          }
+        }
+      ],
+      "event": [],
+      "name": "/"
+    },
+    {
+      "item": [
+        {
+          "response": [],
+          "event": [],
+          "name": "Display name for POST /animal/dog",
+          "request": {
+            "url": {
+              "path": [
+                "",
+                "animal",
+                "dog"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST"
+          }
+        }
+      ],
+      "event": [],
+      "name": "/animal/dog"
+    },
+    {
+      "item": [
+        {
+          "response": [],
+          "event": [],
+          "name": "Display name for PUT /animal/dog",
+          "request": {
+            "url": {
+              "path": [
+                "",
+                "animal",
+                "dog",
+                "animal",
+                "cat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "PUT"
+          }
+        }
+      ],
+      "event": [],
+      "name": "/animal/cat"
+    },
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "item": [
+                {
+                  "response": [],
+                  "event": [],
+                  "name": "Display name for GET mammal/dog/bulldog",
+                  "request": {
+                    "url": {
+                      "path": [
+                        "",
+                        "animal",
+                        "dog",
+                        "animal",
+                        "cat",
+                        "mammal",
+                        "dog",
+                        "bulldog"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "method": "GET",
+                    "description": "This is bulldog"
+                  }
+                }
+              ],
+              "event": [],
+              "name": "/bulldog",
+              "description": "Folder will be made as this resource has description. With name mammal/dog/bulldog as no displayName is defined."
+            }
+          ],
+          "event": [],
+          "name": "/dog"
+        }
+      ],
+      "event": [],
+      "name": "/mammal"
+    },
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "response": [],
+              "event": [],
+              "name": "JUST DO IT.",
+              "request": {
+                "url": {
+                  "path": [
+                    "",
+                    "animal",
+                    "dog",
+                    "animal",
+                    "cat",
+                    "mammal",
+                    "dog",
+                    "bulldog",
+                    "birds",
+                    "parrot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET"
+              }
+            }
+          ],
+          "event": [],
+          "name": "/parrot",
+          "description": "Will not be collapsed with /birds as there is description present."
+        }
+      ],
+      "event": [],
+      "name": "This is Birds."
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "This is version of API schema.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v3"
+    },
+    {
+      "type": "string",
+      "value": "https://animal.birds.tech/{{version}}"
+    }
+  ],
+  "info": {
+    "name": "Animals and Birds",
+    "version": "v3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Will check for folder structure (Made from trie)"
+  }
+}
