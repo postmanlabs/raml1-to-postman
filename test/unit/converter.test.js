@@ -129,22 +129,42 @@ describe('helper functions', function() {
 
   it('should add query parameters to url', function() {
     let queryParams = {
-        page:
-         { name: 'page',
-           displayName: 'page',
-           example: 'hello'
-         },
-        per_page:
-         { name: 'per_page',
-           displayName: 'per_page',
-           type: ['integer'],
-           example: 10
-         }
+        page: {
+          name: 'page',
+          displayName: 'page',
+          type: ['page']
+        },
+        per_page: {
+          name: 'per_page',
+          displayName: 'per_page',
+          type: ['integer'],
+          example: 10
+        }
       },
-      modifiedUrl = helper.constructQueryStringFromQueryParams(queryParams);
+      types = {
+        'page': {
+          'type': [
+            'object'
+          ],
+          'properties': {
+            'start': {
+              'name': 'start',
+              'type': [
+                'integer'
+              ]
+            },
+            'page_size': {
+              'name': 'page_size',
+              'type': [
+                'integer'
+              ]
+            }
+          }
+        }
+      },
+      modifiedUrl = helper.constructQueryStringFromQueryParams(queryParams, types);
 
-    expect(modifiedUrl).to.equal('?page=hello&per_page=10');
-
+    expect(modifiedUrl).to.equal('?start=<integer>&page_size=<integer>&per_page=10');
   });
 
   it('should construct query string', function() {
