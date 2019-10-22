@@ -63,7 +63,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Doe Enterprise\",\n  \"value\": \"Silver\"\n}"
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"value\": \"<string>\",\n  \"lastname\": \"<string>\"\n}"
                 }
               }
             },
