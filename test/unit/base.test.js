@@ -87,7 +87,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     Converter.convert({
       type: 'file',
       data: VALID_RAML_DIR_PATH + '/ramlSpecBasic.raml'
-    }, null, (err, conversionResult) => {
+    }, {}, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output.length).to.equal(1);
@@ -111,7 +111,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     Converter.convert({
       type: 'file',
       data: VALID_RAML_DIR_PATH + '/ramlSpecTypes.raml'
-    }, null, (err, conversionResult) => {
+    }, {}, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output.length).to.equal(1);
@@ -144,7 +144,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     Converter.convert({
       type: 'file',
       data: VALID_RAML_DIR_PATH + '/ramlSpecTraits.raml'
-    }, null, (err, conversionResult) => {
+    }, {}, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output.length).to.equal(1);
@@ -172,7 +172,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     Converter.convert({
       type: 'file',
       data: VALID_RAML_DIR_PATH + '/ramlSpecExamples.raml'
-    }, null, (err, conversionResult) => {
+    }, {}, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output.length).to.equal(1);
@@ -208,7 +208,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     Converter.convert({
       type: 'file',
       data: VALID_RAML_DIR_PATH + '/ramlSpecNameAndDesc.raml'
-    }, null, (err, conversionResult) => {
+    }, {}, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output.length).to.equal(1);
@@ -232,7 +232,31 @@ describe('CONVERT FUNCTION TESTS ', function() {
     Converter.convert({
       type: 'file',
       data: VALID_RAML_DIR_PATH + '/ramlSpecFolderStructure.raml'
-    }, null, (err, conversionResult) => {
+    }, {}, (err, conversionResult) => {
+      expect(err).to.be.null;
+      expect(conversionResult.result).to.equal(true);
+      expect(conversionResult.output.length).to.equal(1);
+      expect(conversionResult.output[0].type).to.equal('collection');
+
+      collectionJSON = conversionResult.output[0].data;
+      removeId(collectionJSON);
+      expect(collectionJSON).to.be.an('object');
+      expect(collectionJSON).to.deep.equal(collectionFixture);
+      done();
+    });
+  });
+
+  it('The converter should convert raml spec to postman collection ' +
+      'with proper folder structure for an option {collapseFolder: false}', function(done) {
+    let collectionFixture = JSON.parse(fs.readFileSync(
+        VALID_RAML_DIR_PATH + '/ramlSpecFolderStructureNoCollapseCollection.json'
+      ).toString()),
+      collectionJSON;
+
+    Converter.convert({
+      type: 'file',
+      data: VALID_RAML_DIR_PATH + '/ramlSpecFolderStructure.raml'
+    }, { collapseFolders: false }, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output.length).to.equal(1);
