@@ -36,18 +36,50 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Doe Enterprise\",\n  \"value\": \"Silver\"\n}"
+              "raw": "{\n  \"name\": \"Doe Enterprise\",\n  \"value\": \"Silver\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
         {
           "response": [
             {
-              "header": [],
-              "cookie": [],
-              "code": "201",
               "name": "201",
-              "body": "{\n  \"name\": \"Acme\"\n}"
+              "originalRequest": {
+                "description": {
+                  "content": "Returns an organization entity.",
+                  "type": "text/plain"
+                },
+                "url": {
+                  "path": [
+                    "organization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": {
+                    "name": "Acme"
+                  }
+                }
+              ],
+              "body": "{\n  \"name\": \"Acme\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
             }
           ],
           "event": [],
@@ -64,7 +96,8 @@
               "variables": []
             },
             "method": "GET",
-            "description": "Returns an organization entity."
+            "description": "Returns an organization entity.",
+            "body": {}
           }
         }
       ],

@@ -10,6 +10,40 @@
         {
           "response": [
             {
+              "name": "201",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {},
+                "auth": {
+                  "description": [
+                    {
+                      "type": "any",
+                      "value": "This is basic security scheme",
+                      "key": "content"
+                    },
+                    {
+                      "type": "any",
+                      "value": "text/plain",
+                      "key": "type"
+                    }
+                  ],
+                  "type": "basic",
+                  "basic": []
+                }
+              },
+              "status": "Created",
+              "code": 201,
               "header": [
                 {
                   "key": "Location",
@@ -18,12 +52,18 @@
                 {
                   "key": "Header",
                   "value": "Bangalore"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": {
+                    "groupName": "groupName example",
+                    "deptCode": 12345
+                  }
                 }
               ],
+              "body": "{\n  \"groupName\": \"groupName example\",\n  \"deptCode\": 12345\n}",
               "cookie": [],
-              "code": "201",
-              "name": "201",
-              "body": "{\n  \"groupName\": \"groupName example\",\n  \"deptCode\": 12345\n}"
+              "_postman_previewlanguage": "json"
             }
           ],
           "event": [],
@@ -41,6 +81,7 @@
               "variables": []
             },
             "method": "GET",
+            "body": {},
             "auth": {
               "type": "basic",
               "description": {
@@ -83,7 +124,12 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstname\": \"someName\",\n  \"lastname\": \"someLastName\",\n  \"age\": 10\n}"
+              "raw": "{\n  \"firstname\": \"someName\",\n  \"lastname\": \"someLastName\",\n  \"age\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "auth": {
               "type": "basic",

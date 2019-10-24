@@ -17,7 +17,8 @@
               "query": [],
               "variable": []
             },
-            "method": "GET"
+            "method": "GET",
+            "body": {}
           }
         }
       ],
@@ -42,7 +43,8 @@
               "query": [],
               "variable": []
             },
-            "method": "POST"
+            "method": "POST",
+            "body": {}
           }
         }
       ],
@@ -67,7 +69,8 @@
               "query": [],
               "variable": []
             },
-            "method": "PUT"
+            "method": "PUT",
+            "body": {}
           }
         }
       ],
@@ -98,7 +101,8 @@
                       "variable": []
                     },
                     "method": "GET",
-                    "description": "This is bulldog"
+                    "description": "This is bulldog",
+                    "body": {}
                   }
                 }
               ],
@@ -134,7 +138,8 @@
                   "query": [],
                   "variable": []
                 },
-                "method": "GET"
+                "method": "GET",
+                "body": {}
               }
             }
           ],
