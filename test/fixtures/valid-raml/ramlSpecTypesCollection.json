@@ -31,7 +31,7 @@
                   "variables": [
                     {
                       "key": "uriParam1",
-                      "value": "",
+                      "value": 5,
                       "description": ""
                     },
                     {
@@ -101,7 +101,7 @@
                   "variables": [
                     {
                       "key": "uriParam1",
-                      "value": "",
+                      "value": 5,
                       "description": ""
                     },
                     {

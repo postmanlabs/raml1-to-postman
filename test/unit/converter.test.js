@@ -164,7 +164,7 @@ describe('helper functions', function() {
       },
       modifiedUrl = helper.constructQueryStringFromQueryParams(queryParams, types);
 
-    expect(modifiedUrl).to.equal('?start=<integer>&page_size=<integer>&per_page=10');
+    expect(modifiedUrl).to.equal('?page={"start":"<integer>","page_size":"<integer>"}&per_page=10');
   });
 
   it('should construct query string', function() {
