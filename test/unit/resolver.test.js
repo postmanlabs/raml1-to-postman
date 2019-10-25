@@ -64,8 +64,8 @@ describe('RESOLVER FUNCTION TESTS ', function() {
     expect(object_output).to.deep.include({
       type: 'object',
       properties: {
-        name: { type: 'string', default: '<string>', required: true },
-        lastname: { type: 'string', default: '<string>', required: true }
+        name: { type: 'string', default: '<string>' },
+        lastname: { type: 'string', default: '<string>' }
       }
     });
     expect(nested_object_output).to.deep.include({
@@ -74,12 +74,12 @@ describe('RESOLVER FUNCTION TESTS ', function() {
         user: {
           type: 'object',
           properties: {
-            name: { type: 'string', default: '<string>', required: true },
-            lastname: { type: 'string', default: '<string>', required: true }
+            name: { type: 'string', default: '<string>' },
+            lastname: { type: 'string', default: '<string>' }
           }
         },
-        address: { type: 'string', default: '<string>', required: false },
-        value: { type: 'string', default: '<string>', required: false }
+        address: { type: 'string', default: '<string>' },
+        value: { type: 'string', default: '<string>' }
       }
     });
     expect(array_output).to.deep.include({
@@ -89,8 +89,8 @@ describe('RESOLVER FUNCTION TESTS ', function() {
       items: {
         type: 'object',
         properties: {
-          name: { type: 'string', default: '<string>', required: true },
-          lastname: { type: 'string', default: '<string>', required: true }
+          name: { type: 'string', default: '<string>' },
+          lastname: { type: 'string', default: '<string>' }
         }
       }
     });
