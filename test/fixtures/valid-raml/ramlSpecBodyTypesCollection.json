@@ -1,0 +1,210 @@
+{
+  "item": [
+    {
+      "item": [
+        {
+          "response": [],
+          "event": [],
+          "name": "/file-content",
+          "request": {
+            "url": {
+              "path": [
+                "file-content"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "method": "POST",
+            "description": "Get the file content",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "hello",
+                  "value": "<string>"
+                },
+                {
+                  "key": "world",
+                  "value": "<number>"
+                },
+                {
+                  "key": "this",
+                  "value": "{\"is\":\"<string>\",\"object\":\"<integer>\"}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "response": [],
+          "event": [],
+          "name": "/file-content",
+          "request": {
+            "url": {
+              "path": [
+                "file-content"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ],
+            "method": "PUT",
+            "description": "Use the \"multipart-form/data\" content type to upload a file which content will become the file-content\n",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "<file>"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "event": [],
+      "name": "/file-content",
+      "description": "The file to be reproduced by the client"
+    },
+    {
+      "item": [
+        {
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "songs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in suscipit neque. Orci varius natoque \npenatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec condimentum mauris eget dictum egestas. \nMauris a metus et neque sagittis molestie. Cras aliquam ac sem ut fringilla.",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "201",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "songs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Page Title</title>\n  </head>\n  <body>\n    <h1>This is a Heading</h1>\n    <p>This is a paragraph.</p>\n  </body>\n</html>"
+                }
+              ],
+              "body": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Page Title</title>\n  </head>\n  <body>\n    <h1>This is a Heading</h1>\n    <p>This is a paragraph.</p>\n  </body>\n</html>",
+              "cookie": [],
+              "_postman_previewlanguage": "html"
+            },
+            {
+              "name": "202",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "songs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<song>\n  <title>str1234</title>\n  <artist>str1234</artist>\n</song>"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<song>\n  <title>str1234</title>\n  <artist>str1234</artist>\n</song>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "name": "/songs",
+          "request": {
+            "url": {
+              "path": [
+                "songs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "body": {}
+          }
+        }
+      ],
+      "event": [],
+      "name": "/songs"
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.body.com"
+    }
+  ],
+  "info": {
+    "name": "RAML body to PM body",
+    "version": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": ""
+  }
+}
