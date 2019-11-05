@@ -31,7 +31,8 @@
           }
         ],
         "method": "GET",
-        "description": "The HTTP interaction will look like\n\nGET /users HTTP/1.1\nX-Dept: 18-FINANCE\nX-Dept: 200-MISC\nX-Tracker: gfr456d03ygh38s2\n"
+        "description": "The HTTP interaction will look like\n\nGET /users HTTP/1.1\nX-Dept: 18-FINANCE\nX-Dept: 200-MISC\nX-Tracker: gfr456d03ygh38s2\n",
+        "body": {}
       }
     }
   ],

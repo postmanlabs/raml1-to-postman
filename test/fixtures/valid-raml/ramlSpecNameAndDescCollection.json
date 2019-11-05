@@ -23,7 +23,8 @@
               "variables": []
             },
             "method": "GET",
-            "description": "Description of /users GET req"
+            "description": "Description of /users GET req",
+            "body": {}
           }
         }
       ],
@@ -51,7 +52,8 @@
               "query": [],
               "variables": []
             },
-            "method": "GET"
+            "method": "GET",
+            "body": {}
           }
         }
       ],
