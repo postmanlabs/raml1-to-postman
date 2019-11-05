@@ -31,7 +31,7 @@
                   "variables": [
                     {
                       "key": "uriParam1",
-                      "value": "",
+                      "value": 5,
                       "description": ""
                     },
                     {
@@ -63,18 +63,61 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"value\": \"<string>\",\n  \"lastname\": \"<string>\"\n}"
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"value\": \"<string>\",\n  \"lastname\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 }
               }
             },
             {
               "response": [
                 {
-                  "header": [],
-                  "cookie": [],
-                  "code": "201",
                   "name": "201",
-                  "body": "{\n  \"name\": \"Software Corp\",\n  \"address\": \"35 Central Street\"\n}"
+                  "originalRequest": {
+                    "description": {
+                      "content": "Returns an organization entity.",
+                      "type": "text/plain"
+                    },
+                    "url": {
+                      "path": [
+                        "organization",
+                        ":uriParam1:uriParam2"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [
+                        {
+                          "key": "param1",
+                          "value": "5"
+                        },
+                        {
+                          "key": "param2",
+                          "value": "param2Example"
+                        }
+                      ],
+                      "variable": []
+                    },
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": {
+                        "name": "Software Corp",
+                        "address": "35 Central Street"
+                      }
+                    }
+                  ],
+                  "body": "{\n  \"name\": \"Software Corp\",\n  \"address\": \"35 Central Street\"\n}",
+                  "cookie": [],
+                  "_postman_previewlanguage": "json"
                 }
               ],
               "event": [],
@@ -101,7 +144,7 @@
                   "variables": [
                     {
                       "key": "uriParam1",
-                      "value": "",
+                      "value": 5,
                       "description": ""
                     },
                     {
@@ -112,7 +155,8 @@
                   ]
                 },
                 "method": "GET",
-                "description": "Returns an organization entity."
+                "description": "Returns an organization entity.",
+                "body": {}
               }
             }
           ],

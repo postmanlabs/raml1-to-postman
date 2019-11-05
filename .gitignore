@@ -15,6 +15,9 @@
 # IntelliJ
 out/
 
+#Visual Studio
+.vscode/
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 

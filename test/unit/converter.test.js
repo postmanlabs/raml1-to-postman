@@ -164,7 +164,7 @@ describe('helper functions', function() {
       },
       modifiedUrl = helper.constructQueryStringFromQueryParams(queryParams, types);
 
-    expect(modifiedUrl).to.equal('?start=<integer>&page_size=<integer>&per_page=10');
+    expect(modifiedUrl).to.equal('?page={"start":"<integer>","page_size":"<integer>"}&per_page=10');
   });
 
   it('should construct query string', function() {
@@ -198,14 +198,6 @@ describe('helper functions', function() {
       modifiedQueryString = helper.constructQueryString(queryString, types);
 
     expect(modifiedQueryString).to.equal('?page=<integer>&per_page=<integer>');
-  });
-
-  it('should return contentType header', function() {
-    let mediaType = 'application/json',
-      header = helper.getContentTypeHeader(mediaType);
-
-    expect(header.key).to.equal('Content-Type');
-    expect(header.value).to.equal('application/json');
   });
 
   it('should disable optional headers', function() {
@@ -277,7 +269,7 @@ describe('helper functions', function() {
         }
       },
       expectedBody = { amount: '1221,', vendorName: 'vendor' },
-      postmanBody = helper.convertBody(ramlBody, types);
+      postmanBody = JSON.parse(helper.convertToPmBody(ramlBody, types).body);
 
     expect(postmanBody).to.deep.equal(expectedBody);
   });
@@ -347,8 +339,8 @@ describe('helper functions', function() {
           ]
         }
       },
-      postmanBody = helper.convertBody(ramlBody, ramlTypes),
-      tooManyLevelsString = postmanBody[0].c[0].c[0].c[0].c[0].c.value;
+      postmanBody = helper.convertToPmBody(ramlBody, ramlTypes),
+      tooManyLevelsString = JSON.parse(postmanBody.body)[0].c[0].c[0].c[0].c[0].c.value;
 
     expect(postmanBody).to.not.equal(null);
     expect(tooManyLevelsString).to.equal('<Error: Too many levels of nesting to fake this schema>');
