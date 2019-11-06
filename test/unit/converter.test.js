@@ -49,7 +49,7 @@ describe('helper functions', function() {
                strict: true,
                name: null,
                structuredValue: 'SWED-123' } },
-      postmanHeader = helper.convertHeader(ramlHeader, {});
+      postmanHeader = helper.convertHeader(ramlHeader, {}, 'example');
 
     expect(postmanHeader).to.be.an('object');
     expect(postmanHeader.key).to.equal('UserID');
@@ -209,7 +209,7 @@ describe('helper functions', function() {
         required: false
       },
       types = {},
-      postmanHeader = helper.convertHeader(ramlHeader, types);
+      postmanHeader = helper.convertHeader(ramlHeader, types, 'schema');
 
     expect(SDK.Header.isHeader(postmanHeader)).to.be.true;
     expect(postmanHeader.disabled).to.be.true;
@@ -265,11 +265,11 @@ describe('helper functions', function() {
           displayName: 'Invoice',
           typePropertyKind: 'TYPE_EXPRESSION',
           type: ['object'],
-          properties: { amount: { type: 'number' }, vendorName: { type: 'string' } }
+          properties: { amount: { type: ['number'] }, vendorName: { type: ['string'] } }
         }
       },
-      expectedBody = { amount: '1221,', vendorName: 'vendor' },
-      postmanBody = JSON.parse(helper.convertToPmBody(ramlBody, types).body);
+      expectedBody = { amount: '<number>', vendorName: '<string>' },
+      postmanBody = JSON.parse(helper.convertToPmBody(ramlBody, types, { requestResolution: 'schema' }).body);
 
     expect(postmanBody).to.deep.equal(expectedBody);
   });
@@ -339,7 +339,7 @@ describe('helper functions', function() {
           ]
         }
       },
-      postmanBody = helper.convertToPmBody(ramlBody, ramlTypes),
+      postmanBody = helper.convertToPmBody(ramlBody, ramlTypes, { requestResolution: 'schema' }),
       tooManyLevelsString = JSON.parse(postmanBody.body)[0].c[0].c[0].c[0].c[0].c.value;
 
     expect(postmanBody).to.not.equal(null);

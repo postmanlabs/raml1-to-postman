@@ -15,7 +15,7 @@
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variable": []
+              "variables": []
             },
             "header": [
               {
@@ -57,7 +57,7 @@
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variable": []
+              "variables": []
             },
             "header": [
               {
@@ -183,7 +183,7 @@
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variable": []
+              "variables": []
             },
             "method": "GET",
             "body": {}
