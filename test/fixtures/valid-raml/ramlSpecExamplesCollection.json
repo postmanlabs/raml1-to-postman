@@ -29,14 +29,14 @@
               },
               {
                 "key": "UserID",
-                "value": "<string>",
+                "value": "SWED-123",
                 "description": "the identifier for the user who posts a new organization"
               }
             ],
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"value\": \"<string>\"\n}",
+              "raw": "{\n  \"name\": \"Bob\",\n  \"lastname\": \"Marley\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
