@@ -75,6 +75,46 @@ describe('CONVERT FUNCTION TESTS ', function() {
         done();
       });
     });
+
+    it('(type: folder)', function (done) {
+      var input = {
+          data: [
+            { fileName: VALID_RAML_DIR_PATH + '/ramlSpecFolder/types/user.raml' },
+            { fileName: VALID_RAML_DIR_PATH + '/ramlSpecFolder/api.raml' }
+          ],
+          type: 'folder'
+        },
+        collectionFixture = JSON.parse(fs.readFileSync(
+          VALID_RAML_DIR_PATH + '/ramlSpecFolderCollection.json'
+        ).toString()),
+        collectionJSON;
+
+      Converter.convert(input, {}, function(err, conversionResult) {
+        expect(err).to.be.null;
+        expect(conversionResult.result).to.equal(true);
+        conversionResult.output.forEach(function (element) {
+          expect(['collection', 'request', 'environment']).to.include(element.type);
+          if (element.type === 'collection') {
+            expect(element.data).to.have.property('info');
+            expect(element.data).to.have.property('item');
+          }
+          else if (element.type === 'request') {
+            expect(element.data).to.have.property('url');
+          }
+          else if (element.type === 'environment') {
+            expect(element.data).to.have.property('values');
+          }
+        });
+        expect(conversionResult.output.length).to.equal(1);
+        expect(conversionResult.output[0].type).to.equal('collection');
+
+        collectionJSON = conversionResult.output[0].data;
+        removeId(collectionJSON);
+        expect(collectionJSON).to.be.an('object');
+        expect(collectionJSON).to.deep.equal(collectionFixture);
+        done();
+      });
+    });
   });
 
   it('The converter should convert basic raml spec to postman collection ' +
