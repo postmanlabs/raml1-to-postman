@@ -114,17 +114,17 @@
               },
               {
                 "key": "myHeader",
-                "value": "<string>"
+                "value": "headerExample"
               },
               {
                 "key": "SomeOtherHeader",
-                "value": "<string>"
+                "value": "OtherExample"
               }
             ],
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstname\": \"<string>\",\n  \"lastname\": \"<string>\",\n  \"age\": \"<number>\"\n}",
+              "raw": "{\n  \"firstname\": \"someName\",\n  \"lastname\": \"someLastName\",\n  \"age\": 10\n}",
               "options": {
                 "raw": {
                   "language": "json"
