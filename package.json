@@ -28,8 +28,7 @@
   "homepage": "https://github.com/postmanlabs/raml1-to-postman",
   "dependencies": {
     "lodash": "4.17.15",
-    "postman-collection": "3.5.3",
-    "raml-1-parser": "1.1.47"
+    "postman-collection": "3.5.3"
   },
   "devDependencies": {
     "async": "2.6.0",
