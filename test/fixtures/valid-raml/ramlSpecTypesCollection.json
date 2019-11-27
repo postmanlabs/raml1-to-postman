@@ -76,11 +76,17 @@
               "response": [
                 {
                   "name": "201",
+                  "status": "Created",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"name\": \"Software Corp\",\n  \"address\": \"35 Central Street\"\n}",
+                  "cookie": [],
                   "originalRequest": {
-                    "description": {
-                      "content": "Returns an organization entity.",
-                      "type": "text/plain"
-                    },
                     "url": {
                       "path": [
                         "organization",
@@ -92,31 +98,30 @@
                       "query": [
                         {
                           "key": "param1",
-                          "value": "5"
+                          "value": 5
                         },
                         {
                           "key": "param2",
                           "value": "param2Example"
                         }
                       ],
-                      "variable": []
+                      "variables": [
+                        {
+                          "key": "uriParam1",
+                          "value": 5,
+                          "description": ""
+                        },
+                        {
+                          "key": "uriParam2",
+                          "value": "example",
+                          "description": ""
+                        }
+                      ]
                     },
                     "method": "GET",
+                    "description": "Returns an organization entity.",
                     "body": {}
                   },
-                  "status": "Created",
-                  "code": 201,
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": {
-                        "name": "Software Corp",
-                        "address": "35 Central Street"
-                      }
-                    }
-                  ],
-                  "body": "{\n  \"name\": \"Software Corp\",\n  \"address\": \"35 Central Street\"\n}",
-                  "cookie": [],
                   "_postman_previewlanguage": "json"
                 }
               ],
@@ -134,7 +139,7 @@
                   "query": [
                     {
                       "key": "param1",
-                      "value": "5"
+                      "value": 5
                     },
                     {
                       "key": "param2",

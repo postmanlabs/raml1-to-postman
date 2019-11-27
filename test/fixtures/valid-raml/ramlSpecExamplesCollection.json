@@ -49,11 +49,17 @@
           "response": [
             {
               "name": "201",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Acme\"\n}",
+              "cookie": [],
               "originalRequest": {
-                "description": {
-                  "content": "Returns an organization entity.",
-                  "type": "text/plain"
-                },
                 "url": {
                   "path": [
                     "organization"
@@ -62,23 +68,12 @@
                     "{{baseUrl}}"
                   ],
                   "query": [],
-                  "variable": []
+                  "variables": []
                 },
                 "method": "GET",
+                "description": "Returns an organization entity.",
                 "body": {}
               },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": {
-                    "name": "Acme"
-                  }
-                }
-              ],
-              "body": "{\n  \"name\": \"Acme\"\n}",
-              "cookie": [],
               "_postman_previewlanguage": "json"
             }
           ],
