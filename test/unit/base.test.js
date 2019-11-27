@@ -212,7 +212,7 @@ describe('CONVERT FUNCTION TESTS ', function() {
     Converter.convert({
       type: 'file',
       data: VALID_RAML_DIR_PATH + '/ramlSpecExamples.raml'
-    }, { requestResolution: 'example' }, (err, conversionResult) => {
+    }, { requestParametersResolution: 'example' }, (err, conversionResult) => {
       expect(err).to.be.null;
       expect(conversionResult.result).to.equal(true);
       expect(conversionResult.output.length).to.equal(1);

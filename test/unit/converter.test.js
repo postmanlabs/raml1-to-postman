@@ -269,7 +269,7 @@ describe('helper functions', function() {
   });
 
   describe('should generate postman body', function() {
-    it('for an option requestResolution set to schema', function() {
+    it('for an option requestParametersResolution set to schema', function() {
       let ramlBody = {
           'application/json': {
             name: 'application/json',
@@ -289,12 +289,14 @@ describe('helper functions', function() {
           }
         },
         expectedBody = { amount: '<number>', vendorName: '<string>' },
-        postmanBody = JSON.parse(helper.convertToPmBody(ramlBody, types, { requestResolution: 'schema' }).body);
+        postmanBody = JSON.parse(helper.convertToPmBody(
+          ramlBody, types, { requestParametersResolution: 'schema' }
+        ).body);
 
       expect(postmanBody).to.deep.equal(expectedBody);
     });
 
-    it('for an option requestResolution set to example', function() {
+    it('for an option requestParametersResolution set to example', function() {
       let ramlBody = {
           'application/json': {
             name: 'application/json',
@@ -314,7 +316,9 @@ describe('helper functions', function() {
           }
         },
         expectedBody = { amount: '1221', vendorName: 'vendor' },
-        postmanBody = JSON.parse(helper.convertToPmBody(ramlBody, types, { requestResolution: 'example' }).body);
+        postmanBody = JSON.parse(helper.convertToPmBody(
+          ramlBody, types, { requestParametersResolution: 'example' }
+        ).body);
 
       expect(postmanBody).to.deep.equal(expectedBody);
     });
@@ -385,7 +389,7 @@ describe('helper functions', function() {
           ]
         }
       },
-      postmanBody = helper.convertToPmBody(ramlBody, ramlTypes, { requestResolution: 'schema' }),
+      postmanBody = helper.convertToPmBody(ramlBody, ramlTypes, { requestParametersResolution: 'schema' }),
       tooManyLevelsString = JSON.parse(postmanBody.body)[0].c[0].c[0].c[0].c[0].c.value;
 
     expect(postmanBody).to.not.equal(null);
