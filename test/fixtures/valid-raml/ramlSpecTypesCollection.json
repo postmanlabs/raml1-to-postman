@@ -48,16 +48,16 @@
                   },
                   {
                     "key": "Header1",
-                    "value": "2016-02-28T16:41:41.090Z",
+                    "value": "<datetime>",
                     "disabled": true
                   },
                   {
                     "key": "Header2",
-                    "value": "header2Example"
+                    "value": "<string>"
                   },
                   {
                     "key": "Header3",
-                    "value": "header3Example"
+                    "value": "<string>"
                   }
                 ],
                 "method": "POST",

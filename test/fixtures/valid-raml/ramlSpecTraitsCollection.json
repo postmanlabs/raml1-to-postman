@@ -26,7 +26,7 @@
           },
           {
             "key": "X-Tracker",
-            "value": "abcdefghijklmnop",
+            "value": "<string>",
             "description": "A code to track API calls end to end"
           }
         ],

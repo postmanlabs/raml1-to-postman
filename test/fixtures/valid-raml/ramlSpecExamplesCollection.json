@@ -36,7 +36,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Doe Enterprise\",\n  \"value\": \"Silver\"\n}",
+              "raw": "{\n  \"name\": \"Bob\",\n  \"lastname\": \"Marley\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

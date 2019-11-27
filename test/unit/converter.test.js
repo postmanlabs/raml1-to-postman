@@ -35,21 +35,30 @@ describe('Validate raml', function() {
 
 describe('helper functions', function() {
   it('should convert raml header into postman header', function() {
-    let ramlHeader =
-            { name: 'UserID',
-              displayName: 'UserID',
-              typePropertyKind: 'TYPE_EXPRESSION',
-              type: ['string'],
-              example: 'SWED-123',
-              required: true,
-              description: 'the identifier for the user that posts a new organisation',
-              __METADATA__: { primitiveValuesMeta: { displayName: [Object], required: [Object] } },
-              structuredExample:
-             { value: 'SWED-123',
-               strict: true,
-               name: null,
-               structuredValue: 'SWED-123' } },
-      postmanHeader = helper.convertHeader(ramlHeader, {});
+    let ramlHeader = {
+        name: 'UserID',
+        displayName: 'UserID',
+        typePropertyKind: 'TYPE_EXPRESSION',
+        type: ['uid'],
+        required: true,
+        description: 'the identifier for the user that posts a new organisation',
+        __METADATA__: { primitiveValuesMeta: { displayName: [Object], required: [Object] } },
+        structuredExample: {
+          value: 'SWED-123',
+          strict: true,
+          name: null,
+          structuredValue: 'SWED-123'
+        }
+      },
+      types = {
+        'uid': {
+          'type': [
+            'string'
+          ],
+          'example': 'SWED-123'
+        }
+      },
+      postmanHeader = helper.convertHeader(ramlHeader, types, 'example');
 
     expect(postmanHeader).to.be.an('object');
     expect(postmanHeader.key).to.equal('UserID');
@@ -209,7 +218,7 @@ describe('helper functions', function() {
         required: false
       },
       types = {},
-      postmanHeader = helper.convertHeader(ramlHeader, types);
+      postmanHeader = helper.convertHeader(ramlHeader, types, 'schema');
 
     expect(SDK.Header.isHeader(postmanHeader)).to.be.true;
     expect(postmanHeader.disabled).to.be.true;
@@ -249,29 +258,60 @@ describe('helper functions', function() {
     expect(postmanSecurityScheme.type).to.equal('oauth1');
   });
 
-  it('should generate postman body', function() {
-    let ramlBody = {
-        'application/json': {
-          name: 'application/json',
-          displayName: 'application/json',
-          typePropertyKind: 'TYPE_EXPRESSION',
-          type: ['Invoice'],
-          example: { amount: '1221,', vendorName: 'vendor' }
-        }
-      },
-      types = {
-        Invoice: {
-          name: 'Invoice',
-          displayName: 'Invoice',
-          typePropertyKind: 'TYPE_EXPRESSION',
-          type: ['object'],
-          properties: { amount: { type: 'number' }, vendorName: { type: 'string' } }
-        }
-      },
-      expectedBody = { amount: '1221,', vendorName: 'vendor' },
-      postmanBody = JSON.parse(helper.convertToPmBody(ramlBody, types).body);
+  describe('should generate postman body', function() {
+    it('for an option requestParametersResolution set to schema', function() {
+      let ramlBody = {
+          'application/json': {
+            name: 'application/json',
+            displayName: 'application/json',
+            typePropertyKind: 'TYPE_EXPRESSION',
+            type: ['Invoice'],
+            example: { amount: '1221,', vendorName: 'vendor' }
+          }
+        },
+        types = {
+          Invoice: {
+            name: 'Invoice',
+            displayName: 'Invoice',
+            typePropertyKind: 'TYPE_EXPRESSION',
+            type: ['object'],
+            properties: { amount: { type: ['number'] }, vendorName: { type: ['string'] } }
+          }
+        },
+        expectedBody = { amount: '<number>', vendorName: '<string>' },
+        postmanBody = JSON.parse(helper.convertToPmBody(
+          ramlBody, types, { requestParametersResolution: 'schema' }
+        ).body);
 
-    expect(postmanBody).to.deep.equal(expectedBody);
+      expect(postmanBody).to.deep.equal(expectedBody);
+    });
+
+    it('for an option requestParametersResolution set to example', function() {
+      let ramlBody = {
+          'application/json': {
+            name: 'application/json',
+            displayName: 'application/json',
+            typePropertyKind: 'TYPE_EXPRESSION',
+            type: ['Invoice'],
+            example: { amount: '1221', vendorName: 'vendor' }
+          }
+        },
+        types = {
+          Invoice: {
+            name: 'Invoice',
+            displayName: 'Invoice',
+            typePropertyKind: 'TYPE_EXPRESSION',
+            type: ['object'],
+            properties: { amount: { type: ['number'] }, vendorName: { type: ['string'] } }
+          }
+        },
+        expectedBody = { amount: '1221', vendorName: 'vendor' },
+        postmanBody = JSON.parse(helper.convertToPmBody(
+          ramlBody, types, { requestParametersResolution: 'example' }
+        ).body);
+
+      expect(postmanBody).to.deep.equal(expectedBody);
+    });
   });
 
   it('should convert baseUrl path params into postman collection variables', function() {
@@ -339,7 +379,7 @@ describe('helper functions', function() {
           ]
         }
       },
-      postmanBody = helper.convertToPmBody(ramlBody, ramlTypes),
+      postmanBody = helper.convertToPmBody(ramlBody, ramlTypes, { requestParametersResolution: 'schema' }),
       tooManyLevelsString = JSON.parse(postmanBody.body)[0].c[0].c[0].c[0].c[0].c.value;
 
     expect(postmanBody).to.not.equal(null);
