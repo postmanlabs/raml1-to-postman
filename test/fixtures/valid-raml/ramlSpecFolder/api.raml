@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: Simple raml API
+baseUri: https://api.BasicRamlAPI.com
+types:
+  User: !include type.raml
+/users:
+  post:
+    body:
+      application/json:
+        type: User

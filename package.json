@@ -27,11 +27,11 @@
   "license": "Apache-2.0",
   "homepage": "https://github.com/postmanlabs/raml1-to-postman",
   "dependencies": {
+    "async": "3.1.0",
     "lodash": "4.17.15",
     "postman-collection": "3.5.3"
   },
   "devDependencies": {
-    "async": "2.6.0",
     "chai": "4.1.2",
     "colors": "1.2.1",
     "eslint": "4.19.1",

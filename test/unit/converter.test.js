@@ -1,32 +1,42 @@
 const expect = require('chai').expect,
   fs = require('fs'),
-  converter = require('./../../lib/convert.js'),
+  converter = require('../../index'),
   helper = require('./../../lib/helper.js'),
   SDK = require('postman-collection'),
-  VALID_RAML_PATH = './test/fixtures/valid-raml/validRaml.raml',
-  INVALID_NO_TITLE_PATH = './test/fixtures/invalid-raml/invalidNoTitle.raml',
+  VALID_RAML_DIR_PATH = './test/fixtures/valid-raml',
   INVALID_VERSION_PATH = './test/fixtures/invalid-raml/invalidVersion.raml';
 
 /* global describe, it */
 describe('Validate raml', function() {
   it('should validate valid raml string', function() {
-    let ramlString = fs.readFileSync(VALID_RAML_PATH).toString(),
-      valid = converter.validate(ramlString);
+    let ramlString = fs.readFileSync(VALID_RAML_DIR_PATH + '/validRaml.raml').toString(),
+      valid = converter.validate({
+        type: 'string',
+        data: ramlString
+      });
+
+    expect(valid.result).to.be.equal(true);
+  });
+
+  it('should validate folder with valid root of document', function() {
+    let valid = converter.validate({
+      type: 'folder',
+      data: [
+        { fileName: VALID_RAML_DIR_PATH + '/ramlSpecFolder/types/user.raml' },
+        { fileName: VALID_RAML_DIR_PATH + '/ramlSpecFolder/api.raml' }
+      ]
+    });
 
     expect(valid.result).to.be.equal(true);
   });
 
   describe('should not validate invalid raml string', function() {
-    it('with no title', function() {
-      let ramlString = fs.readFileSync(INVALID_NO_TITLE_PATH).toString(),
-        valid = converter.validate(ramlString);
-
-      expect(valid.result).to.be.equal(false);
-    });
-
     it('with invalid version', function() {
       let ramlString = fs.readFileSync(INVALID_VERSION_PATH).toString(),
-        valid = converter.validate(ramlString);
+        valid = converter.validate({
+          type: 'string',
+          data: ramlString
+        });
 
       expect(valid.result).to.be.equal(false);
     });
