@@ -89,20 +89,6 @@
           "response": [
             {
               "name": "200",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "songs"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "method": "GET",
-                "body": {}
-              },
               "status": "OK",
               "code": 200,
               "header": [
@@ -113,10 +99,6 @@
               ],
               "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in suscipit neque. Orci varius natoque \npenatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec condimentum mauris eget dictum egestas. \nMauris a metus et neque sagittis molestie. Cras aliquam ac sem ut fringilla.",
               "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "name": "201",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -126,25 +108,25 @@
                     "{{baseUrl}}"
                   ],
                   "query": [],
-                  "variable": []
+                  "variables": []
                 },
                 "method": "GET",
                 "body": {}
               },
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "201",
               "status": "Created",
               "code": 201,
               "header": [
                 {
                   "key": "Content-Type",
-                  "value": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Page Title</title>\n  </head>\n  <body>\n    <h1>This is a Heading</h1>\n    <p>This is a paragraph.</p>\n  </body>\n</html>"
+                  "value": "text/html"
                 }
               ],
               "body": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Page Title</title>\n  </head>\n  <body>\n    <h1>This is a Heading</h1>\n    <p>This is a paragraph.</p>\n  </body>\n</html>",
               "cookie": [],
-              "_postman_previewlanguage": "html"
-            },
-            {
-              "name": "202",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -154,21 +136,39 @@
                     "{{baseUrl}}"
                   ],
                   "query": [],
-                  "variable": []
+                  "variables": []
                 },
                 "method": "GET",
                 "body": {}
               },
+              "_postman_previewlanguage": "html"
+            },
+            {
+              "name": "202",
               "status": "Accepted",
               "code": 202,
               "header": [
                 {
                   "key": "Content-Type",
-                  "value": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<song>\n  <title>str1234</title>\n  <artist>str1234</artist>\n</song>"
+                  "value": "text/xml"
                 }
               ],
               "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<song>\n  <title>str1234</title>\n  <artist>str1234</artist>\n</song>",
               "cookie": [],
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "songs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variables": []
+                },
+                "method": "GET",
+                "body": {}
+              },
               "_postman_previewlanguage": "xml"
             }
           ],

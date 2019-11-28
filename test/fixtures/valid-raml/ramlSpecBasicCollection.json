@@ -11,37 +11,6 @@
           "response": [
             {
               "name": "201",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "users",
-                    "search"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "method": "GET",
-                "body": {},
-                "auth": {
-                  "description": [
-                    {
-                      "type": "any",
-                      "value": "This is basic security scheme",
-                      "key": "content"
-                    },
-                    {
-                      "type": "any",
-                      "value": "text/plain",
-                      "key": "type"
-                    }
-                  ],
-                  "type": "basic",
-                  "basic": []
-                }
-              },
               "status": "Created",
               "code": 201,
               "header": [
@@ -55,14 +24,33 @@
                 },
                 {
                   "key": "Content-Type",
-                  "value": {
-                    "groupName": "groupName example",
-                    "deptCode": 12345
-                  }
+                  "value": "application/json"
                 }
               ],
               "body": "{\n  \"groupName\": \"groupName example\",\n  \"deptCode\": 12345\n}",
               "cookie": [],
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variables": []
+                },
+                "method": "GET",
+                "body": {},
+                "auth": {
+                  "type": "basic",
+                  "description": {
+                    "content": "This is basic security scheme",
+                    "type": "text/plain"
+                  }
+                }
+              },
               "_postman_previewlanguage": "json"
             }
           ],

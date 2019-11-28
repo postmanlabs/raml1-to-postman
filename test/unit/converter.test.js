@@ -141,6 +141,7 @@ describe('helper functions', function() {
         page: {
           name: 'page',
           displayName: 'page',
+          description: 'sample description',
           type: ['page']
         },
         per_page: {
@@ -171,9 +172,20 @@ describe('helper functions', function() {
           }
         }
       },
-      modifiedUrl = helper.constructQueryStringFromQueryParams(queryParams, types);
+      expectedQueryParams = [
+        {
+          key: 'page',
+          value: '{\"start\":\"<integer>\",\"page_size\":\"<integer>\"}',
+          description: 'sample description'
+        },
+        {
+          key: 'per_page',
+          value: 10
+        }
+      ],
+      convertedQueryParams = helper.constructQueryStringFromQueryParams(queryParams, types);
 
-    expect(modifiedUrl).to.equal('?page={"start":"<integer>","page_size":"<integer>"}&per_page=10');
+    expect(convertedQueryParams).to.deep.equal(expectedQueryParams);
   });
 
   it('should construct query string', function() {
@@ -204,9 +216,19 @@ describe('helper functions', function() {
           }
         }
       },
-      modifiedQueryString = helper.constructQueryString(queryString, types);
+      expectedQueryParams = [
+        {
+          key: 'page',
+          value: '<integer>'
+        },
+        {
+          key: 'per_page',
+          value: '<integer>'
+        }
+      ],
+      convertedQueryParams = helper.constructQueryString(queryString, types);
 
-    expect(modifiedQueryString).to.equal('?page=<integer>&per_page=<integer>');
+    expect(convertedQueryParams).to.deep.equal(expectedQueryParams);
   });
 
   it('should disable optional headers', function() {
