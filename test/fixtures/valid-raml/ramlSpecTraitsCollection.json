@@ -1,0 +1,52 @@
+{
+  "item": [
+    {
+      "response": [],
+      "event": [],
+      "name": "/users",
+      "request": {
+        "url": {
+          "path": [
+            "users"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variables": []
+        },
+        "header": [
+          {
+            "key": "X-Dept",
+            "value": [
+              "<string>",
+              "<string>"
+            ],
+            "description": "A department code to be charged.\nMultiple of such headers are allowed.\n"
+          },
+          {
+            "key": "X-Tracker",
+            "value": "<string>",
+            "description": "A code to track API calls end to end"
+          }
+        ],
+        "method": "GET",
+        "description": "The HTTP interaction will look like\n\nGET /users HTTP/1.1\nX-Dept: 18-FINANCE\nX-Dept: 200-MISC\nX-Tracker: gfr456d03ygh38s2\n",
+        "body": {}
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": ""
+    }
+  ],
+  "info": {
+    "name": "Example with headers (Traits)",
+    "version": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": ""
+  }
+}

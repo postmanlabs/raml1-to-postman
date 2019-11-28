@@ -1,0 +1,187 @@
+{
+  "item": [
+    {
+      "name": "organization",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "name": "{uriParam1}{uriParam2}",
+          "description": {
+            "content": "",
+            "type": "text/plain"
+          },
+          "item": [
+            {
+              "response": [],
+              "event": [],
+              "name": "/organization/:uriParam1:uriParam2",
+              "request": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":uriParam1:uriParam2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variables": [
+                    {
+                      "key": "uriParam1",
+                      "value": 5,
+                      "description": ""
+                    },
+                    {
+                      "key": "uriParam2",
+                      "value": "example",
+                      "description": ""
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Header1",
+                    "value": "<datetime>",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Header2",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Header3",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"value\": \"<string>\",\n  \"lastname\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "response": [
+                {
+                  "name": "201",
+                  "status": "Created",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"name\": \"Software Corp\",\n  \"address\": \"35 Central Street\"\n}",
+                  "cookie": [],
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "organization",
+                        ":uriParam1:uriParam2"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [
+                        {
+                          "key": "param1",
+                          "value": 5
+                        },
+                        {
+                          "key": "param2",
+                          "value": "param2Example"
+                        }
+                      ],
+                      "variables": [
+                        {
+                          "key": "uriParam1",
+                          "value": 5,
+                          "description": ""
+                        },
+                        {
+                          "key": "uriParam2",
+                          "value": "example",
+                          "description": ""
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "description": "Returns an organization entity.",
+                    "body": {}
+                  },
+                  "_postman_previewlanguage": "json"
+                }
+              ],
+              "event": [],
+              "name": "/organization/:uriParam1:uriParam2",
+              "request": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":uriParam1:uriParam2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "param1",
+                      "value": 5
+                    },
+                    {
+                      "key": "param2",
+                      "value": "param2Example"
+                    }
+                  ],
+                  "variables": [
+                    {
+                      "key": "uriParam1",
+                      "value": 5,
+                      "description": ""
+                    },
+                    {
+                      "key": "uriParam2",
+                      "value": "example",
+                      "description": ""
+                    }
+                  ]
+                },
+                "method": "GET",
+                "description": "Returns an organization entity.",
+                "body": {}
+              }
+            }
+          ],
+          "event": []
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": ""
+    }
+  ],
+  "info": {
+    "name": "Types raml API",
+    "version": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": ""
+  }
+}

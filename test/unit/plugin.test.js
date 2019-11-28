@@ -1,5 +1,5 @@
 var path = '../../',
-  expect = require('expect.js'),
+  expect = require('chai').expect,
   package = require(path),
   packageJson = require(path + '/package.json');
 
@@ -23,17 +23,16 @@ describe(packageJson.name, function() {
   });
 
   it('should validate the sample input correctly', function (done) {
-  // console.log(package.validate(sampleInput).reason);
     expect(package.validate(sampleInput).result).to.equal(true);
     done();
   });
 
   it('should convert the sample input correctly', function (done) {
     package.convert(sampleInput, {}, function(err, result) {
-      expect(err).to.be(null);
+      expect(err).to.be.null;
       expect(result.result).to.equal(true);
       result.output.forEach(function (element) {
-        expect(element.type).to.be.within('collection', 'request', 'environment');
+        expect(['collection', 'request', 'environment']).to.include(element.type);
         if (element.type === 'collection') {
           expect(element.data).to.have.property('info');
           expect(element.data).to.have.property('item');

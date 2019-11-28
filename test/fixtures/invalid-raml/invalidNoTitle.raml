@@ -1,0 +1,25 @@
+#%RAML 1.0
+description: Something
+baseUri: www.google.com/{something}
+types:
+  User:
+  type: object
+  properties:
+    name: string
+    lastname: string
+  example:
+    name: Bob
+/organisation/{version}:
+  post:
+  headers:
+    UserID:
+    description: the identifier for the user that posts a new organisation
+    type: string
+    example: SWED-123 # single scalar example
+  body:
+    application/json:
+    type: Org
+    example: # single request body example
+      value: # needs to be declared since type contains 'value' property
+      name: Doe Enterprise
+      value: Silver

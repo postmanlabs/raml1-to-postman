@@ -1,0 +1,115 @@
+{
+  "item": [
+    {
+      "name": "organization",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "response": [],
+          "event": [],
+          "name": "/organization",
+          "request": {
+            "url": {
+              "path": [
+                "organization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "UserID",
+                "value": "SWED-123",
+                "description": "the identifier for the user who posts a new organization"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bob\",\n  \"lastname\": \"Marley\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "response": [
+            {
+              "name": "201",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Acme\"\n}",
+              "cookie": [],
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variables": []
+                },
+                "method": "GET",
+                "description": "Returns an organization entity.",
+                "body": {}
+              },
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "name": "/organization",
+          "request": {
+            "url": {
+              "path": [
+                "organization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variables": []
+            },
+            "method": "GET",
+            "description": "Returns an organization entity.",
+            "body": {}
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": ""
+    }
+  ],
+  "info": {
+    "name": "API with Examples",
+    "version": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": ""
+  }
+}

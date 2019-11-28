@@ -48,7 +48,7 @@ types:
       type: Age
     uriParam2:
       type: string
-      example: example
+      default: example
   post:
     headers:
       Header1?:
@@ -61,11 +61,7 @@ types:
         example: header3Example
     body:
       application/json:
-        type: Org
-        example:
-          value:
-            name: Doe Enterprise
-            value: Silver
+        type: [ Org , User | Email ]
   get:
     queryParameters:
       param1:
