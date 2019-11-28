@@ -1,11 +1,24 @@
 {
   "name": "raml1-to-postman",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Converts RAML 1.0 files to postman v2 collection",
-  "main": "index.js",
+  "homepage": "https://github.com/postmanlabs/raml1-to-postman",
+  "bugs": "https://github.com/postmanlabs/raml1-to-postman/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/postmanlabs/raml1-to-postman.git"
+  },
+  "keywords": [
+    "raml",
+    "postman",
+    "api",
+    "schema",
+    "raml1.0",
+    "raml1"
+  ],
   "com_postman_plugin": {
     "plugin_type": "importer",
-    "name": "raml 1.0 to postman",
+    "name": "RAML 1.0",
     "source_format": "RAML1.0",
     "source_format_name": "RAML 1.0",
     "sample_input": {
@@ -13,10 +26,10 @@
       "data": "#%RAML 1.0\ntitle: Simple raml API\nmediaType: application/json \ndescription: This is a simple raml API. \nversion: v3 \nbaseUri: https://api.BasicRamlAPI.com/{version} \nsecuritySchemes: \n  basic: \n    type: Basic Authentication \n    description: This is basic security scheme \n  digest: \n    type: Digest Authentication \n    description: This is a digest security scheme \n  oauth_1_0: \n    description: | \n      OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred. \n    type: OAuth 1.0 \n    settings: \n      requestTokenUri: https://api.mysampleapi.com/1/oauth/request_token \n      authorizationUri: https://api.mysampleapi.com/1/oauth/authorize \n      tokenCredentialsUri: https://api.mysampleapi.com/1/oauth/access_token \n      signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ] \nsecuredBy: oauth_1_0 \n/search: \n  get: \n    responses: \n        201: \n          body: \n            application/json: \n              properties: \n                groupName: \n                  default: groupName example \n                deptCode: \n                  type: number \n                  default: 12345 \n          headers: \n            Location: \n              example: /invoices/45612 \n            Header: \n              example: Bangalore \n  post: \n    securedBy: [digest] \n    body: \n      properties: \n        firstname: string \n        lastname: string \n        age: number \n      example: \n        firstname: someName \n        lastname: someLastName \n        age: 10 \n    headers: \n      myHeader: \n        example: headerExample \n      SomeOtherHeader: \n        example: OtherExample"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/postmanlabs/raml1-to-postman"
+  "engines": {
+    "node": ">=6"
   },
+  "main": "index.js",
   "scripts": {
     "test": "node npm/test.js",
     "test-lint": "node npm/test-lint.js",
@@ -25,7 +38,6 @@
   },
   "author": "Postman Labs <help@getpostman.com>",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/postmanlabs/raml1-to-postman",
   "dependencies": {
     "async": "3.1.0",
     "lodash": "4.17.15",
