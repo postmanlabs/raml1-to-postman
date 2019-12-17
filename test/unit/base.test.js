@@ -333,6 +333,25 @@ describe('CONVERT FUNCTION TESTS ', function() {
       done();
     });
   });
+
+  it('The converter should return valid result and reason for ' +
+      'input type:folder with multiple root files', function(done) {
+    var input = {
+      data: [
+        { fileName: VALID_RAML_DIR_PATH + '/ramlSpecFolder/types/user.raml' },
+        { fileName: VALID_RAML_DIR_PATH + '/ramlSpecFolder/api.raml' },
+        { fileName: VALID_RAML_DIR_PATH + '/ramlSpecBasic.raml' }
+      ],
+      type: 'folder'
+    };
+
+    Converter.convert(input, {}, function(err, conversionResult) {
+      expect(err).to.be.null;
+      expect(conversionResult.result).to.equal(false);
+      expect(conversionResult.reason).to.equal('Imported folder contains multiple Root of the RAML 1.0 Specs.');
+      done();
+    });
+  });
 });
 
 /* Plugin Interface Tests */
