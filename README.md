@@ -147,7 +147,8 @@ The validate function is synchronous and returns a status object which conforms 
 
 This version of converter does not handle the following yet:
 
-* Libraries, overlays and extensions.
+* Libraries, Overlays and Extensions.
+* Annotations.
 
 ### Resources
 
