@@ -1,4 +1,5 @@
-![postman icon](https://raw.githubusercontent.com/postmanlabs/postmanlabs.github.io/develop/global-artefacts/postman-logo%2Btext-320x132.png) 
+<a href="https://www.getpostman.com/"><img src="https://assets.getpostman.com/common-share/postman-logo-horizontal-320x132.png" /></a><br />
+_Manage all of your organization's APIs in Postman, with the industry's most complete API development environment._
 
 *Supercharge your API workflow.*  
 *Modern software is built on APIs. Postman helps you develop APIs faster.*
@@ -31,7 +32,7 @@ $ npm install raml1-to-postman
 
 ## Using the converter as a NodeJS module
 
-In order to use the convert in your node application, you need to import the package using `require`.
+In order to use the converter in your node application, you need to import the package using `require`.
 
 ```javascript
 var Converter = require('raml1-to-postman')
