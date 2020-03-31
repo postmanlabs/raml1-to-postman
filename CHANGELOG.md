@@ -1,3 +1,6 @@
+#### v0.1.2 (March 31, 2020)
+* Fixed default response body from object to null.
+
 #### v0.1.1 (December 20, 2019)
 * Updated flow for conversion of multiple root of document files for folder import.
 
