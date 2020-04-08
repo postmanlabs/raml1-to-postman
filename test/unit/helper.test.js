@@ -1,4 +1,5 @@
-var expect = require('chai').expect,
+var _ = require('lodash'),
+  expect = require('chai').expect,
   helper = require('../../lib/helper.js');
 
 describe('HELPER FUNCTION TESTS ', function() {
@@ -18,4 +19,33 @@ describe('HELPER FUNCTION TESTS ', function() {
     expect(convertedResponse[0].body).to.be.null;
     done();
   });
+
+  it('convertResponse function should return valid responses for multiple response with same status code',
+    function(done) {
+      var convertedResponses = helper.convertResponse({
+        '200': [
+          {
+            code: '200',
+            body: {}
+          },
+          {
+            code: '200',
+            body: {}
+          }
+        ],
+        '400': {
+          code: '400',
+          body: {}
+        }
+      }, {}, {}, {});
+
+      expect(convertedResponses).to.be.an('array');
+      expect(convertedResponses.length).to.eql(3);
+      _.forEach(convertedResponses, (convertedResponse, index) => {
+        expect(convertedResponse).to.have.any.keys('name', 'code', 'headers', 'body');
+        (index === 2) ? expect(convertedResponse.code).to.eql(400) : expect(convertedResponse.code).to.eql(200);
+        expect(convertedResponse.body).to.be.null;
+      });
+      done();
+    });
 });
