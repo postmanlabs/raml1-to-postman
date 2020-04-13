@@ -26,24 +26,32 @@ describe('HELPER FUNCTION TESTS ', function() {
         '200': [
           {
             code: '200',
+            name: 'Success 1',
             body: {}
           },
           {
             code: '200',
+            name: 'Success 2',
             body: {}
           }
         ],
         '400': {
           code: '400',
+          name: 'Failure',
           body: {}
         }
       }, {}, {}, {});
 
       expect(convertedResponses).to.be.an('array');
       expect(convertedResponses.length).to.eql(3);
-      _.forEach(convertedResponses, (convertedResponse, index) => {
+      expect(convertedResponses[0].code).to.eql(200);
+      expect(convertedResponses[0].name).to.eql('Success 1');
+      expect(convertedResponses[1].code).to.eql(200);
+      expect(convertedResponses[1].name).to.eql('Success 2');
+      expect(convertedResponses[2].code).to.eql(400);
+      expect(convertedResponses[2].name).to.eql('Failure');
+      _.forEach(convertedResponses, (convertedResponse) => {
         expect(convertedResponse).to.have.any.keys('name', 'code', 'headers', 'body');
-        (index === 2) ? expect(convertedResponse.code).to.eql(400) : expect(convertedResponse.code).to.eql(200);
         expect(convertedResponse.body).to.be.null;
       });
       done();
