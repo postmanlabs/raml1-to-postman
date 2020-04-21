@@ -1,3 +1,6 @@
+#### v0.1.3 (April 21, 2020)
+* Fixed multiple responses with same code returning example with 500 code.
+
 #### v0.1.2 (March 31, 2020)
 * Fixed default response body from object to null.
 
