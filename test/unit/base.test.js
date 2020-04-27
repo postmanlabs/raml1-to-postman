@@ -117,6 +117,60 @@ describe('CONVERT FUNCTION TESTS ', function() {
     });
   });
 
+  describe('getMetaData should return meta data for different types of inputs', function() {
+    it('(type: string)', function (done) {
+      var data = fs.readFileSync(VALID_RAML_DIR_PATH + '/validRaml.raml').toString(),
+        input = {
+          data: data,
+          type: 'string'
+        };
+
+      Converter.getMetaData(input, function(err, result) {
+        expect(err).to.be.null;
+        expect(result.result).to.equal(true);
+        expect(result.name).to.equal('API with Examples');
+        expect(result.output[0].type).to.equal('collection');
+        expect(result.output[0].name).to.equal('API with Examples');
+        done();
+      });
+    });
+
+    it('(type: file)', function (done) {
+      var input = {
+        data: VALID_RAML_DIR_PATH + '/validRaml.raml',
+        type: 'file'
+      };
+
+      Converter.getMetaData(input, function(err, result) {
+        expect(err).to.be.null;
+        expect(result.result).to.equal(true);
+        expect(result.name).to.equal('API with Examples');
+        expect(result.output[0].type).to.equal('collection');
+        expect(result.output[0].name).to.equal('API with Examples');
+        done();
+      });
+    });
+
+    it('(type: folder)', function (done) {
+      var input = {
+        data: [
+          { fileName: VALID_RAML_DIR_PATH + '/ramlSpecFolder/types/user.raml' },
+          { fileName: VALID_RAML_DIR_PATH + '/ramlSpecFolder/api.raml' }
+        ],
+        type: 'folder'
+      };
+
+      Converter.getMetaData(input, function(err, result) {
+        expect(err).to.be.null;
+        expect(result.result).to.equal(true);
+        expect(result.name).to.equal('Simple raml API');
+        expect(result.output[0].type).to.equal('collection');
+        expect(result.output[0].name).to.equal('Simple raml API');
+        done();
+      });
+    });
+  });
+
   it('The converter should convert basic raml spec to postman collection ' +
       'with proper headers, body, responses and security schemes', function(done) {
     let collectionFixture = JSON.parse(fs.readFileSync(
