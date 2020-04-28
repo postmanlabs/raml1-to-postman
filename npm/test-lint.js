@@ -6,8 +6,7 @@ const async = require('async'),
   ESLintCLIEngine = require('eslint').CLIEngine,
 
   LINT_SOURCE_DIRS = [
-    './lib/convert.js',
-    './lib/helper.js',
+    './lib/*.js',
     './test/**/*.js'
   ];
 
