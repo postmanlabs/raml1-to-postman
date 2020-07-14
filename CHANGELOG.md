@@ -1,5 +1,8 @@
+#### v0.1.5 (Jul 14, 2020)
+* Update folder import flow to work in web.
+
 #### v0.1.4 (April 28, 2020)
-* Fixed multiple responses with same code returning example with 500 code.
+* Add a function to return meta data of a spec.
 
 #### v0.1.3 (April 21, 2020)
 * Fixed multiple responses with same code returning example with 500 code.
