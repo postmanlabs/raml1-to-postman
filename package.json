@@ -42,7 +42,7 @@
     "async": "3.1.0",
     "lodash": "4.17.15",
     "path-browserify": "1.0.1",
-    "postman-collection": "3.5.3"
+    "postman-collection": "3.6.6"
   },
   "devDependencies": {
     "chai": "4.1.2",
