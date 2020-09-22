@@ -450,6 +450,19 @@ describe('CONVERT FUNCTION TESTS ', function() {
       done();
     });
   });
+
+  it('The converter should convert schema with non-referenced include statements', function (done) {
+    Converter.convert({
+      type: 'file',
+      data: VALID_RAML_DIR_PATH + '/unresolvedIncludes.raml'
+    }, {}, (err, conversionResult) => {
+      expect(err).to.be.null;
+      expect(conversionResult.result).to.equal(true);
+      expect(conversionResult.output.length).to.equal(1);
+      expect(conversionResult.output[0].type).to.equal('collection');
+      done();
+    });
+  });
 });
 
 /* Plugin Interface Tests */

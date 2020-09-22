@@ -1,0 +1,34 @@
+#%RAML 1.0
+
+title: User API
+version: 2.0
+baseUri: /api/users-api/{version}
+
+description: This API allows to query/modify and register users.
+
+types:
+  error-response: !include types/error-response/error-response.raml
+  create-user-request: !include types/create-user-request.raml
+  create-user-response: !include types/create-user-response.raml
+
+traits:
+  traceable: !include traits/traceability/traceability-headers.raml
+
+/users:
+  post:
+    is: [ traceable ]
+    description: Creates/registers a new user.
+    body:
+      application/json:
+        type: create-user-request
+    responses:
+      201:
+        description: Successfully created/registered the user.
+        body:
+          application/json:
+            type: create-user-response
+      409:
+        description: Duplicate user detected.
+        body:
+          application/json:
+            type: error-response
