@@ -1,3 +1,6 @@
+#### v0.1.6 (Oct 15, 2020)
+* Fixed type error "path must be string" when nonresolved includes are present.
+
 #### v0.1.5 (Jul 14, 2020)
 * Update folder import flow to work in web.
 
