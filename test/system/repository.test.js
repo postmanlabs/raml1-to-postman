@@ -39,26 +39,6 @@ describe('project repository', function () {
       });
     });
 
-    describe('script definitions', function () {
-      it('files must exist', function () {
-        let scriptRegex = /^node\snpm\/.*\.js/;
-
-        expect(json.scripts).to.be.ok;
-        json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-          expect(scriptRegex.test(json.scripts[scriptName])).to.equal(true);
-          expect(fs.existsSync('npm/' + scriptName + '.js')).to.be.ok;
-        });
-      });
-
-      it('must have the hashbang defined', function () {
-        json.scripts && Object.keys(json.scripts).forEach(function (scriptName) {
-          let fileContent = fs.readFileSync('npm/' + scriptName + '.js').toString();
-
-          expect(/^#!\/(bin\/bash|usr\/bin\/env\snode)[\r\n][\W\w]*$/g.test(fileContent)).to.be.ok;
-        });
-      });
-    });
-
     describe('dependencies', function () {
       it('must exist', function () {
         expect(json.dependencies).to.be.a('object');
