@@ -39,7 +39,7 @@
   "author": "Postman Labs <help@getpostman.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "async": "3.1.0",
+    "async": "3.2.2",
     "lodash": "4.17.15",
     "path-browserify": "1.0.1",
     "postman-collection": "3.5.3"
