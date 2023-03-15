@@ -168,3 +168,13 @@ node_modules
 # Test and coverage reports
 .tmp/
 .coverage/
+.nyc_output/
+
+# - Prevent config and test files from being added
+npm/
+test/
+.eslintrc
+.eslintignore
+.nycrc
+.editorconfig
+.jsdoc-config.json
