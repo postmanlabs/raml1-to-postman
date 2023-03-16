@@ -1,0 +1,37 @@
+#%RAML 1.0
+title: Example API
+
+resourceTypes:
+  collection:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      description: Get all <<resourcePathName>>, optionally filtered
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                groupName:
+                  default: groupName example
+                deptCode:
+                  type: number
+                  default: 12345
+          headers:
+            Location:
+              example: /invoices/45612
+            Header:
+              example: Bangalore
+    post:
+      description: Create a new <<resourcePathName | !singularize>>
+      headers:
+        UserID:
+          description: the identifier for the user who posts a new organization
+          type: string
+          example: SWED-123 # single scalar example
+
+/products:
+  displayName: Products related operations
+  type: collection
+  post:
+    description: Create new Essential Product
