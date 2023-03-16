@@ -463,6 +463,36 @@ describe('CONVERT FUNCTION TESTS ', function() {
       done();
     });
   });
+
+  it('The converter should convert schema with resourceTypes defined correctly', function (done) {
+    Converter.convert({
+      type: 'file',
+      data: VALID_RAML_DIR_PATH + '/resourceTypes.raml'
+    }, {}, (err, conversionResult) => {
+      expect(err).to.be.null;
+      expect(conversionResult.result).to.equal(true);
+      expect(conversionResult.output.length).to.equal(1);
+      expect(conversionResult.output[0].type).to.equal('collection');
+
+      collectionJSON = conversionResult.output[0].data;
+      removeId(collectionJSON);
+      expect(collectionJSON).to.be.an('object');
+
+      // types used in request (headers and body) of first item
+      expect(collectionJSON.item[0].item).to.have.lengthOf(2);
+      expect(collectionJSON.item[0].item[0].name).to.eql('/products');
+      expect(collectionJSON.item[0].item[0].request.method).to.eql('GET');
+      expect(collectionJSON.item[0].item[0].response).to.have.lengthOf(1);
+      expect(collectionJSON.item[0].item[0].response[0].code).to.eql(200);
+      expect(collectionJSON.item[0].item[0].response[0].header).to.have.lengthOf(3);
+      expect(collectionJSON.item[0].item[0].response[0].body).to.be.not.empty;
+
+      expect(collectionJSON.item[0].item[1].name).to.eql('/products');
+      expect(collectionJSON.item[0].item[1].request.method).to.eql('POST');
+      expect(collectionJSON.item[0].item[1].response).to.have.lengthOf(0);
+      done();
+    });
+  });
 });
 
 /* Plugin Interface Tests */
