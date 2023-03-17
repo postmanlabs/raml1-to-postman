@@ -34,7 +34,8 @@
     "test": "node npm/test.js",
     "test-lint": "node npm/test-lint.js",
     "test-system": "node npm/test-system.js",
-    "test-unit": "node npm/test-unit.js"
+    "test-unit": "node npm/test-unit.js",
+    "release": "./npm/release.sh"
   },
   "author": "Postman Labs <help@getpostman.com>",
   "license": "Apache-2.0",
