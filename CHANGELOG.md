@@ -1,3 +1,8 @@
+# RAML 1.0 to Postman Changelog
+
+#### v0.1.7 (March 17, 2023)
+* Added support for resource types.
+
 #### v0.1.6 (Oct 15, 2020)
 * Fixed type error "path must be string" when nonresolved includes are present.
 
