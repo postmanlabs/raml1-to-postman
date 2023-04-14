@@ -532,6 +532,33 @@ describe('CONVERT FUNCTION TESTS ', function() {
       done();
     });
   });
+
+  it('should convert schema with with unresolved securitySchemes', function (done) {
+    Converter.convert({
+      type: 'file',
+      data: VALID_RAML_DIR_PATH + '/unresolvedSecuritySchemes.raml'
+    }, {}, (err, conversionResult) => {
+      expect(err).to.be.null;
+      expect(conversionResult.result).to.equal(true);
+      expect(conversionResult.output.length).to.equal(1);
+      expect(conversionResult.output[0].type).to.equal('collection');
+
+      collectionJSON = conversionResult.output[0].data;
+      removeId(collectionJSON);
+      expect(collectionJSON).to.be.an('object');
+
+      // Check if valid number of request exist
+      expect(collectionJSON.item[0]).to.have.property('item').an('array').length(2);
+
+      // Request should not have auth defined
+      expect(collectionJSON.item[0].item[0]).to.have.property('request');
+      expect(collectionJSON.item[0].item[0].request).to.not.have.property('auth');
+
+      expect(collectionJSON.item[0].item[1]).to.have.property('request');
+      expect(collectionJSON.item[0].item[1].request).to.not.have.property('auth');
+      done();
+    });
+  });
 });
 
 /* Plugin Interface Tests */
