@@ -16,7 +16,6 @@ jobs:
       (contains(github.event.pull_request.head.ref, 'release/') || contains(github.event.pull_request.head.ref, 'hotfix/'))
     permissions:
       contents: write
-      pull-requests: write
 
     steps:
       - name: Extract version from branch name (for release branches)
@@ -45,15 +44,3 @@ jobs:
           name: ${{ env.RELEASE_VERSION }}
           draft: false
           prerelease: false
-
-      - name: Merge master into develop branch
-        uses: thomaseizinger/create-pull-request@1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          head: master
-          base: develop
-          title: Merge master into develop branch
-          body: |
-            This PR merges the master branch back into develop.
-            This happens to ensure that the updates that happened on the release branch, i.e. CHANGELOG and manifest updates are also present on the develop branch.
