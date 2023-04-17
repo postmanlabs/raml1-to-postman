@@ -1,5 +1,22 @@
 # RAML 1.0 to Postman Changelog
 
+## [Unreleased]
+
+### Added
+
+-   GitHub Actions for Release management.
+
+### Changed
+
+-   Bumped up minimum Node version to 12.
+-   Unit tests now run on Node versions 12, 16 and 18.
+
+### Fixed
+
+-   Fixed an issue where conversion failed if securitySchemes are not resolved.
+
+## Previous Releases
+Newer releases follow the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
 #### v0.1.7 (March 17, 2023)
 * Added support for resource types.
 
@@ -26,3 +43,5 @@
 
 #### v0.0.1 (November 28, 2019)
 * Base release
+
+[Unreleased]: https://github.com/postmanlabs/raml1-to-postman/compare/0.1.7...HEAD

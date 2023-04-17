@@ -1,4 +1,4 @@
-# Contributing to @postmanlabs/read-sso-cookie
+# Contributing to @postmanlabs/raml1-to-postman
 
 ## tl;dr
 
@@ -16,6 +16,7 @@ npm test
 ```
 
 - If all checks out, push your code and create a pull with `develop` as the target
+- Add a small note on what's changed in `CHANGELOG.md` under `Unreleased` section
 
 ```bash
 git push feature/my-feature
@@ -27,26 +28,7 @@ This repository uses standard `git-flow` branch management policy/strategy. If y
 
 
 ## Preferred IDE
-The preferred IDE for this project is SublimeText. You can download it from [http://www.sublimetext.com](http://www.sublimetext.com).
-
-The repository has a sublime project file included in `develop/` directory. This project is configured with the best practices recommended for `xt-edge`. Things like using 120 character ruler, addition of end-of-file newline, cleaning up of trailing whitespace has been configured in this project.
-
-There are a number of SublimeText Plugins that you can use to make your life simpler. One of them is the `jsDoc` autocompletion plugin. Download it from [https://github.com/spadgos/sublime-jsdocs](https://github.com/spadgos/sublime-jsdocs).
-
-> *It is expected that changes to the file `/postman-documentator.sublime-project` is not committed back in the repository without proper discussion with all primary contributors of this project.*
-
-### Generic IDE Settings
-
-Most IDE settings for Sublime Text resides within the project configuration file `./develop/xt-edge.sublime-project`. In case you are using any other IDE, (not recommended,) setting the following defaults of the IDE should help.
-
-1. Set to true to ensure the last line of the file ends in a newline character when saving.
-2. Use 120the columns to display vertical ruler.
-3. The number of spaces a tab is considered equal should be 4.
-4. Insert spaces when tab is pressed.
-5. Remove trailing white space on save.
-6. Always use UTF-8 character encoding for reading and writing files.
-7. Set IDE to not change file permissions upon editing.
-
+The preferred IDE for this project is [VSCode](https://code.visualstudio.com/).
 
 ## Commit Guidelines
 
@@ -88,9 +70,9 @@ The third is the most important question to answer, as it can point out problems
 A good commit message template
 
 ```
-Short (50 chars or less) summary of changes with relevant project management issue ID.
+Short (50 chars or less) summary of changes with relevant issue link.
 
-More detailed explanatory text, if necessary.  Wrap it to about 72 characters or so.  In some contexts, the first line is treated as the subject of an email and the rest of the text as the body.  The blank line separating the summary from the body is critical (unless you omit the body entirely); tools like rebase can get confused if you run the two together.
+More detailed explanatory text, if necessary. Wrap it to about 72 characters or so. In some contexts, the first line is treated as the subject of an email and the rest of the text as the body. The blank line separating the summary from the body is critical (unless you omit the body entirely); tools like rebase can get confused if you run the two together.
 
 Further paragraphs come after blank lines.
 
@@ -100,16 +82,6 @@ Further paragraphs come after blank lines.
 ```
 
 Run `git log --no-merges` to see what a nicely formatted project-commit history looks like.
-
-## Documentation guidelines
-
-~~ to be documented further ~~
-
-## The CI Platform
-
-The CI system is built as a bunch of bash scripts to execute a set of tasks. These scripts are meant to execute tasks that can run on every local machine. In general, knowledge about these scripts are not necessary for development.
-
-**The scripts are to be only accessed using `npm run-script script name`.** This ensures that the execution point of the scripts (`pwd`) is always the repository root.
 
 ### Ensuring your commits will not fail build
 
