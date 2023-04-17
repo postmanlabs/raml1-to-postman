@@ -15,11 +15,14 @@
 
 -   Fixed an issue where conversion failed if securitySchemes are not resolved.
 
+## [0.1.7] - 2023-03-21
+
+### Added
+
+-   Added support for resource types.
+
 ## Previous Releases
 Newer releases follow the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
-#### v0.1.7 (March 17, 2023)
-* Added support for resource types.
-
 #### v0.1.6 (Oct 15, 2020)
 * Fixed type error "path must be string" when nonresolved includes are present.
 
@@ -45,3 +48,5 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com/en/1.0.0
 * Base release
 
 [Unreleased]: https://github.com/postmanlabs/raml1-to-postman/compare/0.1.7...HEAD
+
+[0.1.7]: https://github.com/postmanlabs/raml1-to-postman/compare/0.1.6...0.1.7
