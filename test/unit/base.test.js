@@ -2,7 +2,8 @@ var expect = require('chai').expect,
   Converter = require('../../index.js'),
   fs = require('fs'),
   _ = require('lodash'),
-  VALID_RAML_DIR_PATH = './test/fixtures/valid-raml';
+  VALID_RAML_DIR_PATH = './test/fixtures/valid-raml',
+  INVALID_RAML_DIR_PATH = './test/fixtures/invalid-raml';
 
 /**
 * Used to remove property id of a json object
@@ -212,6 +213,19 @@ describe('CONVERT FUNCTION TESTS ', function() {
         expect(result.output[0].name).to.equal('Simple raml API');
         done();
       });
+    });
+  });
+
+  it('The converter should convert basic raml spec to postman collection ' +
+      'with proper headers, body, responses and security schemes', function(done) {
+    Converter.convert({
+      type: 'file',
+      data: INVALID_RAML_DIR_PATH + '/invalidSpec.raml'
+    }, {}, (err) => {
+      expect(err).to.be.not.null;
+      expect(err.name).to.equal('UserError');
+      expect(err.message).to.equal('Provided RAML 1.0 definition is invalid.');
+      done();
     });
   });
 
