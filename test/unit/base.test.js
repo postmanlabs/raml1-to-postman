@@ -216,8 +216,8 @@ describe('CONVERT FUNCTION TESTS ', function() {
     });
   });
 
-  it('The converter should convert basic raml spec to postman collection ' +
-      'with proper headers, body, responses and security schemes', function(done) {
+  it('The converter should throw an UserError if provided definition ' +
+      'fails to import and is an invalid RAML 1.0 definition', function(done) {
     Converter.convert({
       type: 'file',
       data: INVALID_RAML_DIR_PATH + '/invalidSpec.raml'
