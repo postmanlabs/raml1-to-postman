@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [v0.2.0] - 2024-02-15
+
+### Added
+
+-   Added support for reporting UserErrors when provided definition is invalid.
+
 ## [v0.1.8] - 2023-04-17
 
 ### Added
@@ -59,7 +65,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com/en/1.0.0
 
 -   Base release
 
-[Unreleased]: https://github.com/postmanlabs/raml1-to-postman/compare/v0.1.8...HEAD
+[Unreleased]: https://github.com/postmanlabs/raml1-to-postman/compare/v0.2.0...HEAD
+
+[v0.2.0]: https://github.com/postmanlabs/raml1-to-postman/compare/v0.1.8...v0.2.0
 
 [v0.1.8]: https://github.com/postmanlabs/raml1-to-postman/compare/0.1.7...v0.1.8
 
