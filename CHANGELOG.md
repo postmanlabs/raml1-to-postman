@@ -4,6 +4,10 @@
 
 ## [v0.2.0] - 2024-02-15
 
+### Added
+
+-   Added support for reporting UserErrors when provided definition is invalid.
+
 ## [v0.1.8] - 2023-04-17
 
 ### Added
