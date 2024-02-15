@@ -56,4 +56,37 @@ describe('HELPER FUNCTION TESTS ', function() {
       });
       done();
     });
+
+  it('addTraitsToMethod function should correctly be able to add traits with property of type string', function(done) {
+    var modifiedMethod = helper.addTraitsToMethod({
+      is: ['paged'],
+      queryParameters: {}
+    }, {
+      paged: {
+        description: 'API resource supporting pagination of results',
+        name: 'paged',
+        queryParameters: {
+          page: {
+            name: 'page',
+            displayName: 'name',
+            description: 'The page number to return',
+            type: ['integer']
+          },
+          per_page: {
+            name: 'per_page',
+            displayName: 'per_page',
+            description: 'The number of items to return per page',
+            type: ['integer']
+          }
+        }
+      }
+    });
+
+    expect(modifiedMethod).to.be.an('object');
+    expect(modifiedMethod).to.have.all.keys('is', 'description', 'queryParameters');
+    expect(modifiedMethod.description).to.eql('API resource supporting pagination of results');
+    expect(modifiedMethod.queryParameters).to.be.an('object');
+    expect(modifiedMethod.queryParameters).to.have.all.keys('page', 'per_page');
+    done();
+  });
 });
