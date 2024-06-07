@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v0.3.0] - 2024-06-07
+
 ## [v0.2.0] - 2024-02-15
 
 ### Added
@@ -65,7 +67,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com/en/1.0.0
 
 -   Base release
 
-[Unreleased]: https://github.com/postmanlabs/raml1-to-postman/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/postmanlabs/raml1-to-postman/compare/v0.3.0...HEAD
+
+[v0.3.0]: https://github.com/postmanlabs/raml1-to-postman/compare/v0.2.0...v0.3.0
 
 [v0.2.0]: https://github.com/postmanlabs/raml1-to-postman/compare/v0.1.8...v0.2.0
 
