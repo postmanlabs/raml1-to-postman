@@ -4,6 +4,10 @@
 
 ## [v0.3.0] - 2024-06-07
 
+### Fixed
+
+-   Removed usage of archived webapi-parser for error reporting causing issues with app bundling.
+
 ## [v0.2.0] - 2024-02-15
 
 ### Added
