@@ -2,7 +2,8 @@ const expect = require('chai').expect,
   fs = require('fs'),
   converter = require('../../index'),
   helper = require('./../../lib/helper.js'),
-  SDK = require('postman-collection'),
+  { Collection } = require('postman-collection/lib/collection/collection'),
+  { Header } = require('postman-collection/lib/collection/header'),
   VALID_RAML_DIR_PATH = './test/fixtures/valid-raml',
   INVALID_VERSION_PATH = './test/fixtures/invalid-raml/invalidVersion.raml';
 
@@ -126,7 +127,7 @@ describe('helper functions', function() {
         description: 'This is the description.',
         version: '1.1'
       },
-      collection = new SDK.Collection(),
+      collection = new Collection(),
       modified_collection = helper.setCollectionInfo(info, collection);
 
     expect(modified_collection.name).to.equal('My sample api');
@@ -252,7 +253,7 @@ describe('helper functions', function() {
       types = {},
       postmanHeader = helper.convertHeader(ramlHeader, types, 'schema');
 
-    expect(SDK.Header.isHeader(postmanHeader)).to.be.true;
+    expect(Header.isHeader(postmanHeader)).to.be.true;
     expect(postmanHeader.disabled).to.be.true;
   });
 
