@@ -4,6 +4,10 @@
 
 ## [v1.0.0] - 2025-03-10
 
+### Breaking Changes
+
+- Drop support for node < v18.
+
 ## [v0.4.0] - 2024-07-10
 
 ### Chore
