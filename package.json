@@ -46,6 +46,8 @@
     "postman-collection": "^5.0.0"
   },
   "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-draft-04": "1.0.0",
     "chai": "4.1.2",
     "colors": "1.2.1",
     "eslint": "4.19.1",

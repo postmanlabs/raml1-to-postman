@@ -31,7 +31,7 @@
                   "variables": [
                     {
                       "key": "uriParam1",
-                      "value": 5,
+                      "value": "5",
                       "description": ""
                     },
                     {
@@ -98,7 +98,7 @@
                       "query": [
                         {
                           "key": "param1",
-                          "value": 5
+                          "value": "5"
                         },
                         {
                           "key": "param2",
@@ -108,7 +108,7 @@
                       "variables": [
                         {
                           "key": "uriParam1",
-                          "value": 5,
+                          "value": "5",
                           "description": ""
                         },
                         {
@@ -139,7 +139,7 @@
                   "query": [
                     {
                       "key": "param1",
-                      "value": 5
+                      "value": "5"
                     },
                     {
                       "key": "param2",
@@ -149,7 +149,7 @@
                   "variables": [
                     {
                       "key": "uriParam1",
-                      "value": 5,
+                      "value": "5",
                       "description": ""
                     },
                     {

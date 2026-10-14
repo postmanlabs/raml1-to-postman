@@ -147,7 +147,7 @@ describe('Multi-file RAML specs (folder input)', function () {
         expect(result.result).to.equal(true);
         // the trait is applied by both expand(true) and the converter; it must still show up only once
         expect(_.map(request.url.query, 'key')).to.deep.equal(['page', 'limit']);
-        expect(_.map(request.url.query, 'value')).to.deep.equal([1, 20]);
+        expect(_.map(request.url.query, 'value')).to.deep.equal(['1', '20']);
         expect(request.auth.type).to.equal('basic');
         done();
       });
