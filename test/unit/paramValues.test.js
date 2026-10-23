@@ -17,7 +17,7 @@ var expect = require('chai').expect,
     '  region: { type: integer, default: 2 }',
     '/items/{itemId}:',
     '  uriParameters:',
-    '    itemId: { type: integer, example: 42 }',
+    '    itemId: { type: integer, example: 42, description: Item ID }',
     '  get:',
     '    headers:',
     '      X-Retries: { type: integer, default: 3, required: true }',
@@ -64,8 +64,8 @@ var expect = require('chai').expect,
       '/things:\n  get:\n    is: [ Lib.paged ]'
   },
 
-  // Fields whose `value` must be a string in Postman Collection v2.1 (`variables` is where path variables land)
-  STRING_VALUE_FIELDS = ['variable', 'variables', 'query', 'header', 'urlencoded', 'formdata'];
+  // Fields whose `value` must be a string in Postman Collection v2.1
+  STRING_VALUE_FIELDS = ['variable', 'query', 'header', 'urlencoded', 'formdata'];
 
 /**
  * @param {Object} files - map of file name to file content
@@ -169,12 +169,26 @@ describe('Parameter, header and variable values are strings (Postman Collection 
       expect(stringValueOf(collection.variable, 'region')).to.equal('2');
       expect(stringValueOf(request.url.query, 'page')).to.equal('1');
       expect(stringValueOf(request.url.query, 'ratio')).to.equal('0.5');
-      expect(stringValueOf(request.url.variables, 'itemId')).to.equal('42');
+      expect(stringValueOf(request.url.variable, 'itemId')).to.equal('42');
       expect(stringValueOf(request.header, 'X-Retries')).to.equal('3');
       expect(stringValueOf(item.response[0].header, 'X-Rate-Limit')).to.equal('100');
       done();
     });
   });
+
+  it('should serialize path variables under url.variable so Postman keeps their value and description',
+    function (done) {
+      convertFolder({ '/api.raml': TYPED_PARAMS_RAML }, (collection) => {
+        var url = requestsByUrl(collection)['GET /items/:itemId'].request.url;
+
+        expect(url).to.not.have.property('variables');
+        expect(_.find(url.variable, { key: 'itemId' })).to.deep.include({
+          value: '42',
+          description: { content: 'Item ID', type: 'text/plain' }
+        });
+        done();
+      });
+    });
 
   it('should keep falsy defaults instead of replacing them with a placeholder', function (done) {
     convertFolder({ '/api.raml': TYPED_PARAMS_RAML }, (collection) => {
@@ -269,7 +283,7 @@ describe('Parameter, header and variable values are strings (Postman Collection 
 
           expect(validateCollection(collection), JSON.stringify(validateCollection.errors)).to.equal(true);
 
-          // the schema doesn't cover `url.variables`, so check every string-only field directly too
+          // the schema allows non-string values in some of these fields, so check them directly too
           expect(_.filter(collectParamValues(collection), (param) => {
             return !_.isString(param.value);
           })).to.deep.equal([]);
