@@ -191,7 +191,7 @@ describe('helper functions', function() {
         },
         {
           key: 'per_page',
-          value: 10
+          value: '10'
         }
       ],
       convertedQueryParams = helper.constructQueryStringFromQueryParams(queryParams, types);

@@ -13,15 +13,12 @@
             "{{baseUrl}}"
           ],
           "query": [],
-          "variables": []
+          "variable": []
         },
         "header": [
           {
             "key": "X-Dept",
-            "value": [
-              "<string>",
-              "<string>"
-            ],
+            "value": "[\"<string>\",\"<string>\"]",
             "description": "A department code to be charged.\nMultiple of such headers are allowed.\n"
           },
           {

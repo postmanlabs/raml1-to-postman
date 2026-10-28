@@ -1,6 +1,6 @@
 {
   "name": "raml1-to-postman",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Converts RAML 1.0 files to postman v2 collection",
   "homepage": "https://github.com/postmanlabs/raml1-to-postman",
   "bugs": "https://github.com/postmanlabs/raml1-to-postman/issues",
@@ -46,6 +46,8 @@
     "postman-collection": "^5.0.0"
   },
   "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-draft-04": "1.0.0",
     "chai": "4.1.2",
     "colors": "1.2.1",
     "eslint": "4.19.1",

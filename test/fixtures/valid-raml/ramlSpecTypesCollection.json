@@ -28,16 +28,24 @@
                     "{{baseUrl}}"
                   ],
                   "query": [],
-                  "variables": [
+                  "variable": [
                     {
-                      "key": "uriParam1",
-                      "value": 5,
-                      "description": ""
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "5",
+                      "key": "uriParam1"
                     },
                     {
-                      "key": "uriParam2",
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
                       "value": "example",
-                      "description": ""
+                      "key": "uriParam2"
                     }
                   ]
                 },
@@ -98,23 +106,31 @@
                       "query": [
                         {
                           "key": "param1",
-                          "value": 5
+                          "value": "5"
                         },
                         {
                           "key": "param2",
                           "value": "param2Example"
                         }
                       ],
-                      "variables": [
+                      "variable": [
                         {
-                          "key": "uriParam1",
-                          "value": 5,
-                          "description": ""
+                          "description": {
+                            "content": "",
+                            "type": "text/plain"
+                          },
+                          "type": "any",
+                          "value": "5",
+                          "key": "uriParam1"
                         },
                         {
-                          "key": "uriParam2",
+                          "description": {
+                            "content": "",
+                            "type": "text/plain"
+                          },
+                          "type": "any",
                           "value": "example",
-                          "description": ""
+                          "key": "uriParam2"
                         }
                       ]
                     },
@@ -139,23 +155,31 @@
                   "query": [
                     {
                       "key": "param1",
-                      "value": 5
+                      "value": "5"
                     },
                     {
                       "key": "param2",
                       "value": "param2Example"
                     }
                   ],
-                  "variables": [
+                  "variable": [
                     {
-                      "key": "uriParam1",
-                      "value": 5,
-                      "description": ""
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "5",
+                      "key": "uriParam1"
                     },
                     {
-                      "key": "uriParam2",
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
                       "value": "example",
-                      "description": ""
+                      "key": "uriParam2"
                     }
                   ]
                 },
