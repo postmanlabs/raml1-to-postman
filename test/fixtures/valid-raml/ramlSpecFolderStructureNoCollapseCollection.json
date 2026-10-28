@@ -15,7 +15,7 @@
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variables": []
+              "variable": []
             },
             "method": "GET",
             "body": {}
@@ -41,7 +41,7 @@
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variables": []
+              "variable": []
             },
             "method": "POST",
             "body": {}
@@ -67,7 +67,7 @@
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variables": []
+              "variable": []
             },
             "method": "PUT",
             "body": {}
@@ -98,7 +98,7 @@
                         "{{baseUrl}}"
                       ],
                       "query": [],
-                      "variables": []
+                      "variable": []
                     },
                     "method": "GET",
                     "description": "This is bulldog",
@@ -136,7 +136,7 @@
                     "{{baseUrl}}"
                   ],
                   "query": [],
-                  "variables": []
+                  "variable": []
                 },
                 "method": "GET",
                 "body": {}

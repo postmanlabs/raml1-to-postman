@@ -20,7 +20,7 @@
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variables": []
+              "variable": []
             },
             "method": "GET",
             "description": "Description of /users GET req",
@@ -50,7 +50,7 @@
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variables": []
+              "variable": []
             },
             "method": "GET",
             "body": {}
