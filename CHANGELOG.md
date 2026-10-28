@@ -2,11 +2,13 @@
 
 ## [Unreleased]
 
+## [v1.0.1] - 2026-10-28
+
 ## [v1.0.0] - 2025-03-10
 
 ### Breaking Changes
 
-- Drop support for node < v18.
+-   Drop support for node &lt; v18.
 
 ## [v0.4.0] - 2024-07-10
 
@@ -83,7 +85,9 @@ Newer releases follow the [Keep a Changelog](https://keepachangelog.com/en/1.0.0
 
 -   Base release
 
-[Unreleased]: https://github.com/postmanlabs/raml1-to-postman/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/postmanlabs/raml1-to-postman/compare/v1.0.1...HEAD
+
+[v1.0.1]: https://github.com/postmanlabs/raml1-to-postman/compare/v1.0.0...v1.0.1
 
 [v1.0.0]: https://github.com/postmanlabs/raml1-to-postman/compare/v0.4.0...v1.0.0
 
