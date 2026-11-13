@@ -3,6 +3,7 @@ let expect = require('chai').expect,
 
 const optionIds = [
     'collapseFolders',
+    'folderPerPathSegment',
     'requestParametersResolution',
     'exampleParametersResolution'
   ],
@@ -13,6 +14,14 @@ const optionIds = [
       default: true,
       description: 'Importing will collapse all folders that have only one child element and' +
       ' lack persistent folder-level data.'
+    },
+    folderPerPathSegment: {
+      name: 'Folder per path segment',
+      type: 'boolean',
+      default: false,
+      description: 'Importing will create one folder for every URL path segment, even if it has only one' +
+      ' request, so each request is always placed in the same folder. Takes precedence over' +
+      ' "Collapse redundant folders" when both are enabled.'
     },
     requestParametersResolution: {
       name: 'Request parameter generation',
