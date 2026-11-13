@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+-   Added `folderPerPathSegment` option, which creates one folder per URL path segment so a request lands in the same folder on every conversion. Default output is unchanged.
+
 ## [v1.0.1] - 2026-10-28
 
 ## [v1.0.0] - 2025-03-10
