@@ -1,87 +1,114 @@
 {
   "item": [
     {
-      "item": [
-        {
-          "response": [],
-          "event": [],
-          "name": "GET Request at root",
-          "request": {
-            "url": {
-              "path": [
-                ""
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "method": "GET",
-            "body": {}
-          }
-        }
-      ],
+      "response": [],
       "event": [],
-      "name": "/"
+      "name": "GET Request at root",
+      "request": {
+        "url": {
+          "path": [
+            ""
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "method": "GET",
+        "body": {}
+      }
     },
     {
+      "name": "animal",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
-          "response": [],
-          "event": [],
-          "name": "Display name for POST /animal/dog",
-          "request": {
-            "url": {
-              "path": [
-                "animal",
-                "dog"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "method": "POST",
-            "body": {}
-          }
-        }
-      ],
-      "event": [],
-      "name": "/animal/dog"
-    },
-    {
-      "item": [
-        {
-          "response": [],
-          "event": [],
-          "name": "Display name for PUT /animal/dog",
-          "request": {
-            "url": {
-              "path": [
-                "animal",
-                "cat"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "method": "PUT",
-            "body": {}
-          }
-        }
-      ],
-      "event": [],
-      "name": "/animal/cat"
-    },
-    {
-      "item": [
-        {
+          "name": "dog",
+          "description": {
+            "content": "",
+            "type": "text/plain"
+          },
           "item": [
             {
+              "response": [],
+              "event": [],
+              "name": "Display name for POST /animal/dog",
+              "request": {
+                "url": {
+                  "path": [
+                    "animal",
+                    "dog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              }
+            }
+          ],
+          "event": []
+        },
+        {
+          "name": "cat",
+          "description": {
+            "content": "",
+            "type": "text/plain"
+          },
+          "item": [
+            {
+              "response": [],
+              "event": [],
+              "name": "Display name for PUT /animal/dog",
+              "request": {
+                "url": {
+                  "path": [
+                    "animal",
+                    "cat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "PUT",
+                "body": {}
+              }
+            }
+          ],
+          "event": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "name": "mammal",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "name": "dog",
+          "description": {
+            "content": "",
+            "type": "text/plain"
+          },
+          "item": [
+            {
+              "name": "bulldog",
+              "description": {
+                "content": "Folder will be made as this resource has description. With name mammal/dog/bulldog as no displayName is defined.",
+                "type": "text/plain"
+              },
               "item": [
                 {
                   "response": [],
@@ -106,21 +133,27 @@
                   }
                 }
               ],
-              "event": [],
-              "name": "/bulldog",
-              "description": "Folder will be made as this resource has description. With name mammal/dog/bulldog as no displayName is defined."
+              "event": []
             }
           ],
-          "event": [],
-          "name": "/dog"
+          "event": []
         }
       ],
-      "event": [],
-      "name": "/mammal"
+      "event": []
     },
     {
+      "name": "This is Birds.",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
+          "name": "parrot",
+          "description": {
+            "content": "Will not be collapsed with /birds as there is description present.",
+            "type": "text/plain"
+          },
           "item": [
             {
               "response": [],
@@ -143,13 +176,10 @@
               }
             }
           ],
-          "event": [],
-          "name": "/parrot",
-          "description": "Will not be collapsed with /birds as there is description present."
+          "event": []
         }
       ],
-      "event": [],
-      "name": "This is Birds."
+      "event": []
     }
   ],
   "event": [],

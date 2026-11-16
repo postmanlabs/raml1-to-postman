@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+-   `collapseFolders: false` now creates one folder per URL path segment, named without a leading slash (e.g. `orders` instead of `/orders`), so a request lands in the same folder on every conversion. This changes import output for users who turn collapsing off. The default (`collapseFolders: true`) is unchanged.
+
 ## [v1.0.1] - 2026-10-28
 
 ## [v1.0.0] - 2025-03-10

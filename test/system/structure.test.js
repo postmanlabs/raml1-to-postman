@@ -12,7 +12,8 @@ const optionIds = [
       type: 'boolean',
       default: true,
       description: 'Importing will collapse all folders that have only one child element and' +
-      ' lack persistent folder-level data.'
+      ' lack persistent folder-level data. When off, every URL path segment gets its own folder' +
+      ' (named without a leading slash), so each request is always placed in the same folder.'
     },
     requestParametersResolution: {
       name: 'Request parameter generation',
