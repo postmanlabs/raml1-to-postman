@@ -60,12 +60,11 @@ OR
 ```javascript
 {
   collapseFolders: true,
-  folderPerPathSegment: false,
   requestParametersResolution: 'schema',
   exampleParametersResolution: 'example'
 }
 /*
-All properties are optional. Defaults will be used for no options provided. Check the options section below for possible values for each option..
+All three properties are optional. Defaults will be used for no options provided. Check the options section below for possible values for each option..
 */
 ```
 
@@ -87,8 +86,7 @@ function (err, result) {
 ```
 
 ### Options:
-* `'collapseFolders'(boolean)`:  Determines whether the importer should attempt to collapse redundant folders into one. Folders are redundant if they have only one child element, and don't have any folder-level data to persist. Default: `true`
-* `'folderPerPathSegment'(boolean)`: Creates one folder for every URL path segment (named like `collapseFolders` names them, e.g. `orders` or the resource's `displayName`), even if it has only one request below it. A request always goes in the folder of the last segment of its path, so it lands in the same folder every time the spec is converted, whatever its siblings are. This is needed by callers that merge a re-converted spec into an existing collection. Requests of the root resource `/` stay at the collection root, and resources with no methods below them don't get a folder. Takes precedence over `collapseFolders` when both are set. Not shown in the Postman app import UI. Default: `false`
+* `'collapseFolders'(boolean)`:  Determines whether the importer should attempt to collapse redundant folders into one. Folders are redundant if they have only one child element, and don't have any folder-level data to persist. When set to `false`, every URL path segment gets its own folder, even if it has only one request below it. Folders are named after the segment without a leading slash (e.g. `orders`, `{id}`), or after the resource's `displayName` if it sets one. Each request goes in the folder of the last segment of its path, so it lands in the same folder every time the spec is converted, which callers that merge a re-converted spec into an existing collection need. Requests of the root resource `/` stay at the collection root, and resources with no methods below them don't get a folder. Default: `true`
 * `'requestParametersResolution'(string)`: Determines how request parameters (query parameters, path parameters, headers, or the request body) should be generated. Setting this to `schema` will cause the importer to use the parameter's schema as an indicator; `example` will cause the example (if provided) to be picked up. Default: `schema`
 * `'exampleParametersResolution'(string)`: Determines how response parameters (query parameters, path parameters, headers, or the request body) should be generated. Setting this to schema will cause the importer to use the parameter's schema as an indicator; `example` will cause the example (if provided) to be picked up. Default: `exapmle`
 

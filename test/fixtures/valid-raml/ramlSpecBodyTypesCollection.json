@@ -1,6 +1,11 @@
 {
   "item": [
     {
+      "name": "file-content",
+      "description": {
+        "content": "The file to be reproduced by the client",
+        "type": "text/plain"
+      },
       "item": [
         {
           "response": [],
@@ -79,11 +84,14 @@
           }
         }
       ],
-      "event": [],
-      "name": "/file-content",
-      "description": "The file to be reproduced by the client"
+      "event": []
     },
     {
+      "name": "songs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
           "response": [
@@ -190,8 +198,7 @@
           }
         }
       ],
-      "event": [],
-      "name": "/songs"
+      "event": []
     }
   ],
   "event": [],

@@ -6,7 +6,7 @@ var expect = require('chai').expect,
   FIXTURES = _.filter(fs.readdirSync(VALID_RAML_DIR_PATH), (file) => {
     return _.endsWith(file, '.raml');
   }),
-  OPTION = { folderPerPathSegment: true },
+  COLLAPSE_OFF = { collapseFolders: false },
   HEADER = [
     '#%RAML 1.0',
     'title: T',
@@ -115,42 +115,44 @@ function folderAt (items, names) {
 }
 
 /**
- * Converts with and without the option and expects every request to be identical apart from its placement
+ * Converts with collapsing on and off and expects every request to be identical apart from its placement
  *
  * @param {String} raml - resources of the spec, appended to HEADER
  * @param {Function} done - mocha callback
  * @returns {void}
  */
-function expectSameRequestsAsDefault (raml, done) {
+function expectSameRequestsAsCollapsed (raml, done) {
   convert(raml, {}, (defaultItems) => {
-    convert(raml, OPTION, (items) => {
+    convert(raml, COLLAPSE_OFF, (items) => {
       expect(requestsByKey(items)).to.deep.equal(requestsByKey(defaultItems));
       done();
     });
   });
 }
 
-describe('folderPerPathSegment option', function () {
+describe('collapseFolders: false', function () {
   var SPEC_A = '/orders:\n  get:\n  post:\n',
     SPEC_B = '/orders:\n  post:\n/newres:\n  get:\n';
 
   describe('folder tree', function () {
     it('should keep a resource with several methods in its folder', function (done) {
-      convert(SPEC_A, OPTION, (items) => {
+      convert(SPEC_A, COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal([{ orders: ['GET /orders', 'POST /orders'] }]);
         done();
       });
     });
 
     it('should create a folder for a resource with a single method', function (done) {
-      convert(SPEC_B, OPTION, (items) => {
+      convert(SPEC_B, COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal([{ orders: ['POST /orders'] }, { newres: ['GET /newres'] }]);
         done();
       });
     });
 
     it('should create one folder per path segment for nested and flat resources', function (done) {
-      convert('/orders:\n  get:\n  /{id}:\n    get:\n    /items:\n      get:\n/a/b/c:\n  get:\n', OPTION, (items) => {
+      var raml = '/orders:\n  get:\n  /{id}:\n    get:\n    /items:\n      get:\n/a/b/c:\n  get:\n';
+
+      convert(raml, COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal([
           { orders: ['GET /orders', { '{id}': ['GET /orders/:id', { items: ['GET /orders/:id/items'] }] }] },
           { a: [{ b: [{ c: ['GET /a/b/c'] }] }] }
@@ -160,31 +162,50 @@ describe('folderPerPathSegment option', function () {
     });
 
     it('should create a folder for a segment that only has a nested resource', function (done) {
-      convert('/orders:\n  /{id}:\n    get:\n', OPTION, (items) => {
+      convert('/orders:\n  /{id}:\n    get:\n', COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal([{ orders: [{ '{id}': ['GET /orders/:id'] }] }]);
         done();
       });
     });
 
     it('should not create folders for resources without methods', function (done) {
-      convert('/empty:\n  description: Nothing here\n/orders:\n  get:\n', OPTION, (items) => {
+      convert('/empty:\n  description: Nothing here\n/orders:\n  get:\n', COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal([{ orders: ['GET /orders'] }]);
         done();
       });
     });
 
     it('should keep requests of the root resource at the collection root', function (done) {
-      convert('/:\n  get:\n  post:\n/x:\n  get:\n', OPTION, (items) => {
+      convert('/:\n  get:\n  post:\n/x:\n  get:\n', COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal(['GET /', 'POST /', { x: ['GET /x'] }]);
         done();
       });
     });
 
-    it('should take precedence over collapseFolders', function (done) {
-      convert(SPEC_B, { folderPerPathSegment: true, collapseFolders: true }, (collapseItems) => {
-        convert(SPEC_B, { folderPerPathSegment: true, collapseFolders: false }, (noCollapseItems) => {
-          expect(tree(collapseItems)).to.deep.equal([{ orders: ['POST /orders'] }, { newres: ['GET /newres'] }]);
-          expect(tree(noCollapseItems)).to.deep.equal(tree(collapseItems));
+    it('should share segment folders between flat keys with a common prefix', function (done) {
+      convert('/a/b/c:\n  get:\n/a/b/d:\n  get:\n', COLLAPSE_OFF, (items) => {
+        expect(tree(items)).to.deep.equal([{ a: [{ b: [{ c: ['GET /a/b/c'] }, { d: ['GET /a/b/d'] }] }] }]);
+        done();
+      });
+    });
+
+    _.forEach(FIXTURES, (file) => {
+      it('should not name any folder with a leading slash for ' + file, function (done) {
+        convertRaml(fs.readFileSync(VALID_RAML_DIR_PATH + '/' + file).toString(), COLLAPSE_OFF, (result) => {
+          var names = [];
+
+          /**
+           * @param {Array} items - collection items
+           * @returns {void}
+           */
+          function collectNames (items) {
+            _.forEach(items, (item) => {
+              item.item && names.push(item.name) && collectNames(item.item);
+            });
+          }
+
+          collectNames(_.get(result, 'output[0].data.item'));
+          expect(_.filter(names, (name) => { return _.startsWith(name, '/'); })).to.be.empty;
           done();
         });
       });
@@ -193,8 +214,8 @@ describe('folderPerPathSegment option', function () {
 
   describe('sync', function () {
     it('should keep POST /orders in the orders folder when its sibling GET is removed', function (done) {
-      convert(SPEC_A, OPTION, (itemsA) => {
-        convert(SPEC_B, OPTION, (itemsB) => {
+      convert(SPEC_A, COLLAPSE_OFF, (itemsA) => {
+        convert(SPEC_B, COLLAPSE_OFF, (itemsB) => {
           expect(_.map(folderAt(itemsA, ['orders']).item, 'request.method')).to.include('POST');
           expect(_.map(folderAt(itemsB, ['orders']).item, 'request.method')).to.deep.equal(['POST']);
           done();
@@ -202,7 +223,7 @@ describe('folderPerPathSegment option', function () {
       });
     });
 
-    it('should move POST /orders to the root by default (the behaviour the option avoids)', function (done) {
+    it('should move POST /orders to the root in collapse mode (the default)', function (done) {
       convert(SPEC_B, {}, (items) => {
         expect(tree(items)).to.deep.equal(['POST /orders', 'GET /newres']);
         done();
@@ -217,8 +238,8 @@ describe('folderPerPathSegment option', function () {
         '/orders:\n  displayName: All Orders\n  get:\n';
 
     it('should give the same tree for nested resources and flat keys', function (done) {
-      convert(NESTED, OPTION, (nestedItems) => {
-        convert(FLAT, OPTION, (flatItems) => {
+      convert(NESTED, COLLAPSE_OFF, (nestedItems) => {
+        convert(FLAT, COLLAPSE_OFF, (flatItems) => {
           expect(tree(nestedItems)).to.deep.equal([
             { 'All Orders': ['GET /orders', { '{id}': ['GET /orders/:id', { items: ['GET /orders/:id/items'] }] }] }
           ]);
@@ -228,9 +249,16 @@ describe('folderPerPathSegment option', function () {
       });
     });
 
+    it('should keep the displayName of a parent declared after its flat child', function (done) {
+      convert('/orders/{id}:\n  get:\n/orders:\n  displayName: Orders\n  get:\n', COLLAPSE_OFF, (items) => {
+        expect(tree(items)).to.deep.equal([{ Orders: ['GET /orders', { '{id}': ['GET /orders/:id'] }] }]);
+        done();
+      });
+    });
+
     it('should give the same tree when a flat child is declared before its parent', function (done) {
-      convert(NESTED, OPTION, (nestedItems) => {
-        convert(FLAT_CHILD_FIRST, OPTION, (flatItems) => {
+      convert(NESTED, COLLAPSE_OFF, (nestedItems) => {
+        convert(FLAT_CHILD_FIRST, COLLAPSE_OFF, (flatItems) => {
           // the parent's own requests come first, so only the set of folders and requests is order-independent
           expect(_.map(folderAt(flatItems, ['All Orders']).item, 'name').sort())
             .to.deep.equal(_.map(folderAt(nestedItems, ['All Orders']).item, 'name').sort());
@@ -245,7 +273,7 @@ describe('folderPerPathSegment option', function () {
   describe('folder name and description', function () {
     it('should use the displayName and description of a resource', function (done) {
       convert('/orders:\n  displayName: Orders API\n  description: All orders\n  get:\n' +
-        '  /{id}:\n    displayName: Single order\n    get:\n', OPTION, (items) => {
+        '  /{id}:\n    displayName: Single order\n    get:\n', COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal([{ 'Orders API': ['GET /orders', { 'Single order': ['GET /orders/:id'] }] }]);
         expect(items[0].description.content).to.equal('All orders');
         done();
@@ -253,7 +281,7 @@ describe('folderPerPathSegment option', function () {
     });
 
     it('should name a folder after its segment when only a description is set', function (done) {
-      convert('/orders:\n  description: All orders\n  get:\n', OPTION, (items) => {
+      convert('/orders:\n  description: All orders\n  get:\n', COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal([{ orders: ['GET /orders'] }]);
         expect(items[0].description.content).to.equal('All orders');
         done();
@@ -265,7 +293,7 @@ describe('folderPerPathSegment option', function () {
         '/customers:\n  description: People\n  get:\n';
 
       convert(raml, {}, (defaultItems) => {
-        convert(raml, OPTION, (items) => {
+        convert(raml, COLLAPSE_OFF, (items) => {
           expect(tree(items)).to.deep.equal(tree(defaultItems));
           done();
         });
@@ -273,17 +301,17 @@ describe('folderPerPathSegment option', function () {
     });
   });
 
-  describe('requests are the same as in default mode', function () {
+  describe('requests are the same as in collapse mode', function () {
     it('should apply a parent resource trait to child requests', function (done) {
       var raml = '/orders:\n  is: [ paged ]\n  get:\n  /{id}:\n    get:\n    /items:\n      get:\n';
 
-      convert(raml, OPTION, (items) => {
+      convert(raml, COLLAPSE_OFF, (items) => {
         var requests = requestsByKey(items);
 
         _.forEach(['GET /orders', 'GET /orders/:id', 'GET /orders/:id/items'], (key) => {
           expect(_.map(requests[key].request.url.query, 'key'), key).to.include('page');
         });
-        expectSameRequestsAsDefault(raml, done);
+        expectSameRequestsAsCollapsed(raml, done);
       });
     });
 
@@ -291,7 +319,7 @@ describe('folderPerPathSegment option', function () {
       var raml = '/orders/{orderId}:\n  uriParameters:\n    orderId: { type: integer, example: 7 }\n  get:\n' +
         '  /items:\n    get:\n/a/{x}/b:\n  uriParameters:\n    x: { type: string, example: ex }\n  get:\n/a:\n  get:\n';
 
-      convert(raml, OPTION, (items) => {
+      convert(raml, COLLAPSE_OFF, (items) => {
         var requests = requestsByKey(items);
 
         expect(tree(items)).to.deep.equal([
@@ -301,29 +329,29 @@ describe('folderPerPathSegment option', function () {
         expect(_.find(requests['GET /orders/:orderId/items'].request.url.variable, { key: 'orderId' }).value)
           .to.equal('7');
         expect(_.find(requests['GET /a/:x/b'].request.url.variable, { key: 'x' }).value).to.equal('ex');
-        expectSameRequestsAsDefault(raml, done);
+        expectSameRequestsAsCollapsed(raml, done);
       });
     });
 
     it('should place requests of a resourceType in the resource folder', function (done) {
       var raml = '/products:\n  type: collection\n/stock:\n  type: readOnly\n';
 
-      convert(raml, OPTION, (items) => {
+      convert(raml, COLLAPSE_OFF, (items) => {
         expect(tree(items)).to.deep.equal([
           { products: ['GET /products', 'POST /products'] },
           { stock: ['GET /stock'] }
         ]);
         expect(folderAt(items, ['stock']).item[0].request.description).to.equal('Read stock');
-        expectSameRequestsAsDefault(raml, done);
+        expectSameRequestsAsCollapsed(raml, done);
       });
     });
 
     _.forEach(FIXTURES, (file) => {
-      it('should convert every request of ' + file + ' as in default mode', function (done) {
+      it('should convert every request of ' + file + ' as in collapse mode', function (done) {
         var raml = fs.readFileSync(VALID_RAML_DIR_PATH + '/' + file).toString();
 
         convertRaml(raml, {}, (defaultResult) => {
-          convertRaml(raml, OPTION, (result) => {
+          convertRaml(raml, COLLAPSE_OFF, (result) => {
             expect(result.result).to.equal(defaultResult.result);
             defaultResult.result && expect(requestsByKey(result.output[0].data.item))
               .to.deep.equal(requestsByKey(defaultResult.output[0].data.item));
@@ -334,13 +362,13 @@ describe('folderPerPathSegment option', function () {
     });
   });
 
-  describe('option off', function () {
+  describe('collapse mode', function () {
     _.forEach(FIXTURES, (file) => {
-      it('should give the same output as the default options for ' + file, function (done) {
+      it('should give the same output for {collapseFolders: true} as the default options for ' + file, function (done) {
         var raml = fs.readFileSync(VALID_RAML_DIR_PATH + '/' + file).toString();
 
         convertRaml(raml, {}, (defaultResult) => {
-          convertRaml(raml, { folderPerPathSegment: false }, (result) => {
+          convertRaml(raml, { collapseFolders: true }, (result) => {
             expect(withoutIds(result)).to.deep.equal(withoutIds(defaultResult));
             done();
           });
