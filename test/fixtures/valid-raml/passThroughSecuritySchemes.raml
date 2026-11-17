@@ -1,0 +1,54 @@
+#%RAML 1.0
+title: Pass Through security schemes
+version: v1
+baseUri: https://api.example.com/{version}
+mediaType: application/json
+
+securitySchemes:
+  api_key_header:
+    type: Pass Through
+    description: API key sent in a header
+    describedBy:
+      headers:
+        X-API-Key:
+          type: string
+          example: abc123
+  api_key_query:
+    type: Pass Through
+    description: API key sent as a query param
+    describedBy:
+      queryParameters:
+        api_key:
+          type: string
+          example: abc123
+
+/pets:
+  get:
+    securedBy: [api_key_header]
+    responses:
+      200:
+        body:
+          application/json:
+            example: [{ "id": 1, "name": "Rex" }]
+  post:
+    securedBy: [api_key_query]
+    body:
+      application/json:
+        example: { "name": "Rex" }
+    responses:
+      201:
+        body:
+          application/json:
+            example: { "id": 1, "name": "Rex" }
+
+/pets/{petId}:
+  uriParameters:
+    petId:
+      type: integer
+  get:
+    securedBy: [api_key_header]
+    responses:
+      200:
+        body:
+          application/json:
+            example: { "id": 1, "name": "Rex" }
