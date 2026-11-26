@@ -263,6 +263,86 @@ describe('Multi-file RAML specs (folder input)', function () {
       });
     });
 
+    it('should generate placeholder bodies from a JSON Schema without defaults, the same on every run',
+      function (done) {
+        var schema = JSON.stringify({
+            $schema: 'http://json-schema.org/draft-04/schema#',
+            type: 'object',
+            properties: {
+              id: { type: 'integer' },
+              item: { type: 'string' },
+              quantity: { type: 'integer' },
+              price: { type: 'number' }
+            }
+          }),
+          files = {
+            '/order.json': schema,
+            '/api.raml': rootRaml(responseOf('!include order.json') +
+              '\n  post:\n    body:\n      application/json:\n        type: |\n          ' + schema)
+          },
+          expected = { id: '<integer>', item: '<string>', quantity: '<integer>', price: '<number>' };
+
+        convertFolder(files, {}, (result, requests) => {
+          expect(result.result).to.equal(true);
+          expect(responseBody(requests['GET /things'], 200)).to.deep.equal(expected);
+          expect(JSON.parse(requests['POST /things'].request.body.raw)).to.deep.equal(expected);
+
+          convertFolder(files, {}, (secondResult, secondRequests) => {
+            expect(secondRequests['GET /things'].response[0].body)
+              .to.equal(requests['GET /things'].response[0].body);
+            expect(secondRequests['POST /things'].request.body.raw)
+              .to.equal(requests['POST /things'].request.body.raw);
+            done();
+          });
+        });
+      });
+
+    it('should generate placeholders for nested JSON Schema scalars and keep author-given values', function (done) {
+      var schema = JSON.stringify({
+        type: 'object',
+        properties: {
+          createdAt: { type: 'string', format: 'date-time' },
+          count: { type: ['integer', 'null'], format: 'int64' },
+          status: { type: 'string', enum: ['open'] },
+          kind: { type: 'string', const: 'order' },
+          note: { type: 'string', example: 'fragile' },
+          code: { type: 'string', examples: ['A1', 'B2'] },
+          owner: { type: 'object', properties: { active: { type: 'boolean' } } },
+          tags: { type: 'array', minItems: 1, maxItems: 1, items: { type: 'string' } },
+          both: { allOf: [{ type: 'object', properties: { a: { type: 'integer' } } }] },
+          meta: {
+            type: 'object',
+            minProperties: 1,
+            maxProperties: 1,
+            additionalProperties: { type: 'number' }
+          }
+        }
+      });
+
+      convertFolder({
+        '/order.json': schema,
+        '/api.raml': rootRaml(responseOf('!include order.json'))
+      }, {}, (result, requests) => {
+        var body;
+
+        expect(result.result).to.equal(true);
+        body = responseBody(requests['GET /things'], 200);
+        expect(_.omit(body, 'meta')).to.deep.equal({
+          createdAt: '<date-time>',
+          count: '<int64>',
+          status: 'open',
+          kind: 'order',
+          note: 'fragile',
+          code: 'A1',
+          owner: { active: '<boolean>' },
+          tags: ['<string>'],
+          both: { a: '<integer>' }
+        });
+        expect(_.values(body.meta)).to.deep.equal(['<number>']);
+        done();
+      });
+    });
+
     it('should fall back to the old behaviour for a type string that starts with `{` but is not JSON',
       function (done) {
         convertFolder({
