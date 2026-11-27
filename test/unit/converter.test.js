@@ -1,11 +1,51 @@
 const expect = require('chai').expect,
   fs = require('fs'),
+  _ = require('lodash'),
+  Ajv = require('ajv-draft-04'),
   converter = require('../../index'),
   helper = require('./../../lib/helper.js'),
   { Collection } = require('postman-collection/lib/collection/collection'),
   { Header } = require('postman-collection/lib/collection/header'),
   VALID_RAML_DIR_PATH = './test/fixtures/valid-raml',
-  INVALID_VERSION_PATH = './test/fixtures/invalid-raml/invalidVersion.raml';
+  INVALID_VERSION_PATH = './test/fixtures/invalid-raml/invalidVersion.raml',
+  validateCollection = new Ajv({ strict: false, allErrors: true })
+    .compile(require('../fixtures/schemas/collection-v2.1.0.json'));
+
+/**
+ * @param {Object} input - converter input
+ * @param {Object} options - converter options
+ * @param {Function} cb - called with the schema-valid collection JSON and its requests keyed by `METHOD /path`
+ * @returns {void}
+ */
+function convertToRequests (input, options, cb) {
+  converter.convert(input, options, (err, conversionResult) => {
+    let collection,
+      requests = {};
+
+    expect(err).to.be.null;
+    expect(conversionResult.result, conversionResult.reason).to.equal(true);
+    collection = conversionResult.output[0].data;
+    expect(validateCollection(collection), JSON.stringify(validateCollection.errors)).to.equal(true);
+    expect(JSON.stringify(collection)).to.not.include('"type":null');
+
+    (function collect (items) {
+      _.forEach(items, (item) => {
+        item.item ? collect(item.item) :
+          (requests[item.request.method + ' /' + _.join(item.request.url.path, '/')] = item.request);
+      });
+    }(collection.item));
+
+    cb(collection, requests);
+  });
+}
+
+/**
+ * @param {String} fileName - fixture under valid-raml
+ * @returns {Object} converter input
+ */
+function fixture (fileName) {
+  return { type: 'file', data: VALID_RAML_DIR_PATH + '/' + fileName };
+}
 
 /* global describe, it */
 describe('Validate raml', function() {
@@ -291,6 +331,50 @@ describe('helper functions', function() {
     expect(postmanSecurityScheme.type).to.equal('oauth1');
   });
 
+  it('should not return an auth with a null type for an unmapped security scheme type', function() {
+    let securitySchemes = {
+      passThrough: { name: 'passThrough', type: 'Pass Through' },
+      custom: { name: 'custom', type: 'x-custom-token' },
+      unknown: { name: 'unknown', type: 'Bearer Token' }
+    };
+
+    _.forEach(['passThrough', 'custom', 'unknown', 'missing', null, { custom: { scopes: ['A'] } }], (securedBy) => {
+      expect(helper.convertSecurityScheme(securedBy, securitySchemes), JSON.stringify(securedBy)).to.be.null;
+    });
+  });
+
+  it('should map object form securedBy (with parameters) to its scheme', function() {
+    let securitySchemes = { oauth_2_0: { name: 'oauth_2_0', type: 'OAuth 2.0' } };
+
+    expect(helper.convertSecurityScheme({ oauth_2_0: { scopes: ['ADMINISTRATOR'] } }, securitySchemes).type)
+      .to.equal('oauth2');
+  });
+
+  it('should not add describedBy of known security scheme types to the request', function() {
+    _.forEach({
+      'Basic Authentication': 'basic',
+      'Digest Authentication': 'digest',
+      'OAuth 1.0': 'oauth1',
+      'OAuth 2.0': 'oauth2'
+    }, (pmType, ramlType) => {
+      let securitySchemes = {
+          scheme: {
+            name: 'scheme',
+            type: ramlType,
+            describedBy: {
+              headers: { Authorization: { name: 'Authorization', type: ['string'], example: 'x' } },
+              queryParameters: { access_token: { name: 'access_token', type: ['string'], example: 'x' } }
+            }
+          }
+        },
+        security = helper.resolveSecurityScheme(['scheme'], securitySchemes, {}, 'example');
+
+      expect(security.auth.type, ramlType).to.equal(pmType);
+      expect(security.headers, ramlType).to.be.empty;
+      expect(security.queryParams, ramlType).to.be.empty;
+    });
+  });
+
   describe('should generate postman body', function() {
     it('for an option requestParametersResolution set to schema', function() {
       let ramlBody = {
@@ -418,5 +502,180 @@ describe('helper functions', function() {
     expect(postmanBody).to.not.equal(null);
     expect(tooManyLevelsString).to.equal('<Error: Too many levels of nesting to fake this schema>');
     done();
+  });
+});
+
+describe('Pass Through, x-* and unmapped security schemes', function() {
+  /**
+   * @param {Object} request - request JSON
+   * @param {String} key - header key
+   * @returns {Array} headers with that key (case-insensitive)
+   */
+  function headersNamed (request, key) {
+    return _.filter(request.header, (header) => { return _.toLower(header.key) === _.toLower(key); });
+  }
+
+  it('should add Pass Through describedBy headers instead of setting auth', function(done) {
+    convertToRequests(fixture('passThroughSecuritySchemes.raml'), { requestParametersResolution: 'Example' },
+      (collection, requests) => {
+        _.forEach(['GET /pets', 'GET /pets/:petId'], (name) => {
+          expect(requests[name], name).to.not.have.property('auth');
+          expect(headersNamed(requests[name], 'X-API-Key'), name)
+            .to.deep.equal([{ key: 'X-API-Key', value: 'abc123' }]);
+        });
+        done();
+      });
+  });
+
+  it('should add Pass Through describedBy headers with default options', function(done) {
+    convertToRequests(fixture('passThroughSecuritySchemes.raml'), {}, (collection, requests) => {
+      expect(requests['GET /pets']).to.not.have.property('auth');
+      expect(headersNamed(requests['GET /pets'], 'X-API-Key')).to.have.lengthOf(1);
+      done();
+    });
+  });
+
+  it('should add Pass Through describedBy query parameters and keep the Content-Type header', function(done) {
+    convertToRequests(fixture('passThroughSecuritySchemes.raml'), {}, (collection, requests) => {
+      let request = requests['POST /pets'];
+
+      expect(request).to.not.have.property('auth');
+      expect(request.url.query).to.deep.equal([{ key: 'api_key', value: 'abc123' }]);
+      expect(headersNamed(request, 'Content-Type')).to.deep.equal([{ key: 'Content-Type', value: 'application/json' }]);
+      expect(headersNamed(request, 'X-API-Key')).to.be.empty;
+      done();
+    });
+  });
+
+  it('should add x-* describedBy headers to every secured request', function(done) {
+    convertToRequests(fixture('customSecuritySchemes.raml'), { requestParametersResolution: 'Example' },
+      (collection, requests) => {
+        expect(_.keys(requests)).to.have.members(['GET /pets', 'POST /pets']);
+        _.forEach(requests, (request, name) => {
+          expect(request, name).to.not.have.property('auth');
+          expect(headersNamed(request, 'X-Custom-Token'), name)
+            .to.deep.equal([{ key: 'X-Custom-Token', value: 'tok_123' }]);
+        });
+        done();
+      });
+  });
+
+  describe('edge cases', function() {
+    let requests;
+
+    before(function(done) {
+      convertToRequests(fixture('securitySchemesEdgeCases.raml'), { requestParametersResolution: 'Example' },
+        (collection, convertedRequests) => {
+          requests = convertedRequests;
+          done();
+        });
+    });
+
+    it('should apply root level securedBy to requests without their own', function() {
+      expect(requests['GET /inherited']).to.not.have.property('auth');
+      expect(headersNamed(requests['GET /inherited'], 'X-API-Key'))
+        .to.deep.equal([{ key: 'X-API-Key', value: 'abc123' }]);
+    });
+
+    it('should keep the method\'s own header over the scheme\'s (case-insensitive)', function() {
+      expect(headersNamed(requests['GET /own-header'], 'X-API-Key'))
+        .to.deep.equal([{ key: 'x-api-key', value: 'method_value' }]);
+    });
+
+    it('should not set auth or add headers for securedBy: [null]', function() {
+      expect(requests['GET /anonymous']).to.not.have.property('auth');
+      expect(requests['GET /anonymous'].header || []).to.be.empty;
+    });
+
+    it('should add describedBy headers and query params after the method\'s own, without duplicates', function() {
+      let request = requests['GET /both'];
+
+      expect(_.map(request.header, 'key')).to.deep.equal(['X-Trace', 'X-Client-Id']);
+      expect(request.url.query).to.deep.equal([
+        { key: 'page', value: '1' },
+        { key: 'signature', value: 'method_sig' }
+      ]);
+    });
+
+    it('should resolve object form securedBy and skip describedBy of known types', function() {
+      expect(requests['GET /scoped'].auth).to.deep.equal({ type: 'oauth2' });
+      expect(headersNamed(requests['GET /scoped'], 'Authorization')).to.be.empty;
+    });
+  });
+
+  it('should not set auth for an unknown scheme type or a missing scheme', function(done) {
+    let ramlString = [
+      '#%RAML 1.0',
+      'title: T',
+      'baseUri: https://x.test',
+      'securitySchemes:',
+      '  bearer:',
+      '    type: Bearer Token',
+      '    describedBy:',
+      '      headers:',
+      '        X-Bearer: { type: string, example: b }',
+      '/unknown:',
+      '  get:',
+      '    securedBy: [bearer]',
+      '/missing:',
+      '  get:',
+      '    securedBy: [does_not_exist]'
+    ].join('\n');
+
+    convertToRequests({ type: 'string', data: ramlString }, { requestParametersResolution: 'Example' },
+      (collection, requests) => {
+        expect(requests['GET /unknown']).to.not.have.property('auth');
+        expect(requests['GET /unknown'].header).to.deep.equal([{ key: 'X-Bearer', value: 'b' }]);
+        expect(requests['GET /missing']).to.not.have.property('auth');
+        expect(requests['GET /missing'].header || []).to.be.empty;
+        done();
+      });
+  });
+
+  it('should carry describedBy description and required: false into the request as written in the spec',
+    function(done) {
+      let ramlString = [
+        '#%RAML 1.0',
+        'title: T',
+        'baseUri: https://x.test',
+        'securitySchemes:',
+        '  api_key:',
+        '    type: Pass Through',
+        '    describedBy:',
+        '      headers:',
+        '        X-API-Key:',
+        '          type: string',
+        '          example: abc123',
+        '          description: Key issued per tenant',
+        '        X-Tenant:',
+        '          type: string',
+        '          example: acme',
+        '          required: false',
+        '      queryParameters:',
+        '        api_sig:',
+        '          type: string',
+        '          example: sig_1',
+        '          description: HMAC of the request',
+        '/pets:',
+        '  get:',
+        '    securedBy: [api_key]'
+      ].join('\n');
+
+      convertToRequests({ type: 'string', data: ramlString }, { requestParametersResolution: 'Example' },
+        (collection, requests) => {
+          expect(requests['GET /pets']).to.not.have.property('auth');
+          expect(requests['GET /pets'].header).to.deep.equal([
+            { key: 'X-API-Key', value: 'abc123', description: 'Key issued per tenant' },
+            { key: 'X-Tenant', value: 'acme', disabled: true }
+          ]);
+          expect(requests['GET /pets'].url.query).to.deep.equal([
+            { key: 'api_sig', value: 'sig_1', description: 'HMAC of the request' }
+          ]);
+          done();
+        });
+    });
+
+  it('should still produce a schema-valid collection for an existing fixture', function(done) {
+    convertToRequests(fixture('ramlSpecBasic.raml'), {}, () => { done(); });
   });
 });

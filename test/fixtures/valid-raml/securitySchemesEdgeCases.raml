@@ -1,0 +1,97 @@
+#%RAML 1.0
+title: Security scheme edge cases
+version: v1
+baseUri: https://api.example.com/{version}
+mediaType: application/json
+securedBy: [api_key_header]
+
+securitySchemes:
+  api_key_header:
+    type: Pass Through
+    describedBy:
+      headers:
+        X-API-Key:
+          type: string
+          example: abc123
+  header_and_query:
+    type: Pass Through
+    describedBy:
+      headers:
+        X-Client-Id:
+          type: string
+          example: client_1
+      queryParameters:
+        signature:
+          type: string
+          example: sig_1
+  oauth_2_0:
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          type: string
+          example: Bearer token
+    settings:
+      authorizationUri: https://api.example.com/oauth/authorize
+      accessTokenUri: https://api.example.com/oauth/token
+      authorizationGrants: [ authorization_code ]
+      scopes: [ ADMINISTRATOR ]
+
+/inherited:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: { "ok": true }
+
+/own-header:
+  get:
+    headers:
+      x-api-key:
+        type: string
+        example: method_value
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            example: { "ok": true }
+
+/anonymous:
+  get:
+    securedBy: [null]
+    responses:
+      200:
+        body:
+          application/json:
+            example: { "ok": true }
+
+/both:
+  get:
+    securedBy: [header_and_query]
+    headers:
+      X-Trace:
+        type: string
+        example: trace_1
+    queryParameters:
+      page:
+        type: integer
+        example: 1
+      signature:
+        type: string
+        example: method_sig
+    responses:
+      200:
+        body:
+          application/json:
+            example: { "ok": true }
+
+/scoped:
+  get:
+    securedBy: [{ oauth_2_0: { scopes: [ ADMINISTRATOR ] } }]
+    responses:
+      200:
+        body:
+          application/json:
+            example: { "ok": true }

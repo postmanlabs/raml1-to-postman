@@ -1,0 +1,34 @@
+#%RAML 1.0
+title: x-custom security schemes
+version: v1
+baseUri: https://api.example.com/{version}
+mediaType: application/json
+
+securitySchemes:
+  custom_token:
+    type: x-custom-token
+    description: Vendor-specific token scheme
+    describedBy:
+      headers:
+        X-Custom-Token:
+          type: string
+          example: tok_123
+
+/pets:
+  get:
+    securedBy: [custom_token]
+    responses:
+      200:
+        body:
+          application/json:
+            example: [{ "id": 1, "name": "Rex" }]
+  post:
+    securedBy: [custom_token]
+    body:
+      application/json:
+        example: { "name": "Rex" }
+    responses:
+      201:
+        body:
+          application/json:
+            example: { "id": 1, "name": "Rex" }
