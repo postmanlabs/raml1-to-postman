@@ -632,6 +632,49 @@ describe('Pass Through, x-* and unmapped security schemes', function() {
       });
   });
 
+  it('should carry describedBy description and required: false into the request as written in the spec',
+    function(done) {
+      let ramlString = [
+        '#%RAML 1.0',
+        'title: T',
+        'baseUri: https://x.test',
+        'securitySchemes:',
+        '  api_key:',
+        '    type: Pass Through',
+        '    describedBy:',
+        '      headers:',
+        '        X-API-Key:',
+        '          type: string',
+        '          example: abc123',
+        '          description: Key issued per tenant',
+        '        X-Tenant:',
+        '          type: string',
+        '          example: acme',
+        '          required: false',
+        '      queryParameters:',
+        '        api_sig:',
+        '          type: string',
+        '          example: sig_1',
+        '          description: HMAC of the request',
+        '/pets:',
+        '  get:',
+        '    securedBy: [api_key]'
+      ].join('\n');
+
+      convertToRequests({ type: 'string', data: ramlString }, { requestParametersResolution: 'Example' },
+        (collection, requests) => {
+          expect(requests['GET /pets']).to.not.have.property('auth');
+          expect(requests['GET /pets'].header).to.deep.equal([
+            { key: 'X-API-Key', value: 'abc123', description: 'Key issued per tenant' },
+            { key: 'X-Tenant', value: 'acme', disabled: true }
+          ]);
+          expect(requests['GET /pets'].url.query).to.deep.equal([
+            { key: 'api_sig', value: 'sig_1', description: 'HMAC of the request' }
+          ]);
+          done();
+        });
+    });
+
   it('should still produce a schema-valid collection for an existing fixture', function(done) {
     convertToRequests(fixture('ramlSpecBasic.raml'), {}, () => { done(); });
   });
